@@ -1,5 +1,7 @@
 package main;
 
+import java.util.ArrayList;
+
 public class Command {
 
     private String command;
@@ -69,7 +71,7 @@ class Filters {
 
     private String album;
 
-    private String[] tags;
+    private ArrayList<String> tags;
 
     private String lyrics;
 
@@ -81,11 +83,11 @@ class Filters {
 
     private String owner;
 
-    public String[] getTags() {
+    public ArrayList<String> getTags() {
         return tags;
     }
 
-    public void setTags(String[] tags) {
+    public void setTags(ArrayList<String> tags) {
         this.tags = tags;
     }
 

@@ -5,7 +5,9 @@ import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.LibraryInput;
+import fileio.input.PodcastInput;
 import fileio.input.SongInput;
 
 import java.io.File;
@@ -13,6 +15,7 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -72,26 +75,103 @@ public final class Main {
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LibraryInput library = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
+        LibraryInput.instance = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
         Command[] commands = objectMapper.readValue(new File("input/" + filePath1), Command[].class);
 
-        for (Command command : commands) {
-            System.out.println("Command: " + command.getCommand());
-            System.out.println("Username: " + command.getUsername());
-            System.out.println("Timestamp: " + command.getTimestamp());
-            System.out.println("Type: " + command.getType());
+        ArrayList<SongInput> song = new ArrayList<>();
+        ArrayList<PodcastInput> podcast = new ArrayList<>();
 
-            Filters filters = command.getFilters();
-            if (filters != null) {
-                System.out.println("Filters - Name: " + filters.getName());
-                System.out.println("Filters - Album: " + filters.getAlbum());
+        ArrayNode result = objectMapper.createArrayNode();
+
+        for (Command command : commands) {
+            ObjectNode partialResult = objectMapper.createObjectNode();
+            partialResult.put("command", command.getCommand());
+            partialResult.put("user", command.getUsername());
+            partialResult.put("timestamp", command.getTimestamp());
+            switch (command.getCommand()) {
+                case "search":
+                    song.clear();
+                    podcast.clear();
+
+                    switch (command.getType()) {
+                        case "song":
+                            if (command.getFilters().getAlbum() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByAlbum(command.getFilters().getAlbum()));
+                            }
+                            else if (command.getFilters().getArtist() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByArtist(command.getFilters().getArtist()));
+                            }
+                            else if (command.getFilters().getName() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByName(command.getFilters().getName()));
+                            }
+                            else if (command.getFilters().getGenre() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByGenre(command.getFilters().getGenre()));
+                            }
+                            else if (command.getFilters().getLyrics() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByLyrics(command.getFilters().getLyrics()));
+                            }
+                            else if (command.getFilters().getReleaseYear() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByYear(command.getFilters().getReleaseYear()));
+                            }
+                            else if (command.getFilters().getTags() != null) {
+                                song.addAll(SearchBar.getInstance().SearchSongByTags(command.getFilters().getTags()));
+                            }
+
+                            while (song.size() > 5) {
+                                song.remove(song.size()-1);
+                            }
+
+                            partialResult.put("message", "Search returned " + song.size() + " results");
+
+                            ArrayNode songNames = objectMapper.createArrayNode();
+
+                            for (SongInput sg : song) {
+                                songNames.add(sg.getName());
+                            }
+
+                            partialResult.set("results", songNames);
+
+                            break;
+                        case "playlist":
+                            break;
+                        case "podcast":
+                            if (command.getFilters().getName() != null) {
+                                podcast.addAll(SearchBar.getInstance().SearchPodcastByName(command.getFilters().getName()));
+                            }
+                            if (command.getFilters().getOwner() != null) {
+                                podcast.addAll(SearchBar.getInstance().SearchPodcastByOwner(command.getFilters().getOwner()));
+                            }
+
+                            while (podcast.size() > 5) {
+                                podcast.remove(podcast.size()-1);
+                            }
+
+                            partialResult.put("message", "Search returned " + podcast.size() + " results");
+
+                            ArrayNode podcastNames = objectMapper.createArrayNode();
+
+                            for (PodcastInput pod : podcast) {
+                                podcastNames.add(pod.getName());
+                            }
+                            partialResult.set("results", podcastNames);
+
+                            break;
+                    }
+                    break;
+                case "select":
+                    if (command.getItemNumber() <= song.size()) {
+                        partialResult.put("message", "Successfully selected " + song.get(command.getItemNumber()-1).getName() + ".");
+                    } else {
+                        partialResult.put("message", "The selected ID is too high.");
+                    }
+                    break;
             }
+            result.add(partialResult);
         }
 
-        ArrayNode outputs = objectMapper.createArrayNode();
+
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(filePath2), library);
-        //objectWriter.writeValue(new File(filePath2), outputs);
+        objectWriter.writeValue(new File(filePath2), result);
     }
 }
