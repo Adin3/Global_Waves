@@ -1,8 +1,10 @@
 package fileio.input;
 
+import main.Medium;
+
 import java.util.ArrayList;
 
-public final class SongInput {
+public final class SongInput extends Medium {
     private String name;
     private Integer duration;
     private String album;

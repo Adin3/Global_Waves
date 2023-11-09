@@ -1,7 +1,11 @@
 package main;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import java.util.ArrayList;
 
+@Getter @Setter
 public class Command {
 
     private String command;
@@ -16,53 +20,9 @@ public class Command {
 
     private Filters filters;
 
-    public int getItemNumber() {
-        return itemNumber;
-    }
+    private String playlistName;
 
-    public void setItemNumber(int itemNumber) {
-        this.itemNumber = itemNumber;
-    }
-
-    public String getCommand() {
-        return command;
-    }
-
-    public void setCommand(String command) {
-        this.command = command;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public int getTimestamp() {
-        return timestamp;
-    }
-
-    public void setTimestamp(int timestamp) {
-        this.timestamp = timestamp;
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public Filters getFilters() {
-        return filters;
-    }
-
-    public void setFilters(Filters filters) {
-        this.filters = filters;
-    }
+    private int playlistId;
 }
 
 class Filters {

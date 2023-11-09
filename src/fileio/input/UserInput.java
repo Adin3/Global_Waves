@@ -1,9 +1,7 @@
 package fileio.input;
 
 import lombok.Getter;
-import main.MusicPlayer;
-import main.Playlist;
-import main.SearchBar;
+import main.*;
 
 import java.util.ArrayList;
 
@@ -13,17 +11,15 @@ public final class UserInput {
     private String city;
 
     @Getter
-    private final MusicPlayer musicplayer = new MusicPlayer();
+    private Player musicplayer = new Player();
 
     @Getter
-    private final SearchBar searchBar = new SearchBar();
+    private SearchBar searchBar = new SearchBar();
 
-    private ArrayList<Playlist> playlists;
-
+    private ArrayList<Playlist> playlists = new ArrayList<>();
     private ArrayList<SongInput> likedSongs;
 
-    public UserInput() {
-    }
+    public UserInput() {}
 
     public String getUsername() {
         return username;
@@ -47,5 +43,42 @@ public final class UserInput {
 
     public void setCity(final String city) {
         this.city = city;
+    }
+
+    public void addPlaylist(Playlist playlist) {
+        playlists.add(playlist);
+    }
+
+    public void addLikedSong(SongInput song) {
+        likedSongs.add(song);
+    }
+
+    public void setMusicPlayer() {
+        musicplayer = new MusicPlayer();
+    }
+
+    public void setPlaylistPlayer() {
+
+    }
+
+    public void setPodcastPlayer() {
+
+    }
+
+    public void setSearchBar(String type) {
+        switch (type) {
+            case "song":
+                searchBar = new SearchBarSong();
+                break;
+            case "podcast":
+                searchBar = new SearchBarPodcast();
+                break;
+            case "playlist":
+                break;
+        }
+    }
+
+    public void removePlayer() {
+
     }
 }

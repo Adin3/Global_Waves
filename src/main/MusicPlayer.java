@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-public class MusicPlayer {
+public class MusicPlayer extends Player{
 
     public MusicPlayer() {}
 

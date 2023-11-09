@@ -59,7 +59,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 2) {
+            if (isCreated && a < 3) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -82,12 +82,12 @@ public final class Main {
 
         Manager man = Manager.getInstance();
         LibraryInput lib = LibraryInput.getInstance();
+
         for (UserInput user : lib.getUsers()) {
             Manager.addUser(user);
         }
 
         ArrayNode result = objectMapper.createArrayNode();
-        MusicPlayer musicPlayer = new MusicPlayer();
         int deltaTime = 0;
         int lastTime = 0;
 
@@ -108,7 +108,9 @@ public final class Main {
                 case "search":
                     Manager.searchBar(username).clearSearch();
 
-                    Manager.searchBar(username).search(command.getFilters(), command.getType());
+                    Manager.getUser(username).setSearchBar(command.getType());
+
+                    Manager.searchBar(username).search(command.getFilters());
 
                     ArrayNode node = objectMapper.createArrayNode();
 
@@ -117,17 +119,19 @@ public final class Main {
                     ArrayList<PodcastInput> podcast = Manager.searchBar(username).getPodcast();
 
                     if (!song.isEmpty()) {
-                        partialResult.put("message", "Search returned " + song.size() + " results");
+                        partialResult.put("message", "Search returned " +
+                                song.size() + " results");
 
                         for (SongInput sg : song)
                             node.add(sg.getName());
-
                     }
-                    if (!podcast.isEmpty()) {
-                        partialResult.put("message", "Search returned " + podcast.size() + " results");
 
-                        for (PodcastInput pod : podcast)
-                            node.add(pod.getName());
+                    if (!podcast.isEmpty()) {
+                        partialResult.put("message", "Search returned " +
+                                podcast.size() + " results");
+
+                        for (PodcastInput sg : podcast)
+                            node.add(sg.getName());
                     }
 
                     partialResult.set("results", node);
@@ -155,13 +159,14 @@ public final class Main {
                     break;
                 case "load":
                     if (Manager.searchBar(username).getSongLoaded() != null) {
+                        Manager.getUser(username).setMusicPlayer();
                         Manager.musicPlayer(username).loadSong(Manager.searchBar(username).getSongLoaded());
                         partialResult.put("message", "Playback loaded successfully.");
                     }
                     break;
                 case "status":
                     ObjectNode status = objectMapper.createObjectNode();
-                    MusicPlayer player = Manager.musicPlayer(username);
+                    Player player = Manager.musicPlayer(username);
                     if (player.getSong() == null) {
                         status.put("name", "");
                         status.put("remainedTime", 0);
@@ -183,6 +188,22 @@ public final class Main {
                         partialResult.put("message", "Playback paused successfully.");
                     } else {
                         partialResult.put("message", "Playback resumed successfully.");
+                    }
+                    break;
+                case "createPlaylist":
+                    if (Manager.addPlaylist(username, command.getPlaylistName())) {
+                        partialResult.put("message", "Playlist created successfully.");
+                    } else {
+                        partialResult.put("message", "A playlist with the same name already exists.");
+                    }
+                    break;
+                case "addRemoveInPlaylist":
+                    int id = command.getPlaylistId();
+                    Playlist playlist = Manager.playlist(username, id);
+                    if (playlist == null) {
+                        partialResult.put("message", "Error");
+                    } else {
+                        playlist.addSong(Manager.searchBar(username).getSongLoaded());
                     }
                     break;
             }

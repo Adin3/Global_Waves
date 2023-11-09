@@ -1,8 +1,10 @@
 package fileio.input;
 
+import main.Medium;
+
 import java.util.ArrayList;
 
-public final class PodcastInput {
+public final class PodcastInput extends Medium {
     private String name;
     private String owner;
     private ArrayList<EpisodeInput> episodes;
