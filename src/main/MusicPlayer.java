@@ -1,5 +1,8 @@
 package main;
 
+import com.fasterxml.jackson.core.ObjectCodec;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.SongInput;
 import fileio.input.UserInput;
 import lombok.Getter;
@@ -22,8 +25,47 @@ public class MusicPlayer extends Player{
 
     private boolean shuffled = false;
 
-    public void loadSong(SongInput song) {
-        this.song = song;
+    public MusicPlayer(String owner) {
+        this.owner = owner;
+    }
+
+    private String owner;
+
+    public void load() {
+        this.song = Manager.searchBar(owner).getSongLoaded();
+
+        if (this.song != null) {
+            Manager.partialResult.put("message", "Playback loaded successfully.");
+        }
+    }
+
+    public void status() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode status = objectMapper.createObjectNode();
+        if (song == null) {
+            status.put("name", "");
+            status.put("remainedTime", 0);
+            status.put("repeat", "No Repeat");
+            status.put("shuffle", false);
+            status.put("paused", true);
+        } else {
+            status.put("name", song.getName());
+            status.put("remainedTime", song.getDuration());
+            status.put("repeat", repeats());
+            status.put("shuffle", shuffles());
+            status.put("paused", paused());
+        }
+        Manager.partialResult.set("stats", status);
+    }
+
+    public void playPause() {
+        Manager.musicPlayer(owner).pauseButton();
+
+        if (Manager.musicPlayer(owner).paused()) {
+            Manager.partialResult.put("message", "Playback paused successfully.");
+        } else {
+            Manager.partialResult.put("message", "Playback resumed successfully.");
+        }
     }
     public boolean paused() {
         return paused;
@@ -61,7 +103,6 @@ public class MusicPlayer extends Player{
         if (!paused)
             song.setDuration(time);
     }
-
     public void updatePlayer() {
         if (song == null) return;
 

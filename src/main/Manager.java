@@ -1,5 +1,7 @@
 package main;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.LibraryInput;
 import fileio.input.UserInput;
 import lombok.Getter;
@@ -16,7 +18,11 @@ public class Manager {
 
     private static final Map<String, UserInput> users = new HashMap<>();
 
-    private static ArrayList<Playlist> playlists = new ArrayList<>();
+    @Getter
+    private static final ArrayList<Playlist> playlists = new ArrayList<>();
+
+    public static ArrayNode result;
+    public static ObjectNode partialResult;
 
     private Manager() {}
 
@@ -49,15 +55,18 @@ public class Manager {
             user.getMusicplayer().updatePlayer();
         }
     }
-    public static boolean addPlaylist(String username, String name) {
+    public static void addPlaylist(String username, String name) {
         for (Playlist p : playlists) {
-            if (p.getName().equals(name)) return false;
+            if (p.getName().equals(name)) {
+                Manager.partialResult.put("message", "A playlist with the same name already exists.");
+                return;
+            }
         }
 
         Playlist p = new Playlist(username, name);
         playlists.add(p);
         users.get(username).addPlaylist(p);
-        return true;
+        Manager.partialResult.put("message", "Playlist created successfully.");
     }
 
 //    public static void removePlaylist(String username, String name) {

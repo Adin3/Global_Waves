@@ -87,7 +87,8 @@ public final class Main {
             Manager.addUser(user);
         }
 
-        ArrayNode result = objectMapper.createArrayNode();
+        Manager.result = objectMapper.createArrayNode();
+
         int deltaTime = 0;
         int lastTime = 0;
 
@@ -98,12 +99,14 @@ public final class Main {
             deltaTime = nextTime - lastTime;
             lastTime = nextTime;
 
+
             Manager.updatePlayers(deltaTime);
 
-            ObjectNode partialResult = objectMapper.createObjectNode();
-            partialResult.put("command", command.getCommand());
-            partialResult.put("user", command.getUsername());
-            partialResult.put("timestamp", command.getTimestamp());
+            Manager.partialResult = objectMapper.createObjectNode();
+            Manager.partialResult.put("command", command.getCommand());
+            Manager.partialResult.put("user", command.getUsername());
+            Manager.partialResult.put("timestamp", command.getTimestamp());
+
             switch (command.getCommand()) {
                 case "search":
                     Manager.searchBar(username).clearSearch();
@@ -112,107 +115,47 @@ public final class Main {
 
                     Manager.searchBar(username).search(command.getFilters());
 
-                    ArrayNode node = objectMapper.createArrayNode();
-
-                    ArrayList<SongInput> song = Manager.searchBar(username).getSong();
-
-                    ArrayList<PodcastInput> podcast = Manager.searchBar(username).getPodcast();
-
-                    if (!song.isEmpty()) {
-                        partialResult.put("message", "Search returned " +
-                                song.size() + " results");
-
-                        for (SongInput sg : song)
-                            node.add(sg.getName());
-                    }
-
-                    if (!podcast.isEmpty()) {
-                        partialResult.put("message", "Search returned " +
-                                podcast.size() + " results");
-
-                        for (PodcastInput sg : podcast)
-                            node.add(sg.getName());
-                    }
-
-                    partialResult.set("results", node);
+                    Manager.searchBar(username).searchDone();
 
                     break;
                 case "select":
-                    int ret = Manager.searchBar(username).select(command.getItemNumber());
-
-                    SongInput songLoaded = Manager.searchBar(username).getSongLoaded();
-
-                    PodcastInput podcastLoaded = Manager.searchBar(username).getPodcastLoaded();
-
-                    if (ret == 0) {
-                        if (songLoaded != null) {
-                            partialResult.put("message", "Successfully selected " + songLoaded.getName() + ".");
-                        } else if (podcastLoaded != null) {
-                            partialResult.put("message", "Successfully selected " + podcastLoaded.getName() + ".");
-                        }
-                    } else if (ret == 1) {
-                        partialResult.put("message", "The selected ID is too high.");
-                    } else {
-                        partialResult.put("message", "Please conduct a search before making a selection.");
-                    }
+                    Manager.searchBar(username).select(command.getItemNumber());
 
                     break;
                 case "load":
-                    if (Manager.searchBar(username).getSongLoaded() != null) {
-                        Manager.getUser(username).setMusicPlayer();
-                        Manager.musicPlayer(username).loadSong(Manager.searchBar(username).getSongLoaded());
-                        partialResult.put("message", "Playback loaded successfully.");
-                    }
+                    Manager.getUser(username).setMusicPlayer();
+
+                    Manager.musicPlayer(username).load();
+
                     break;
                 case "status":
-                    ObjectNode status = objectMapper.createObjectNode();
-                    Player player = Manager.musicPlayer(username);
-                    if (player.getSong() == null) {
-                        status.put("name", "");
-                        status.put("remainedTime", 0);
-                        status.put("repeat", "No Repeat");
-                        status.put("shuffle", false);
-                        status.put("paused", true);
-                    } else {
-                        status.put("name", player.getSong().getName());
-                        status.put("remainedTime", player.getSong().getDuration());
-                        status.put("repeat", player.repeats());
-                        status.put("shuffle", player.shuffles());
-                        status.put("paused", player.paused());
-                    }
-                    partialResult.set("stats", status);
+                    Manager.musicPlayer(username).status();
+
                     break;
                 case "playPause":
-                    Manager.musicPlayer(username).pauseButton();
-                    if (Manager.musicPlayer(username).paused()) {
-                        partialResult.put("message", "Playback paused successfully.");
-                    } else {
-                        partialResult.put("message", "Playback resumed successfully.");
-                    }
+                    Manager.musicPlayer(username).playPause();
+
                     break;
                 case "createPlaylist":
-                    if (Manager.addPlaylist(username, command.getPlaylistName())) {
-                        partialResult.put("message", "Playlist created successfully.");
-                    } else {
-                        partialResult.put("message", "A playlist with the same name already exists.");
-                    }
+                    Manager.addPlaylist(username, command.getPlaylistName());
+
                     break;
                 case "addRemoveInPlaylist":
                     int id = command.getPlaylistId();
                     Playlist playlist = Manager.playlist(username, id);
                     if (playlist == null) {
-                        partialResult.put("message", "Error");
+                        Manager.partialResult.put("message", "Error");
                     } else {
                         playlist.addSong(Manager.searchBar(username).getSongLoaded());
                     }
                     break;
             }
-            result.add(partialResult);
+            Manager.result.add(Manager.partialResult);
         }
 
 
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(filePath2), result);
+        objectWriter.writeValue(new File(filePath2), Manager.result);
     }
 }

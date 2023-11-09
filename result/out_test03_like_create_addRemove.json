@@ -79,12 +79,13 @@
   "command" : "search",
   "user" : "alice22",
   "timestamp" : 63,
-  "results" : [ ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Playlist bengos" ]
 }, {
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 64,
-  "message" : "The selected ID is too high."
+  "message" : "Successfully selected Playlist bengos."
 }, {
   "command" : "showPlaylists",
   "user" : "alice22",

@@ -15,9 +15,11 @@ public class Player {
 
     private boolean shuffled = false;
 
-    public void loadSong(SongInput song) {
+    public void load() {}
 
-    }
+    public void status() {}
+    public void playPause() {}
+
     public boolean paused() {
         return false;
     }
@@ -30,23 +32,13 @@ public class Player {
         return null;
     }
 
-    public void pauseButton() {
+    public void pauseButton() {}
 
-    }
+    public void shuffleButton() {}
 
-    public void shuffleButton() {
+    public void repeatButton() {}
 
-    }
+    public void updateDuration(int deltaTime) {}
 
-    public void repeatButton() {
-
-    }
-
-    public void updateDuration(int deltaTime) {
-
-    }
-
-    public void updatePlayer() {
-
-    }
+    public void updatePlayer() {}
 }

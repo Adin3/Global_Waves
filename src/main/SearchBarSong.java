@@ -1,5 +1,7 @@
 package main;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.input.LibraryInput;
 import fileio.input.PodcastInput;
 import fileio.input.SongInput;
@@ -12,13 +14,8 @@ public class SearchBarSong extends SearchBar{
     private final ArrayList<SongInput> song = new ArrayList<>();
 
     @Getter
-    private final ArrayList<PodcastInput> podcast = new ArrayList<>();
-
-    @Getter
     private SongInput songLoaded;
 
-    @Getter
-    private PodcastInput podcastLoaded;
     public SearchBarSong() {}
 
     public void clearSearch() {
@@ -26,15 +23,33 @@ public class SearchBarSong extends SearchBar{
         songLoaded = null;
     }
 
-    public int select(int number) {
-        if (song != null) {
+    public void select(int number) {
+        if (song.isEmpty()) {
+            Manager.partialResult.put("message", "Please conduct a search before making a selection.");
+        } else {
             if (number <= song.size()) {
-                songLoaded = song.get(number - 1);
-                return 0;
+                songLoaded = song.get((number - 1));
+                Manager.partialResult.put("message", "Successfully selected " + songLoaded.getName() + ".");
+                return;
             }
-            return 1;
+            Manager.partialResult.put("message", "The selected ID is too high.");
+            return;
         }
-        return 2;
+    }
+
+    public void searchDone() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode node = objectMapper.createArrayNode();
+
+        if (!song.isEmpty()) {
+            Manager.partialResult.put("message", "Search returned " +
+                    song.size() + " results");
+
+            for (SongInput sg : song)
+                node.add(sg.getName());
+        }
+
+        Manager.partialResult.set("results", node);
     }
 
     public void search(Filters filter) {

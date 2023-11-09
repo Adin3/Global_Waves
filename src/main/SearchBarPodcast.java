@@ -1,5 +1,7 @@
 package main;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
 import fileio.input.LibraryInput;
 import fileio.input.PodcastInput;
 import fileio.input.SongInput;
@@ -7,36 +9,50 @@ import lombok.Getter;
 
 import java.util.ArrayList;
 
-public class SearchBarPodcast extends SearchBar{
-    private Filters filter;
-
-    @Getter
-    private final ArrayList<SongInput> song = new ArrayList<>();
+public class SearchBarPodcast extends SearchBar {
 
     @Getter
     private final ArrayList<PodcastInput> podcast = new ArrayList<>();
 
     @Getter
-    private SongInput songLoaded;
+    private PodcastInput podcastLoaded;
 
     @Getter
-    private PodcastInput podcastLoaded;
+    private SongInput songLoaded;
     public SearchBarPodcast() {}
 
     public void clearSearch() {
 
     }
 
-    public int select(int number) {
-        if (podcast != null) {
+    public void select(int number) {
+        if (!podcast.isEmpty()) {
             if (number <= podcast.size()) {
                 podcastLoaded = podcast.get((number-1));
-                return 0;
+                Manager.partialResult.put("message", "Successfully selected " + podcastLoaded.getName() + ".");
+                return;
             }
-            return 1;
+            Manager.partialResult.put("message", "The selected ID is too high.");
+            return;
         }
-        return 2;
+        Manager.partialResult.put("message", "Please conduct a search before making a selection.");
     }
+
+    public void searchDone() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode node = objectMapper.createArrayNode();
+
+        if (!podcast.isEmpty()) {
+            Manager.partialResult.put("message", "Search returned " +
+                    podcast.size() + " results");
+
+            for (PodcastInput sg : podcast)
+                node.add(sg.getName());
+        }
+
+        Manager.partialResult.set("results", node);
+    }
+
     public void search(Filters filter) {
         if (filter.getName() != null) {
             podcast.addAll(SearchPodcastByName(filter.getName()));

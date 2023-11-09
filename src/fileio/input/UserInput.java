@@ -16,6 +16,8 @@ public final class UserInput {
     @Getter
     private SearchBar searchBar = new SearchBar();
 
+    private String type;
+
     private ArrayList<Playlist> playlists = new ArrayList<>();
     private ArrayList<SongInput> likedSongs;
 
@@ -54,7 +56,18 @@ public final class UserInput {
     }
 
     public void setMusicPlayer() {
-        musicplayer = new MusicPlayer();
+        switch (type) {
+            case "song":
+                musicplayer = new MusicPlayer(username);
+                break;
+            case "podcast":
+
+                break;
+            case "playlist":
+
+                break;
+        }
+        musicplayer = new MusicPlayer(username);
     }
 
     public void setPlaylistPlayer() {
@@ -66,6 +79,7 @@ public final class UserInput {
     }
 
     public void setSearchBar(String type) {
+        this.type = type;
         switch (type) {
             case "song":
                 searchBar = new SearchBarSong();
@@ -74,6 +88,7 @@ public final class UserInput {
                 searchBar = new SearchBarPodcast();
                 break;
             case "playlist":
+                searchBar = new SearchBarPlaylist();
                 break;
         }
     }
