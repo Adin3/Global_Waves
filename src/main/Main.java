@@ -9,6 +9,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.LibraryInput;
 import fileio.input.PodcastInput;
 import fileio.input.SongInput;
+import fileio.input.UserInput;
 
 import java.io.File;
 import java.io.IOException;
@@ -58,7 +59,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 1) {
+            if (isCreated && a < 2) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -75,94 +76,113 @@ public final class Main {
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LibraryInput.instance = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
+        LibraryInput libraryInput = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
+        LibraryInput.setInstance(libraryInput);
         Command[] commands = objectMapper.readValue(new File("input/" + filePath1), Command[].class);
 
-        ArrayList<SongInput> song = new ArrayList<>();
-        ArrayList<PodcastInput> podcast = new ArrayList<>();
+        Manager man = Manager.getInstance();
+        LibraryInput lib = LibraryInput.getInstance();
+        for (UserInput user : lib.getUsers()) {
+            Manager.addUser(user);
+        }
 
         ArrayNode result = objectMapper.createArrayNode();
+        MusicPlayer musicPlayer = new MusicPlayer();
+        int deltaTime = 0;
+        int lastTime = 0;
 
         for (Command command : commands) {
+
+            String username = command.getUsername();
+            int nextTime = command.getTimestamp();
+            deltaTime = nextTime - lastTime;
+            lastTime = nextTime;
+
+            Manager.updatePlayers(deltaTime);
+
             ObjectNode partialResult = objectMapper.createObjectNode();
             partialResult.put("command", command.getCommand());
             partialResult.put("user", command.getUsername());
             partialResult.put("timestamp", command.getTimestamp());
             switch (command.getCommand()) {
                 case "search":
-                    song.clear();
-                    podcast.clear();
+                    Manager.searchBar(username).clearSearch();
 
-                    switch (command.getType()) {
-                        case "song":
-                            if (command.getFilters().getAlbum() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByAlbum(command.getFilters().getAlbum()));
-                            }
-                            else if (command.getFilters().getArtist() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByArtist(command.getFilters().getArtist()));
-                            }
-                            else if (command.getFilters().getName() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByName(command.getFilters().getName()));
-                            }
-                            else if (command.getFilters().getGenre() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByGenre(command.getFilters().getGenre()));
-                            }
-                            else if (command.getFilters().getLyrics() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByLyrics(command.getFilters().getLyrics()));
-                            }
-                            else if (command.getFilters().getReleaseYear() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByYear(command.getFilters().getReleaseYear()));
-                            }
-                            else if (command.getFilters().getTags() != null) {
-                                song.addAll(SearchBar.getInstance().SearchSongByTags(command.getFilters().getTags()));
-                            }
+                    Manager.searchBar(username).search(command.getFilters(), command.getType());
 
-                            while (song.size() > 5) {
-                                song.remove(song.size()-1);
-                            }
+                    ArrayNode node = objectMapper.createArrayNode();
 
-                            partialResult.put("message", "Search returned " + song.size() + " results");
+                    ArrayList<SongInput> song = Manager.searchBar(username).getSong();
 
-                            ArrayNode songNames = objectMapper.createArrayNode();
+                    ArrayList<PodcastInput> podcast = Manager.searchBar(username).getPodcast();
 
-                            for (SongInput sg : song) {
-                                songNames.add(sg.getName());
-                            }
+                    if (!song.isEmpty()) {
+                        partialResult.put("message", "Search returned " + song.size() + " results");
 
-                            partialResult.set("results", songNames);
+                        for (SongInput sg : song)
+                            node.add(sg.getName());
 
-                            break;
-                        case "playlist":
-                            break;
-                        case "podcast":
-                            if (command.getFilters().getName() != null) {
-                                podcast.addAll(SearchBar.getInstance().SearchPodcastByName(command.getFilters().getName()));
-                            }
-                            if (command.getFilters().getOwner() != null) {
-                                podcast.addAll(SearchBar.getInstance().SearchPodcastByOwner(command.getFilters().getOwner()));
-                            }
-
-                            while (podcast.size() > 5) {
-                                podcast.remove(podcast.size()-1);
-                            }
-
-                            partialResult.put("message", "Search returned " + podcast.size() + " results");
-
-                            ArrayNode podcastNames = objectMapper.createArrayNode();
-
-                            for (PodcastInput pod : podcast) {
-                                podcastNames.add(pod.getName());
-                            }
-                            partialResult.set("results", podcastNames);
-
-                            break;
                     }
+                    if (!podcast.isEmpty()) {
+                        partialResult.put("message", "Search returned " + podcast.size() + " results");
+
+                        for (PodcastInput pod : podcast)
+                            node.add(pod.getName());
+                    }
+
+                    partialResult.set("results", node);
+
                     break;
                 case "select":
-                    if (command.getItemNumber() <= song.size()) {
-                        partialResult.put("message", "Successfully selected " + song.get(command.getItemNumber()-1).getName() + ".");
-                    } else {
+                    int ret = Manager.searchBar(username).select(command.getItemNumber());
+
+                    SongInput songLoaded = Manager.searchBar(username).getSongLoaded();
+
+                    PodcastInput podcastLoaded = Manager.searchBar(username).getPodcastLoaded();
+
+                    if (ret == 0) {
+                        if (songLoaded != null) {
+                            partialResult.put("message", "Successfully selected " + songLoaded.getName() + ".");
+                        } else if (podcastLoaded != null) {
+                            partialResult.put("message", "Successfully selected " + podcastLoaded.getName() + ".");
+                        }
+                    } else if (ret == 1) {
                         partialResult.put("message", "The selected ID is too high.");
+                    } else {
+                        partialResult.put("message", "Please conduct a search before making a selection.");
+                    }
+
+                    break;
+                case "load":
+                    if (Manager.searchBar(username).getSongLoaded() != null) {
+                        Manager.musicPlayer(username).loadSong(Manager.searchBar(username).getSongLoaded());
+                        partialResult.put("message", "Playback loaded successfully.");
+                    }
+                    break;
+                case "status":
+                    ObjectNode status = objectMapper.createObjectNode();
+                    MusicPlayer player = Manager.musicPlayer(username);
+                    if (player.getSong() == null) {
+                        status.put("name", "");
+                        status.put("remainedTime", 0);
+                        status.put("repeat", "No Repeat");
+                        status.put("shuffle", false);
+                        status.put("paused", true);
+                    } else {
+                        status.put("name", player.getSong().getName());
+                        status.put("remainedTime", player.getSong().getDuration());
+                        status.put("repeat", player.repeats());
+                        status.put("shuffle", player.shuffles());
+                        status.put("paused", player.paused());
+                    }
+                    partialResult.set("stats", status);
+                    break;
+                case "playPause":
+                    Manager.musicPlayer(username).pauseButton();
+                    if (Manager.musicPlayer(username).paused()) {
+                        partialResult.put("message", "Playback paused successfully.");
+                    } else {
+                        partialResult.put("message", "Playback resumed successfully.");
                     }
                     break;
             }

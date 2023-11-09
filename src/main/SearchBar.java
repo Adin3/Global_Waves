@@ -3,23 +3,105 @@ package main;
 import fileio.input.LibraryInput;
 import fileio.input.PodcastInput;
 import fileio.input.SongInput;
+import lombok.Getter;
 
 import java.util.ArrayList;
 
 public class SearchBar {
 
-    private static SearchBar instance = null;
-    private SearchBar() {}
+    private Filters filter;
 
-    public static SearchBar getInstance() {
-        if (instance == null) {
-            instance = new SearchBar();
-        }
-        return instance;
+    @Getter
+    private final ArrayList<SongInput> song = new ArrayList<>();
+
+    @Getter
+    private final ArrayList<PodcastInput> podcast = new ArrayList<>();
+
+    @Getter
+    private SongInput songLoaded;
+
+    @Getter
+    private PodcastInput podcastLoaded;
+    public SearchBar() {}
+
+    public void clearSearch() {
+        song.clear();
+        podcast.clear();
+        songLoaded = null;
     }
 
+    public int select(int number) {
+        if (song != null) {
+            if (number <= song.size()) {
+                songLoaded = song.get(number-1);
+                return 0;
+            }
+            return 1;
+        } else if (podcast != null) {
+            if (number <= podcast.size()) {
+                podcastLoaded = podcast.get((number-1));
+                return 0;
+            }
+            return 1;
+        }
+        return 2;
+    }
 
-    public ArrayList<SongInput> SearchSongByName(String name) {
+    public void search(Filters filter, String type) {
+        this.filter = filter;
+        switch (type) {
+            case "song":
+                searchSong();
+                break;
+            case "playlist":
+                break;
+            case "podcast":
+                searchPodcast();
+                break;
+        }
+    }
+
+    private void searchSong() {
+        if (filter.getAlbum() != null) {
+            song.addAll(SearchSongByAlbum(filter.getAlbum()));
+        }
+        else if (filter.getArtist() != null) {
+            song.addAll(SearchSongByArtist(filter.getArtist()));
+        }
+        else if (filter.getName() != null) {
+            song.addAll(SearchSongByName(filter.getName()));
+        }
+        else if (filter.getGenre() != null) {
+            song.addAll(SearchSongByGenre(filter.getGenre()));
+        }
+        else if (filter.getLyrics() != null) {
+            song.addAll(SearchSongByLyrics(filter.getLyrics()));
+        }
+        else if (filter.getReleaseYear() != null) {
+            song.addAll(SearchSongByYear(filter.getReleaseYear()));
+        }
+        else if (filter.getTags() != null) {
+            song.addAll(SearchSongByTags(filter.getTags()));
+        }
+
+        while (song.size() > 5) {
+            song.remove(song.size()-1);
+        }
+    }
+
+    private void searchPodcast() {
+        if (filter.getName() != null) {
+            podcast.addAll(SearchPodcastByName(filter.getName()));
+        }
+        if (filter.getOwner() != null) {
+            podcast.addAll(SearchPodcastByOwner(filter.getOwner()));
+        }
+
+        while (podcast.size() > 5) {
+            podcast.remove(podcast.size()-1);
+        }
+    }
+    private ArrayList<SongInput> SearchSongByName(String name) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
@@ -30,7 +112,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<SongInput> SearchSongByAlbum(String album) {
+    private ArrayList<SongInput> SearchSongByAlbum(String album) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
@@ -41,7 +123,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<SongInput> SearchSongByTags(ArrayList<String> tags) {
+    private ArrayList<SongInput> SearchSongByTags(ArrayList<String> tags) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
@@ -59,7 +141,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<SongInput> SearchSongByLyrics(String lyric) {
+    private ArrayList<SongInput> SearchSongByLyrics(String lyric) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
@@ -70,7 +152,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<SongInput> SearchSongByGenre(String genre) {
+    private ArrayList<SongInput> SearchSongByGenre(String genre) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
@@ -81,7 +163,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<SongInput> SearchSongByYear(String year) {
+    private ArrayList<SongInput> SearchSongByYear(String year) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
 
@@ -99,7 +181,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<SongInput> SearchSongByArtist(String artist) {
+    private ArrayList<SongInput> SearchSongByArtist(String artist) {
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
@@ -110,7 +192,7 @@ public class SearchBar {
         return songs;
     }
 
-    public ArrayList<PodcastInput> SearchPodcastByName(String name) {
+    private ArrayList<PodcastInput> SearchPodcastByName(String name) {
 
         ArrayList<PodcastInput> podcasts = new ArrayList<>();
         for (PodcastInput podcast : LibraryInput.getInstance().getPodcasts()) {
@@ -121,7 +203,7 @@ public class SearchBar {
         return podcasts;
     }
 
-    public ArrayList<PodcastInput> SearchPodcastByOwner(String owner) {
+    private ArrayList<PodcastInput> SearchPodcastByOwner(String owner) {
 
         ArrayList<PodcastInput> podcasts = new ArrayList<>();
         for (PodcastInput podcast : LibraryInput.getInstance().getPodcasts()) {
