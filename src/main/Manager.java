@@ -1,5 +1,6 @@
 package main;
 
+import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
@@ -66,7 +67,7 @@ public class Manager {
             user.getMusicplayer().updatePlayer();
         }
     }
-    public static void addPlaylist(String username, String name) {
+    public static void addPlaylist(String username, String name, int time) {
         for (Playlist p : playlists) {
             if (p.getName().equals(name)) {
                 Manager.partialResult.put("message", "A playlist with the same name already exists.");
@@ -74,7 +75,7 @@ public class Manager {
             }
         }
 
-        Playlist p = new Playlist(username, name);
+        Playlist p = new Playlist(username, name, time);
         playlists.add(p);
         users.get(username).addPlaylist(p);
         Manager.partialResult.put("message", "Playlist created successfully.");
@@ -91,18 +92,18 @@ public class Manager {
 //            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
 //            return;
 //        }
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
+            return;
+        }
+
         if (!Manager.getUser(owner).getType().equals("song")) {
             Manager.partialResult.put("message", "The loaded source is not a song.");
             return;
         }
 
-        if (playlists.size() < (id-1)) {
+        if (getUser(owner).getPlaylists().size() < (id-1)) {
             Manager.partialResult.put("message", "The specified playlist does not exist.");
-            return;
-        }
-
-        if (searchBar(owner).getSongLoaded() == null) {
-            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
             return;
         }
 
@@ -111,11 +112,7 @@ public class Manager {
 //            return;
 //        }
 
-        Playlist playlist = playlists.get(id-1);
-        if (playlist == null) {
-            Manager.partialResult.put("message", "Successfully added to playlist.");
-            return;
-        }
+        Playlist playlist = getUser(owner).getPlaylists().get(id-1);
 
         SongInput song = Manager.musicPlayer(owner).getSong();
 
@@ -126,7 +123,68 @@ public class Manager {
             playlist.removeSong(song);
             Manager.partialResult.put("message", "Successfully removed from playlist.");
         }
+
+        for (int i = 0; i < playlists.size(); i++) {
+            if (playlists.get(i).getName().equals(playlist.getName())) {
+                playlists.set(i, playlist);
+            }
+        }
     }
+
+    public static void switchVisibility(String username, int id) {
+
+        if (getUser(username).getPlaylists().size() < (id-1)) {
+            Manager.partialResult.put("message", "The specified playlist ID is too high.");
+            return;
+        }
+
+        Playlist pl = getUser(username).getPlaylists().get(id-1);
+
+        pl.changeVisibility();
+
+        Manager.partialResult.put("message", "Visibility status updated successfully to " + pl.getVisibility() + ".");
+
+        for (int i = 0; i < playlists.size(); i++) {
+            if (playlists.get(i).getName().equals(pl.getName())) {
+                playlists.set(i, pl);
+            }
+        }
+    }
+
+    public static void follow(String owner) {
+
+        if (!Manager.getSource(owner).isSourceSelected()) {
+            Manager.partialResult.put("message", "Please select a source before following or unfollowing.");
+            return;
+        }
+
+        if (!Manager.getUser(owner).getType().equals("playlist")) {
+            Manager.partialResult.put("message", "The selected source is not a playlist.");
+            return;
+        }
+
+        Playlist pl = Manager.searchBar(owner).getPlaylistLoaded();
+
+        if (pl.getOwner().equals(owner)) {
+            Manager.partialResult.put("message", "You cannot follow or unfollow your own playlist.");
+            return;
+        }
+
+        if (pl.getFollowers().contains(owner)) {
+            pl.removeFollower(owner);
+            Manager.partialResult.put("message", "Playlist unfollowed successfully.");
+        } else {
+            pl.addFollower(owner);
+            Manager.partialResult.put("message", "Playlist followed successfully.");
+        }
+
+        for (int i = 0; i < playlists.size(); i++) {
+            if (playlists.get(i).getName().equals(pl.getName())) {
+                playlists.set(i, pl);
+            }
+        }
+    }
+
 
     public static void like(String username) {
 
@@ -154,24 +212,31 @@ public class Manager {
     }
 
     public static void showPlaylists(String username) {
-        Playlist play = Manager.searchBar(username).getPlaylistLoaded();
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode rez = objectMapper.createArrayNode();
-        ObjectNode status = objectMapper.createObjectNode();
-        if (play != null) {
 
-            status.put("name", play.getName());
-            ArrayNode node = objectMapper.createArrayNode();
+        for (Playlist play : getUser(username).getPlaylists()) {
+            ObjectNode status = objectMapper.createObjectNode();
+            if (play != null) {
+
+                status.put("name", play.getName());
+                ArrayNode node = objectMapper.createArrayNode();
 
 
-            for (SongInput sg : play.getSongs())
-                node.add(sg.getName());
+                for (SongInput sg : play.getSongs())
+                    node.add(sg.getName());
 
-            status.set("songs", node);
-            status.put("visibility", play.getVisibility());
-            status.put("followers", play.getFollowers());
+                status.set("songs", node);
+//                if (play.isVisibility()) {
+//                    status.put("visibility", "public");
+//                } else {
+//                    status.put("visibility", "private");
+//                }
+                status.put("visibility", play.getVisibility());
+                status.put("followers", play.getFollowers().size());
+            }
+            rez.add(status);
         }
-        rez.add(status);
         Manager.partialResult.set("result", rez);
     }
 
@@ -180,11 +245,84 @@ public class Manager {
         ArrayNode songs = objectMapper.createArrayNode();
 
         for (SongInput sg : getUser(username).getLikedSongs()) {
-            System.out.println(sg.getName());
             songs.add(sg.getName());
         }
 
         Manager.partialResult.set("result", songs);
+    }
+
+    public static void getTop5Playlists() {
+        ArrayList<Playlist> playlist = new ArrayList<>();
+
+        for (Playlist play : playlists) {
+            if (play.getVisibility().equals("public"))
+                playlist.add(play);
+        }
+
+        for (int i = 0; i < playlist.size(); i++) {
+            for (int j = 0; j < playlist.size(); j++) {
+                if (playlist.get(i).numberOfFollowers() > playlist.get(j).numberOfFollowers()
+                        || playlist.get(i).getTime() < playlist.get(j).getTime()) {
+                    Playlist temp = playlist.get(i);
+                    playlist.set(i, playlist.get(j));
+                    playlist.set(j, temp);
+                }
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode node = objectMapper.createArrayNode();
+
+        for (int i = 0; i < playlist.size() && i < 5; i++) {
+//            System.out.print(pl.getName());
+//            System.out.print(pl.numberOfFollowers());
+//            System.out.println(pl.getTime());
+            node.add(playlist.get(i).getName());
+        }
+//        System.out.println("-----------");
+
+        Manager.partialResult.set("result", node);
+
+    }
+
+    public static void getTop5Songs() {
+
+        ArrayList<SongInput> tempSongs = LibraryInput.getInstance().getSongs();
+        int[] freqVec = new int[tempSongs.size()];
+
+        for (UserInput user : LibraryInput.getInstance().getUsers()) {
+            for (SongInput song : user.getLikedSongs()) {
+                freqVec[tempSongs.indexOf(song)]++;
+            }
+        }
+
+        for (int i = 0; i < tempSongs.size() - 1; i++) {
+            for (int j = 0; j < tempSongs.size() - 1; j++) {
+                if (freqVec[i] > freqVec[j+1]) {
+                    int temp = freqVec[i];
+                    freqVec[i] = freqVec[j];
+                    freqVec[j] = temp;
+
+                    SongInput sg = tempSongs.get(i);
+                    tempSongs.set(i, tempSongs.get(j));
+                    tempSongs.set(j, sg);
+
+                }
+            }
+        }
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode node = objectMapper.createArrayNode();
+
+        for (SongInput sg : tempSongs.subList(0, 5)) {
+            System.out.print(sg.getName());
+            System.out.println(freqVec[tempSongs.indexOf(sg)]);
+            node.add(sg.getName());
+
+        }
+        System.out.println("---------------");
+        Manager.partialResult.set("results", node);
+
     }
 
     public static void checkSource(String username, String command) {

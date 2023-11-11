@@ -70,6 +70,105 @@ public class PodcastPlayer extends Player {
         Manager.partialResult.put("message", "Repeat mode changed to " + repeat.toLowerCase() + ".");
     }
 
+    public void shuffle(int seed) {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
+            return;
+        }
+        Manager.partialResult.put("message", "The loaded source is not a playlist.");
+    }
+
+    public void next() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before skipping to the next track.");
+            return;
+        }
+
+        boolean end = podcastPosition >= podcast.getEpisodes().size();
+        if (!repeat.equals("No Repeat")) {
+            if (end) {
+                podcastPosition = 0;
+            } else {
+                podcastPosition++;
+            }
+
+            currentEpisode.setDuration(currentEpisode.getMaxDuration());
+            currentEpisode = podcast.getEpisodes().get(podcastPosition);
+            currentEpisode.setDuration(currentEpisode.getMaxDuration());
+            Manager.partialResult.put("message",
+                    "Skipped to next track successfully. The current track is " + currentEpisode.getName() + ".");
+            return;
+        }
+
+        if (end) {
+            currentEpisode = null;
+            return;
+        }
+
+        podcastPosition++;
+        currentEpisode.setDuration(currentEpisode.getMaxDuration());
+        currentEpisode = podcast.getEpisodes().get(podcastPosition);
+        currentEpisode.setDuration(currentEpisode.getMaxDuration());
+        Manager.partialResult.put("message",
+                "Skipped to next track successfully. The current track is " + currentEpisode.getName() + ".");
+    }
+
+    public void prev() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before returning to the previous track.");
+            return;
+        }
+
+        if (!currentEpisode.getDuration().equals(currentEpisode.getMaxDuration())) {
+            currentEpisode.setDuration(currentEpisode.getMaxDuration());
+            Manager.partialResult.put("message",
+                    "Returned to previous track successfully. The current track is " + currentEpisode.getName() + ".");
+            return;
+        }
+
+        if (podcastPosition <= 0) {
+            podcastPosition++;
+        }
+
+        podcastPosition--;
+        currentEpisode.setDuration(currentEpisode.getMaxDuration());
+        currentEpisode = podcast.getEpisodes().get(podcastPosition);
+        currentEpisode.setDuration(currentEpisode.getMaxDuration());
+        Manager.partialResult.put("message",
+                "Returned to previous track successfully. The current track is " + currentEpisode.getName() + ".");
+    }
+
+    public void forward() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before attempting to forward.");
+            return;
+        }
+        int time = currentEpisode.getDuration() - 90;
+
+        if (time <= 0) {
+            next();
+        }
+
+        currentEpisode.setDuration(time);
+        Manager.partialResult.put("message", "Skipped forward successfully.");
+    }
+
+    public void backward() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before attempting to backward.");
+            return;
+        }
+        int time = currentEpisode.getDuration() + 90;
+
+        currentEpisode.setDuration(time);
+
+        if (time >= currentEpisode.getMaxDuration()) {
+            currentEpisode.setDuration(currentEpisode.getMaxDuration());
+        }
+
+        Manager.partialResult.put("message", "Rewound successfully.");
+    }
+
     public void status() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode status = objectMapper.createObjectNode();

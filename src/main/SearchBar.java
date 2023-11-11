@@ -26,7 +26,7 @@ public class SearchBar {
 
     public void clearSearch() {}
 
-    public void select(int number) {}
+    public void select(int number, String username) {}
 
     public void search(Filters filter) {}
 

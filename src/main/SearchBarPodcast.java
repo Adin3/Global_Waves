@@ -23,15 +23,20 @@ public class SearchBarPodcast extends SearchBar {
     @Getter
     private Playlist playlistLoaded;
 
-    public SearchBarPodcast() {}
+    @Getter
+    private final String owner;
+
+    public SearchBarPodcast(String owner) {
+        this.owner = owner;
+    }
 
     public void clearSearch() {
         sourceSearched = false;
         sourceSelected = false;
     }
 
-    public void select(int number) {
-        if (!podcast.isEmpty()) {
+    public void select(int number, String username) {
+        if (!podcast.isEmpty() && Manager.getSource(username).isSourceSearched()) {
             if (number <= podcast.size()) {
                 podcastLoaded = podcast.get((number-1));
                 sourceSelected = true;

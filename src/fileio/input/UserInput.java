@@ -19,6 +19,7 @@ public final class UserInput {
     @Getter
     private String type;
 
+    @Getter
     private final ArrayList<Playlist> playlists = new ArrayList<>();
 
     @Getter
@@ -88,13 +89,13 @@ public final class UserInput {
         this.type = type;
         switch (type) {
             case "song":
-                searchBar = new SearchBarSong();
+                searchBar = new SearchBarSong(username);
                 break;
             case "podcast":
-                searchBar = new SearchBarPodcast();
+                searchBar = new SearchBarPodcast(username);
                 break;
             case "playlist":
-                searchBar = new SearchBarPlaylist();
+                searchBar = new SearchBarPlaylist(username);
                 break;
         }
     }

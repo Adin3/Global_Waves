@@ -25,4 +25,6 @@ public class Command {
     private String playlistName;
 
     private int playlistId;
+
+    private int seed;
 }

@@ -60,7 +60,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a <= 8) {
+            if (isCreated && a <= 15) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -112,7 +112,8 @@ public final class Main {
 
             Manager.partialResult = objectMapper.createObjectNode();
             Manager.partialResult.put("command", command.getCommand());
-            Manager.partialResult.put("user", command.getUsername());
+            if (username != null)
+                Manager.partialResult.put("user", command.getUsername());
             Manager.partialResult.put("timestamp", command.getTimestamp());
 
             switch (command.getCommand()) {
@@ -130,7 +131,7 @@ public final class Main {
 
                     break;
                 case "select":
-                    Manager.searchBar(username).select(command.getItemNumber());
+                    Manager.searchBar(username).select(command.getItemNumber(), username);
 
                     break;
                 case "load":
@@ -149,7 +150,7 @@ public final class Main {
 
                     break;
                 case "createPlaylist":
-                    Manager.addPlaylist(username, command.getPlaylistName());
+                    Manager.addPlaylist(username, command.getPlaylistName(), command.getTimestamp());
 
                     break;
                 case "addRemoveInPlaylist":
@@ -167,8 +168,36 @@ public final class Main {
                 case "repeat":
                     Manager.musicPlayer(username).repeat();
                     break;
+                case "shuffle":
+                    Manager.musicPlayer(username).shuffle(command.getSeed());
+                    break;
+                case "next":
+                    Manager.musicPlayer(username).next();
+                    break;
+                case "prev":
+                    Manager.musicPlayer(username).prev();
+                    break;
+                case "forward":
+                    Manager.musicPlayer(username).forward();
+                    break;
+                case "backward":
+                    Manager.musicPlayer(username).backward();
+                    break;
+                case "follow":
+                    Manager.follow(username);
+                    break;
+                case "switchVisibility":
+                    Manager.switchVisibility(username, command.getPlaylistId());
+                    break;
+                case "getTop5Playlists":
+                    Manager.getTop5Playlists();
+                    break;
+                case "getTop5Songs":
+                    Manager.getTop5Songs();
+                    break;
             }
-            Manager.checkSource(username, command.getCommand());
+            if (username != null)
+                Manager.checkSource(username, command.getCommand());
             Manager.result.add(Manager.partialResult);
         }
 

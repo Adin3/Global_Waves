@@ -86,6 +86,80 @@ public class MusicPlayer extends Player{
         Manager.partialResult.put("message", "Repeat mode changed to " + repeat.toLowerCase() + ".");
     }
 
+    public void shuffle(int seed) {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
+            return;
+        }
+        Manager.partialResult.put("message", "The loaded source is not a playlist.");
+    }
+
+    public void next() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before skipping to the next track.");
+            return;
+        }
+
+        if (repeat.equals("No Repeat")) {
+            song = null;
+            return;
+        }
+
+        if (repeat.equals("Repeat Once")) {
+            repeat = "No Repeat";
+            repeatState = 0;
+        }
+
+        song.setDuration(song.getMaxDuration());
+        Manager.partialResult.put("message",
+                "Skipped to next track successfully. The current track is " + song.getName() + ".");
+    }
+
+    public void prev() {
+
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before returning to the previous track.");
+            return;
+        }
+
+        if (!song.getDuration().equals(song.getMaxDuration())) {
+            song.setDuration(song.getMaxDuration());
+            Manager.partialResult.put("message",
+                    "Returned to previous track successfully. The current track is " + song.getName() + ".");
+            return;
+        }
+
+        if (repeat.equals("No Repeat")) {
+            song = null;
+            return;
+        }
+
+        if (repeat.equals("Repeat Once")) {
+            repeat = "No Repeat";
+            repeatState = 0;
+        }
+
+        song.setDuration(song.getMaxDuration());
+        Manager.partialResult.put("message",
+                "Returned to previous track successfully. The current track is " + song.getName() + ".");
+    }
+
+    public void forward() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before attempting to forward.");
+            return;
+        }
+        Manager.partialResult.put("message", "The loaded source is not a podcast.");
+    }
+
+    public void backward() {
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before attempting to backward.");
+            return;
+        }
+        Manager.partialResult.put("message", "The loaded source is not a podcast.");
+    }
+
     public void playPause() {
         Manager.musicPlayer(owner).pauseButton();
 

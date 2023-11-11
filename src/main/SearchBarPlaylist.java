@@ -8,6 +8,7 @@ import fileio.input.SongInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SearchBarPlaylist extends SearchBar{
     @Getter
@@ -18,15 +19,20 @@ public class SearchBarPlaylist extends SearchBar{
 
     @Getter
     private SongInput songLoaded;
-    public SearchBarPlaylist() {}
+
+    @Getter
+    private final String owner;
+    public SearchBarPlaylist(String owner) {
+        this.owner = owner;
+    }
 
     public void clearSearch() {
         sourceSearched = false;
         sourceSelected = false;
     }
 
-    public void select(int number) {
-        if (!playlists.isEmpty()) {
+    public void select(int number, String username) {
+        if (Manager.getSource(username).isSourceSearched()) {
             if (number <= playlists.size()) {
                 playlistLoaded = playlists.get((number-1));
                 sourceSelected = true;
@@ -35,6 +41,8 @@ public class SearchBarPlaylist extends SearchBar{
                 return;
             }
             Manager.partialResult.put("message", "The selected ID is too high.");
+            Manager.getSource(owner).setSourceSearched(false);
+            Manager.getSource(owner).setSourceSelected(false);
             return;
         }
         Manager.partialResult.put("message", "Please conduct a search before making a selection.");
@@ -62,6 +70,13 @@ public class SearchBarPlaylist extends SearchBar{
 
         if (filter.getOwner() != null)
             playlists.addAll(SearchPlaylistByOwner(filter.getOwner()));
+
+        for(int i = 0; i < playlists.size(); i++) {
+            if(playlists.get(i).getVisibility().equals("private") && !playlists.get(i).getOwner().equals(owner)) {
+                playlists.remove(i);
+                i--;
+            }
+        }
 
         while (playlists.size() > 5) {
             playlists.remove(playlists.size()-1);

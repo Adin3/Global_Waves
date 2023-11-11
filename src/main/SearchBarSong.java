@@ -19,7 +19,12 @@ public class SearchBarSong extends SearchBar{
     @Getter
     private Playlist playlistLoaded;
 
-    public SearchBarSong() {}
+    @Getter
+    private final String owner;
+
+    public SearchBarSong(String owner) {
+        this.owner = owner;
+    }
 
     public void clearSearch() {
         song.clear();
@@ -28,8 +33,8 @@ public class SearchBarSong extends SearchBar{
         sourceSearched = false;
     }
 
-    public void select(int number) {
-        if (song.isEmpty()) {
+    public void select(int number, String username) {
+        if (song.isEmpty() || !Manager.getSource(username).isSourceSearched()) {
             Manager.partialResult.put("message", "Please conduct a search before making a selection.");
         } else {
             if (number <= song.size()) {
@@ -62,31 +67,24 @@ public class SearchBarSong extends SearchBar{
     public void search(Filters filter) {
 
         if (filter.getAlbum() != null) {
-            System.out.println("1");
             song.addAll(SearchSongByAlbum(filter.getAlbum()));
         }
         else if (filter.getArtist() != null) {
-            System.out.println("2");
             song.addAll(SearchSongByArtist(filter.getArtist()));
         }
         else if (filter.getName() != null) {
-            System.out.println("3");
             song.addAll(SearchSongByName(filter.getName()));
         }
         else if (filter.getGenre() != null) {
-            System.out.println("4");
             song.addAll(SearchSongByGenre(filter.getGenre()));
         }
         else if (filter.getLyrics() != null) {
-            System.out.println("5");
             song.addAll(SearchSongByLyrics(filter.getLyrics()));
         }
         else if (filter.getReleaseYear() != null) {
-            System.out.println("6");
             song.addAll(SearchSongByYear(filter.getReleaseYear()));
         }
         else if (filter.getTags() != null) {
-            System.out.println("7");
             song.addAll(SearchSongByTags(filter.getTags()));
         }
 
@@ -149,7 +147,6 @@ public class SearchBarSong extends SearchBar{
 
         ArrayList<SongInput> songs = new ArrayList<>();
         for (SongInput song : LibraryInput.getInstance().getSongs()) {
-            System.out.println(song.getName());
             if (song.getGenre().equalsIgnoreCase(genre)) {
                 songs.add(song);
             }

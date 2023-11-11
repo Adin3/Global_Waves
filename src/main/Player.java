@@ -37,6 +37,26 @@ public class Player {
         Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
     }
 
+    public void shuffle(int seed) {
+        Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
+    }
+
+    public void next() {
+        Manager.partialResult.put("message", "Please load a source before skipping to the next track.");
+    }
+
+    public void prev() {
+        Manager.partialResult.put("message", "Please load a source before returning to the previous track.");
+    }
+
+    public void forward() {
+        Manager.partialResult.put("message", "Please load a source before skipping forward.");
+    }
+
+    public void backward() {
+        Manager.partialResult.put("message", "Please select a source before rewinding.");
+    }
+
     public void pauseButton() {}
 
     public void shuffleButton() {}
