@@ -60,7 +60,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a <= 6) {
+            if (isCreated && a <= 8) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -87,6 +87,9 @@ public final class Main {
 
         for (UserInput user : lib.getUsers()) {
             Manager.addUser(user);
+        }
+        for (UserInput user : lib.getUsers()) {
+            Manager.addSource(user.getUsername());
         }
 
         Manager.result = objectMapper.createArrayNode();
@@ -131,7 +134,8 @@ public final class Main {
 
                     break;
                 case "load":
-                    Manager.getUser(username).setMusicPlayer();
+                    if (!Manager.getSource(username).isSourceLoaded())
+                        Manager.getUser(username).setMusicPlayer();
 
                     Manager.musicPlayer(username).load();
 
@@ -160,7 +164,11 @@ public final class Main {
                 case "showPreferredSongs":
                     Manager.showPreferredSongs(username);
                     break;
+                case "repeat":
+                    Manager.musicPlayer(username).repeat();
+                    break;
             }
+            Manager.checkSource(username, command.getCommand());
             Manager.result.add(Manager.partialResult);
         }
 

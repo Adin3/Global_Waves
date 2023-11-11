@@ -49,13 +49,12 @@ public class SearchBarPodcast extends SearchBar {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
-        if (!podcast.isEmpty()) {
-            Manager.partialResult.put("message", "Search returned " +
-                    podcast.size() + " results");
+        int size = podcast.size();
 
-            for (PodcastInput sg : podcast)
-                node.add(sg.getName());
-        }
+        Manager.partialResult.put("message", "Search returned " +
+                size + " results");
+        for (PodcastInput sg : podcast)
+            node.add(sg.getName());
 
         Manager.partialResult.set("results", node);
         sourceSearched = true;

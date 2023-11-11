@@ -21,6 +21,8 @@ public class PodcastPlayer extends Player {
 
     private boolean shuffled = false;
 
+    private boolean repeatOnce = false;
+
     private int savedTime;
 
     private int podcastPosition;
@@ -36,12 +38,14 @@ public class PodcastPlayer extends Player {
     }
 
     public void load() {
-        this.podcast = Manager.searchBar(owner).getPodcastLoaded();
+        PodcastInput temp = Manager.searchBar(owner).getPodcastLoaded();
 
-        if (this.podcast == null && !Manager.searchBar(owner).sourceSelected) {
+        if (temp == null || !Manager.getSource(owner).isSourceSelected()) {
             Manager.partialResult.put("message", "Please select a source before attempting to load.");
             return;
         }
+
+        this.podcast = temp;
 
         if (this.podcast.getEpisodes().isEmpty()) {
             Manager.partialResult.put("message", "You can't load an empty audio collection!");
@@ -52,6 +56,18 @@ public class PodcastPlayer extends Player {
         currentEpisode = podcast.getEpisodes().get(0);
         currentEpisode.setMaxDuration(currentEpisode.getDuration());
         podcastPosition = 0;
+    }
+
+    public void repeat() {
+
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
+            return;
+        }
+
+        repeatButton();
+
+        Manager.partialResult.put("message", "Repeat mode changed to " + repeat.toLowerCase() + ".");
     }
 
     public void status() {
@@ -103,10 +119,20 @@ public class PodcastPlayer extends Player {
     }
 
     public void repeatButton() {
-        if (repeat.startsWith("No")) {
-            repeat = "Repeat";
-        } else {
-            repeat = "No Repeat";
+        switch (repeatState) {
+            case 0:
+                repeat = "Repeat Once";
+                repeatOnce = true;
+                repeatState = 1;
+                break;
+            case 1:
+                repeat = "Repeat Infinite";
+                repeatState = 2;
+                break;
+            case 2:
+                repeat = "No Repeat";
+                repeatState = 0;
+                break;
         }
     }
 
@@ -128,12 +154,23 @@ public class PodcastPlayer extends Player {
 
         if (currentEpisode.getDuration() == 0) {
             while (savedTime != 0) {
-                if (podcastPosition >= podcast.getEpisodes().size()) {
+                boolean end = podcastPosition >= podcast.getEpisodes().size();
+                if (end && repeat.equals("No Repeat")) {
                     currentEpisode = null;
                     paused = true;
                     shuffled = false;
                     repeat = "No Repeat";
                     break;
+                }
+
+                if (end && repeat.equals("Repeat Once")) {
+                    repeat = "No Repeat";
+                    repeatState = 0;
+                    podcastPosition = 0;
+                }
+
+                if (end && repeat.equals("Repeat Infinite")) {
+                    podcastPosition = 0;
                 }
 
                 currentEpisode.setDuration(currentEpisode.getMaxDuration());

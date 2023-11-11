@@ -11,12 +11,16 @@ public class Player {
 
     private String repeat = "No Repeat";
 
+    protected int repeatState = 0;
+
     private boolean paused = false;
 
     private boolean shuffled = false;
 
     public void clearPlayer() {};
-    public void load() {}
+    public void load() {
+        Manager.partialResult.put("message", "Please select a source before attempting to load.");
+    }
 
     public void status() {}
     public void playPause() {}
@@ -29,8 +33,8 @@ public class Player {
         return false;
     }
 
-    public String repeats() {
-        return null;
+    public void repeat() {
+        Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
     }
 
     public void pauseButton() {}

@@ -25,6 +25,10 @@ public class MusicPlayer extends Player{
 
     private boolean shuffled = false;
 
+    private int savedTime = 0;
+
+    private boolean repeatOnce = false;
+
     public MusicPlayer(String owner) {
         this.owner = owner;
     }
@@ -37,7 +41,7 @@ public class MusicPlayer extends Player{
 
     public void load() {
 
-        if (!Manager.searchBar(owner).sourceSelected) {
+        if (!Manager.getSource(owner).isSourceSelected()) {
             Manager.partialResult.put("message", "Please select a source before attempting to load.");
             return;
         }
@@ -70,6 +74,18 @@ public class MusicPlayer extends Player{
         Manager.partialResult.set("stats", status);
     }
 
+    public void repeat() {
+
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
+            return;
+        }
+
+        repeatButton();
+
+        Manager.partialResult.put("message", "Repeat mode changed to " + repeat.toLowerCase() + ".");
+    }
+
     public void playPause() {
         Manager.musicPlayer(owner).pauseButton();
 
@@ -100,10 +116,20 @@ public class MusicPlayer extends Player{
     }
 
     public void repeatButton() {
-        if (repeat.startsWith("No")) {
-            repeat = "Repeat";
-        } else {
-            repeat = "No Repeat";
+        switch (repeatState) {
+            case 0:
+                repeat = "Repeat Once";
+                repeatOnce = true;
+                repeatState = 1;
+                break;
+            case 1:
+                repeat = "Repeat Infinite";
+                repeatState = 2;
+                break;
+            case 2:
+                repeat = "No Repeat";
+                repeatState = 0;
+                break;
         }
     }
 
@@ -111,12 +137,30 @@ public class MusicPlayer extends Player{
         if (song == null) return;
 
         int time = song.getDuration() - deltaTime;
-        if (time < 0) time = 0;
+        savedTime = 0;
+        if (time < 0) {
+            savedTime = -time;
+            time = 0;
+        }
         if (!paused)
             song.setDuration(time);
     }
     public void updatePlayer() {
         if (song == null) return;
+
+        while (savedTime != 0 && !repeat.equals("No Repeat")) {
+            if (repeat.equals("Repeat Once")) {
+                repeat = "No Repeat";
+                repeatState = 0;
+                song.setDuration(song.getMaxDuration());
+            }
+
+            if (repeat.equals("Repeat Infinite")) {
+                song.setDuration(song.getMaxDuration());
+            }
+
+            updateDuration(savedTime);
+        }
 
         if (song.getDuration() == 0) {
             song = null;

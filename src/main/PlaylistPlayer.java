@@ -34,12 +34,14 @@ public class PlaylistPlayer extends Player{
     }
 
     public void load() {
-        this.playlist = Manager.searchBar(owner).getPlaylistLoaded();
+        Playlist temp = Manager.searchBar(owner).getPlaylistLoaded();
 
-        if (this.playlist == null && !Manager.searchBar(owner).isSourceSelected()) {
+        if (temp == null || !Manager.getSource(owner).isSourceSelected()) {
             Manager.partialResult.put("message", "Please select a source before attempting to load.");
             return;
         }
+
+        this.playlist = temp;
 
         if (this.playlist.getSongs().isEmpty()) {
             Manager.partialResult.put("message", "You can't load an empty audio collection!");
@@ -50,6 +52,18 @@ public class PlaylistPlayer extends Player{
         currentSong = playlist.getSong(0);
         currentSong.setDuration(currentSong.getMaxDuration());
         playlistPosition = 0;
+    }
+
+    public void repeat() {
+
+        if (!Manager.getSource(owner).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
+            return;
+        }
+
+        repeatButton();
+
+        Manager.partialResult.put("message", "Repeat mode changed to " + repeat.toLowerCase() + ".");
     }
 
     public void status() {
@@ -101,10 +115,19 @@ public class PlaylistPlayer extends Player{
     }
 
     public void repeatButton() {
-        if (repeat.startsWith("No")) {
-            repeat = "Repeat";
-        } else {
-            repeat = "No Repeat";
+        switch (repeatState) {
+            case 0:
+                repeat = "Repeat All";
+                repeatState = 1;
+                break;
+            case 1:
+                repeat = "Repeat Current Song";
+                repeatState = 2;
+                break;
+            case 2:
+                repeat = "No Repeat";
+                repeatState = 0;
+                break;
         }
     }
 
@@ -126,12 +149,18 @@ public class PlaylistPlayer extends Player{
 
         if (currentSong.getDuration() == 0) {
             while (savedTime != 0) {
-                if (playlistPosition >= playlist.getSongs().size()) {
+                if (playlistPosition >= playlist.getSongs().size() && repeat.equals("No Repeat")) {
                     currentSong = null;
                     paused = true;
                     shuffled = false;
                     repeat = "No Repeat";
                     break;
+                }
+
+                if (playlistPosition >= playlist.getSongs().size() && repeat.equals("Repeat All")) {
+                    playlistPosition = 0;
+                } else if (repeat.equals("Repeat Current Song")) {
+                    playlistPosition--;
                 }
 
                 currentSong.setDuration(currentSong.getMaxDuration());

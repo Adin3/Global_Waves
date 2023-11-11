@@ -44,13 +44,13 @@ public class SearchBarPlaylist extends SearchBar{
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
-        if (!playlists.isEmpty()) {
-            Manager.partialResult.put("message", "Search returned " +
-                    playlists.size() + " results");
+        int size = playlists.size();
 
-            for (Playlist sg : playlists)
-                node.add(sg.getName());
-        }
+        Manager.partialResult.put("message", "Search returned " +
+                size + " results");
+
+        for (Playlist sg : playlists)
+            node.add(sg.getName());
 
         Manager.partialResult.set("results", node);
         sourceSearched = true;

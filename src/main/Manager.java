@@ -25,6 +25,7 @@ public class Manager {
 
     public static ArrayNode result;
     public static ObjectNode partialResult;
+    private static final Map<String, Source> sources = new HashMap<>();
 
     private Manager() {}
 
@@ -49,6 +50,14 @@ public class Manager {
 
     public static Player musicPlayer(String username) {
         return users.get(username).getMusicplayer();
+    }
+
+    public static void addSource(String username) {
+        sources.put(username, new Source());
+    }
+
+    public static Source getSource(String username) {
+        return sources.get(username);
     }
 
     public static void updatePlayers(int deltaTime) {
@@ -123,15 +132,16 @@ public class Manager {
 
         SongInput song = Manager.searchBar(username).getSongLoaded();
 
-        if (!Manager.searchBar(username).isSourceSelected()) {
+        if (!Manager.getUser(username).getType().equals("song") && sources.get(username).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Loaded source is not a song.");
+            return;
+        }
+
+        if (!sources.get(username).isSourceLoaded()) {
             Manager.partialResult.put("message", "Please load a source before liking or unliking.");
             return;
         }
 
-        if (!Manager.getUser(username).getType().equals("song")) {
-            Manager.partialResult.put("message", "Loaded source is not a song.");
-            return;
-        }
 
 
         if (!Manager.getUser(username).getLikedSongs().contains(song)) {
@@ -176,4 +186,28 @@ public class Manager {
 
         Manager.partialResult.set("result", songs);
     }
+
+    public static void checkSource(String username, String command) {
+
+        if (command.equals("search")) {
+            sources.get(username).setSourceSearched(true);
+            sources.get(username).setSourceLoaded(false);
+        } else if (sources.get(username).isSourceSearched() && command.equals("select")) {
+            sources.get(username).setSourceSelected(true);
+            sources.get(username).setSourceSearched(false);
+        } else if (sources.get(username).isSourceSelected() && command.equals("load")) {
+            sources.get(username).setSourceLoaded(true);
+            sources.get(username).setSourceSelected(false);
+        }
+    }
+}
+
+@Getter @Setter
+class Source {
+
+    private boolean sourceSearched = false;
+
+    private boolean sourceSelected = false;
+
+    private boolean sourceLoaded = false;
 }
