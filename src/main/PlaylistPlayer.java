@@ -1,23 +1,17 @@
 package main;
 
-import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.SongInput;
-import fileio.input.UserInput;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-public class MusicPlayer extends Player{
-
-    public MusicPlayer() {}
+public class PlaylistPlayer extends Player{
+    public PlaylistPlayer() {}
 
     @Getter
-    private SongInput song;
+    private Playlist playlist;
+
+    private SongInput currentSong;
 
     private String repeat = "No Repeat";
 
@@ -25,44 +19,51 @@ public class MusicPlayer extends Player{
 
     private boolean shuffled = false;
 
-    public MusicPlayer(String owner) {
+    private int savedTime;
+
+    private int playlistPosition;
+
+    public PlaylistPlayer(String owner) {
         this.owner = owner;
     }
 
     private String owner;
 
     public void clearPlayer() {
-        song = null;
+        currentSong = null;
     }
 
     public void load() {
+        this.playlist = Manager.searchBar(owner).getPlaylistLoaded();
 
-        if (!Manager.searchBar(owner).sourceSelected) {
+        if (this.playlist == null && !Manager.searchBar(owner).isSourceSelected()) {
             Manager.partialResult.put("message", "Please select a source before attempting to load.");
             return;
         }
 
-        this.song = Manager.searchBar(owner).getSongLoaded();
-        if (this.song != null) {
-            Manager.partialResult.put("message", "Playback loaded successfully.");
-            song.setDuration(song.getMaxDuration());
-        } else {
+        if (this.playlist.getSongs().isEmpty()) {
             Manager.partialResult.put("message", "You can't load an empty audio collection!");
+            return;
         }
+
+        Manager.partialResult.put("message", "Playback loaded successfully.");
+        currentSong = playlist.getSong(0);
+        currentSong.setDuration(currentSong.getMaxDuration());
+        playlistPosition = 0;
     }
 
     public void status() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode status = objectMapper.createObjectNode();
-        if (song == null) {
+        if ( currentSong == null) {
             status.put("name", "");
             status.put("remainedTime", 0);
             status.put("repeat", "No Repeat");
             status.put("shuffle", false);
             status.put("paused", true);
         } else {
-            status.put("name", song.getName());
-            status.put("remainedTime", song.getDuration());
+            status.put("name", currentSong.getName());
+            status.put("remainedTime", currentSong.getDuration());
             status.put("repeat", repeats());
             status.put("shuffle", shuffles());
             status.put("paused", paused());
@@ -108,21 +109,37 @@ public class MusicPlayer extends Player{
     }
 
     public void updateDuration(int deltaTime) {
-        if (song == null) return;
+        if (currentSong == null) return;
 
-        int time = song.getDuration() - deltaTime;
-        if (time < 0) time = 0;
+        int time = currentSong.getDuration() - deltaTime;
+        savedTime = 0;
+        if (time < 0) {
+            playlistPosition++;
+            savedTime = -time;
+            time = 0;
+        }
         if (!paused)
-            song.setDuration(time);
+            currentSong.setDuration(time);
     }
     public void updatePlayer() {
-        if (song == null) return;
+        if (currentSong == null) return;
 
-        if (song.getDuration() == 0) {
-            song = null;
-            paused = true;
-            shuffled = false;
-            repeat = "No Repeat";
+        if (currentSong.getDuration() == 0) {
+            while (savedTime != 0) {
+                if (playlistPosition >= playlist.getSongs().size()) {
+                    currentSong = null;
+                    paused = true;
+                    shuffled = false;
+                    repeat = "No Repeat";
+                    break;
+                }
+
+                currentSong.setDuration(currentSong.getMaxDuration());
+                currentSong = playlist.getSong(playlistPosition);
+                currentSong.setDuration(currentSong.getMaxDuration());
+                updateDuration(savedTime);
+            }
+
         }
     }
 }

@@ -1,8 +1,10 @@
 package main;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.LibraryInput;
+import fileio.input.SongInput;
 import fileio.input.UserInput;
 import lombok.Getter;
 import lombok.Setter;
@@ -75,10 +77,103 @@ public class Manager {
 //        }
 //    }
 
-    public static Playlist playlist(String owner, int id) {
-        if (playlists.size() < (id-1) && playlists.get(id-1).getOwner().equals(owner)) {
-            return null;
+    public static void addRemoveInPlaylist(String owner, int id) {
+//        if (!Manager.getUser(owner).getType().isEmpty()) {
+//            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
+//            return;
+//        }
+        if (!Manager.getUser(owner).getType().equals("song")) {
+            Manager.partialResult.put("message", "The loaded source is not a song.");
+            return;
         }
-        return playlists.get(id-1);
+
+        if (playlists.size() < (id-1)) {
+            Manager.partialResult.put("message", "The specified playlist does not exist.");
+            return;
+        }
+
+        if (searchBar(owner).getSongLoaded() == null) {
+            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
+            return;
+        }
+
+//        if (!playlists.get(id-1).getOwner().equals(owner)) {
+//            Manager.partialResult.put("message", "Successfully added to playlist.");
+//            return;
+//        }
+
+        Playlist playlist = playlists.get(id-1);
+        if (playlist == null) {
+            Manager.partialResult.put("message", "Successfully added to playlist.");
+            return;
+        }
+
+        SongInput song = Manager.musicPlayer(owner).getSong();
+
+        if (!playlist.getSongs().contains(song)) {
+            playlist.addSong(song);
+            Manager.partialResult.put("message", "Successfully added to playlist.");
+        } else {
+            playlist.removeSong(song);
+            Manager.partialResult.put("message", "Successfully removed from playlist.");
+        }
+    }
+
+    public static void like(String username) {
+
+        SongInput song = Manager.searchBar(username).getSongLoaded();
+
+        if (!Manager.searchBar(username).isSourceSelected()) {
+            Manager.partialResult.put("message", "Please load a source before liking or unliking.");
+            return;
+        }
+
+        if (!Manager.getUser(username).getType().equals("song")) {
+            Manager.partialResult.put("message", "Loaded source is not a song.");
+            return;
+        }
+
+
+        if (!Manager.getUser(username).getLikedSongs().contains(song)) {
+            Manager.getUser(username).addLikedSong(song);
+            Manager.partialResult.put("message", "Like registered successfully.");
+        } else {
+            Manager.getUser(username).removeLikedSong(song);
+            Manager.partialResult.put("message", "Unlike registered successfully.");
+        }
+    }
+
+    public static void showPlaylists(String username) {
+        Playlist play = Manager.searchBar(username).getPlaylistLoaded();
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode rez = objectMapper.createArrayNode();
+        ObjectNode status = objectMapper.createObjectNode();
+        if (play != null) {
+
+            status.put("name", play.getName());
+            ArrayNode node = objectMapper.createArrayNode();
+
+
+            for (SongInput sg : play.getSongs())
+                node.add(sg.getName());
+
+            status.set("songs", node);
+            status.put("visibility", play.getVisibility());
+            status.put("followers", play.getFollowers());
+        }
+        rez.add(status);
+        Manager.partialResult.set("result", rez);
+    }
+
+    public static void showPreferredSongs(String username) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ArrayNode songs = objectMapper.createArrayNode();
+
+        for (SongInput sg : getUser(username).getLikedSongs()) {
+            System.out.println(sg.getName());
+            songs.add(sg.getName());
+        }
+
+        Manager.partialResult.set("result", songs);
     }
 }

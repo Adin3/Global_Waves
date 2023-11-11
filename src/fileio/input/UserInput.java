@@ -16,10 +16,13 @@ public final class UserInput {
     @Getter
     private SearchBar searchBar = new SearchBar();
 
+    @Getter
     private String type;
 
-    private ArrayList<Playlist> playlists = new ArrayList<>();
-    private ArrayList<SongInput> likedSongs;
+    private final ArrayList<Playlist> playlists = new ArrayList<>();
+
+    @Getter
+    private final ArrayList<SongInput> likedSongs = new ArrayList<>();
 
     public UserInput() {}
 
@@ -55,19 +58,22 @@ public final class UserInput {
         likedSongs.add(song);
     }
 
+    public void removeLikedSong(SongInput song) {
+        likedSongs.remove(song);
+    }
+
     public void setMusicPlayer() {
         switch (type) {
             case "song":
                 musicplayer = new MusicPlayer(username);
                 break;
             case "podcast":
-
+                musicplayer = new PodcastPlayer(username);
                 break;
             case "playlist":
-
+                musicplayer = new PlaylistPlayer(username);
                 break;
         }
-        musicplayer = new MusicPlayer(username);
     }
 
     public void setPlaylistPlayer() {

@@ -1,5 +1,7 @@
 package fileio.input;
 
+import lombok.Getter;
+import lombok.Setter;
 import main.Medium;
 
 import java.util.ArrayList;
@@ -7,6 +9,10 @@ import java.util.ArrayList;
 public final class SongInput extends Medium {
     private String name;
     private Integer duration;
+
+    @Getter @Setter
+    private Integer maxDuration;
+
     private String album;
     private ArrayList<String> tags;
     private String lyrics;

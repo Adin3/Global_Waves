@@ -15,6 +15,7 @@ public class Player {
 
     private boolean shuffled = false;
 
+    public void clearPlayer() {};
     public void load() {}
 
     public void status() {}

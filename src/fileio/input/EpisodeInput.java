@@ -1,8 +1,14 @@
 package fileio.input;
 
+import lombok.Getter;
+import lombok.Setter;
+
 public final class EpisodeInput {
     private String name;
     private Integer duration;
+
+    @Getter @Setter
+    private Integer maxDuration;
     private String description;
 
     public EpisodeInput() {

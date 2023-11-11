@@ -10,23 +10,32 @@ public class Playlist {
     private final String owner;
 
     @Getter
-    private boolean visibility = true;
+    private String visibility = "public";
 
     @Getter
     private final String name;
-    private final ArrayList<SongInput> song = new ArrayList<>();
+
+    @Getter
+    private int followers;
+
+    @Getter
+    private final ArrayList<SongInput> songs = new ArrayList<>();
     public Playlist(String owner, String name) {
         this.owner = owner;
         this.name = name;
     }
     public void addSong(SongInput song) {
-        this.song.add(song);
+        this.songs.add(song);
     }
-    public void changeVisibility(boolean visibility) {
+
+    public void removeSong(SongInput song) {
+        songs.remove(song);
+    }
+    public void changeVisibility(String visibility) {
         this.visibility = visibility;
     }
 
     public SongInput getSong(int index) {
-        return song.get(index);
+        return songs.get(index);
     }
 }

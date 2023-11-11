@@ -38,6 +38,7 @@ public final class Main {
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
+    static int a = 1;
     public static void main(final String[] args) throws IOException {
         File directory = new File(CheckerConstants.TESTS_PATH);
         Path path = Paths.get(CheckerConstants.RESULT_PATH);
@@ -50,7 +51,7 @@ public final class Main {
             resultFile.delete();
         }
         Files.createDirectories(path);
-        int a = 0;
+
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.getName().startsWith("library")) {
                 continue;
@@ -59,7 +60,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 3) {
+            if (isCreated && a <= 6) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -78,6 +79,7 @@ public final class Main {
         ObjectMapper objectMapper = new ObjectMapper();
         LibraryInput libraryInput = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
         LibraryInput.setInstance(libraryInput);
+        LibraryInput.getInstance().setMaxDuration();
         Command[] commands = objectMapper.readValue(new File("input/" + filePath1), Command[].class);
 
         Manager man = Manager.getInstance();
@@ -92,6 +94,9 @@ public final class Main {
         int deltaTime = 0;
         int lastTime = 0;
 
+        System.out.println("-----------------" + a);
+
+        Manager.getPlaylists().clear();
         for (Command command : commands) {
 
             String username = command.getUsername();
@@ -109,9 +114,12 @@ public final class Main {
 
             switch (command.getCommand()) {
                 case "search":
-                    Manager.searchBar(username).clearSearch();
 
                     Manager.getUser(username).setSearchBar(command.getType());
+
+                    Manager.searchBar(username).clearSearch();
+
+                    Manager.musicPlayer(username).clearPlayer();
 
                     Manager.searchBar(username).search(command.getFilters());
 
@@ -141,13 +149,16 @@ public final class Main {
 
                     break;
                 case "addRemoveInPlaylist":
-                    int id = command.getPlaylistId();
-                    Playlist playlist = Manager.playlist(username, id);
-                    if (playlist == null) {
-                        Manager.partialResult.put("message", "Error");
-                    } else {
-                        playlist.addSong(Manager.searchBar(username).getSongLoaded());
-                    }
+                    Manager.addRemoveInPlaylist(username, command.getPlaylistId());
+                    break;
+                case "like":
+                    Manager.like(username);
+                    break;
+                case "showPlaylists":
+                    Manager.showPlaylists(username);
+                    break;
+                case "showPreferredSongs":
+                    Manager.showPreferredSongs(username);
                     break;
             }
             Manager.result.add(Manager.partialResult);

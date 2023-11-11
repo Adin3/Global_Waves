@@ -19,16 +19,23 @@ public class SearchBarPodcast extends SearchBar {
 
     @Getter
     private SongInput songLoaded;
+
+    @Getter
+    private Playlist playlistLoaded;
+
     public SearchBarPodcast() {}
 
     public void clearSearch() {
-
+        sourceSearched = false;
+        sourceSelected = false;
     }
 
     public void select(int number) {
         if (!podcast.isEmpty()) {
             if (number <= podcast.size()) {
                 podcastLoaded = podcast.get((number-1));
+                sourceSelected = true;
+                sourceSearched = false;
                 Manager.partialResult.put("message", "Successfully selected " + podcastLoaded.getName() + ".");
                 return;
             }
@@ -51,6 +58,7 @@ public class SearchBarPodcast extends SearchBar {
         }
 
         Manager.partialResult.set("results", node);
+        sourceSearched = true;
     }
 
     public void search(Filters filter) {

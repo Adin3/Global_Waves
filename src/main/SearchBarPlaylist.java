@@ -21,13 +21,16 @@ public class SearchBarPlaylist extends SearchBar{
     public SearchBarPlaylist() {}
 
     public void clearSearch() {
-
+        sourceSearched = false;
+        sourceSelected = false;
     }
 
     public void select(int number) {
         if (!playlists.isEmpty()) {
             if (number <= playlists.size()) {
                 playlistLoaded = playlists.get((number-1));
+                sourceSelected = true;
+                sourceSearched = false;
                 Manager.partialResult.put("message", "Successfully selected " + playlistLoaded.getName() + ".");
                 return;
             }
@@ -50,6 +53,7 @@ public class SearchBarPlaylist extends SearchBar{
         }
 
         Manager.partialResult.set("results", node);
+        sourceSearched = true;
     }
 
     public void search(Filters filter) {

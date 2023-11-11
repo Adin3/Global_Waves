@@ -22,15 +22,18 @@
 }, {
   "command" : "addRemoveInPlaylist",
   "user" : "alice22",
-  "timestamp" : 24
+  "timestamp" : 24,
+  "message" : "Successfully added to playlist."
 }, {
   "command" : "like",
   "user" : "alice22",
-  "timestamp" : 25
+  "timestamp" : 25,
+  "message" : "Like registered successfully."
 }, {
   "command" : "addRemoveInPlaylist",
   "user" : "alice22",
-  "timestamp" : 26
+  "timestamp" : 26,
+  "message" : "Successfully removed from playlist."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -50,31 +53,38 @@
 }, {
   "command" : "like",
   "user" : "alice22",
-  "timestamp" : 45
+  "timestamp" : 45,
+  "message" : "Like registered successfully."
 }, {
   "command" : "addRemoveInPlaylist",
   "user" : "alice22",
-  "timestamp" : 46
+  "timestamp" : 46,
+  "message" : "Successfully added to playlist."
 }, {
   "command" : "like",
   "user" : "alice22",
-  "timestamp" : 50
+  "timestamp" : 50,
+  "message" : "Unlike registered successfully."
 }, {
   "command" : "addRemoveInPlaylist",
   "user" : "alice22",
-  "timestamp" : 51
+  "timestamp" : 51,
+  "message" : "Successfully removed from playlist."
 }, {
   "command" : "addRemoveInPlaylist",
   "user" : "alice22",
-  "timestamp" : 52
+  "timestamp" : 52,
+  "message" : "Successfully added to playlist."
 }, {
   "command" : "like",
   "user" : "alice22",
-  "timestamp" : 55
+  "timestamp" : 55,
+  "message" : "Like registered successfully."
 }, {
   "command" : "like",
   "user" : "alice22",
-  "timestamp" : 60
+  "timestamp" : 60,
+  "message" : "Unlike registered successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -89,9 +99,16 @@
 }, {
   "command" : "showPlaylists",
   "user" : "alice22",
-  "timestamp" : 65
+  "timestamp" : 65,
+  "result" : [ {
+    "name" : "Playlist bengos",
+    "songs" : [ "The Unforgiven" ],
+    "visibility" : "public",
+    "followers" : 0
+  } ]
 }, {
   "command" : "showPreferredSongs",
   "user" : "alice22",
-  "timestamp" : 70
+  "timestamp" : 70,
+  "result" : [ "Stairway to Heaven" ]
 } ]

@@ -47,4 +47,16 @@ public final class LibraryInput {
     public void setUsers(final ArrayList<UserInput> users) {
         this.users = users;
     }
+
+    public void setMaxDuration() {
+        for (SongInput song : songs) {
+            song.setMaxDuration(song.getDuration());
+        }
+
+        for (PodcastInput podcast : podcasts) {
+            for (EpisodeInput episode : podcast.getEpisodes()) {
+                episode.setMaxDuration(episode.getDuration());
+            }
+        }
+    }
 }
