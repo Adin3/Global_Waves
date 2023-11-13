@@ -2,19 +2,16 @@ package main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import fileio.input.LibraryInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
 
 public class SearchBarSong extends SearchBar{
     @Getter
-    private final ArrayList<SongInput> song = new ArrayList<>();
+    private final ArrayList<Song> song = new ArrayList<>();
 
     @Getter
-    private SongInput songLoaded;
+    private Song songLoaded;
 
     @Getter
     private Playlist playlistLoaded;
@@ -57,7 +54,7 @@ public class SearchBarSong extends SearchBar{
 
         Manager.partialResult.put("message", "Search returned " +
                 size + " results");
-        for (SongInput sg : song)
+        for (Song sg : song)
             node.add(sg.getName());
 
         Manager.partialResult.set("results", node);
@@ -92,10 +89,10 @@ public class SearchBarSong extends SearchBar{
             song.remove(song.size()-1);
         }
     }
-    private ArrayList<SongInput> SearchSongByName(String name) {
+    private ArrayList<Song> SearchSongByName(String name) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : Library.getInstance().getSongs()) {
             if (song.getName().startsWith(name)) {
                 songs.add(song);
             }
@@ -103,10 +100,10 @@ public class SearchBarSong extends SearchBar{
         return songs;
     }
 
-    private ArrayList<SongInput> SearchSongByAlbum(String album) {
+    private ArrayList<Song> SearchSongByAlbum(String album) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : Library.getInstance().getSongs()) {
             if (song.getAlbum().equals(album)) {
                 songs.add(song);
             }
@@ -114,10 +111,10 @@ public class SearchBarSong extends SearchBar{
         return songs;
     }
 
-    private ArrayList<SongInput> SearchSongByTags(ArrayList<String> tags) {
+    private ArrayList<Song> SearchSongByTags(ArrayList<String> tags) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : Library.getInstance().getSongs()) {
             boolean containsAll = true;
             for (String tag : tags) {
                 if (!song.getTags().contains(tag)) {
@@ -132,10 +129,10 @@ public class SearchBarSong extends SearchBar{
         return songs;
     }
 
-    private ArrayList<SongInput> SearchSongByLyrics(String lyric) {
+    private ArrayList<Song> SearchSongByLyrics(String lyric) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : Library.getInstance().getSongs()) {
             if (song.getLyrics().toLowerCase().contains(lyric.toLowerCase())) {
                 songs.add(song);
             }
@@ -143,10 +140,10 @@ public class SearchBarSong extends SearchBar{
         return songs;
     }
 
-    private ArrayList<SongInput> SearchSongByGenre(String genre) {
+    private ArrayList<Song> SearchSongByGenre(String genre) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : Library.getInstance().getSongs()) {
             if (song.getGenre().equalsIgnoreCase(genre)) {
                 songs.add(song);
             }
@@ -154,11 +151,11 @@ public class SearchBarSong extends SearchBar{
         return songs;
     }
 
-    private ArrayList<SongInput> SearchSongByYear(String year) {
+    private ArrayList<Song> SearchSongByYear(String year) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
+        ArrayList<Song> songs = new ArrayList<>();
 
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        for (Song song : Library.getInstance().getSongs()) {
             int sign;
             if (year.startsWith("<"))
                 sign = Integer.parseInt(year.substring(1)) - song.getReleaseYear();
@@ -172,10 +169,10 @@ public class SearchBarSong extends SearchBar{
         return songs;
     }
 
-    private ArrayList<SongInput> SearchSongByArtist(String artist) {
+    private ArrayList<Song> SearchSongByArtist(String artist) {
 
-        ArrayList<SongInput> songs = new ArrayList<>();
-        for (SongInput song : LibraryInput.getInstance().getSongs()) {
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song song : Library.getInstance().getSongs()) {
             if (song.getArtist().equals(artist)) {
                 songs.add(song);
             }

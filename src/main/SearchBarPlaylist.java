@@ -2,9 +2,7 @@ package main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import fileio.input.LibraryInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
+
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -18,7 +16,7 @@ public class SearchBarPlaylist extends SearchBar{
     private Playlist playlistLoaded;
 
     @Getter
-    private SongInput songLoaded;
+    private Song songLoaded;
 
     @Getter
     private final String owner;

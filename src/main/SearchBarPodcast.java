@@ -2,9 +2,7 @@ package main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import fileio.input.LibraryInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
+
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -12,13 +10,13 @@ import java.util.ArrayList;
 public class SearchBarPodcast extends SearchBar {
 
     @Getter
-    private final ArrayList<PodcastInput> podcast = new ArrayList<>();
+    private final ArrayList<Podcast> podcast = new ArrayList<>();
 
     @Getter
-    private PodcastInput podcastLoaded;
+    private Podcast podcastLoaded;
 
     @Getter
-    private SongInput songLoaded;
+    private Song songLoaded;
 
     @Getter
     private Playlist playlistLoaded;
@@ -58,7 +56,7 @@ public class SearchBarPodcast extends SearchBar {
 
         Manager.partialResult.put("message", "Search returned " +
                 size + " results");
-        for (PodcastInput sg : podcast)
+        for (Podcast sg : podcast)
             node.add(sg.getName());
 
         Manager.partialResult.set("results", node);
@@ -77,10 +75,10 @@ public class SearchBarPodcast extends SearchBar {
             podcast.remove(podcast.size()-1);
         }
     }
-    private ArrayList<PodcastInput> SearchPodcastByName(String name) {
+    private ArrayList<Podcast> SearchPodcastByName(String name) {
 
-        ArrayList<PodcastInput> podcasts = new ArrayList<>();
-        for (PodcastInput podcast : LibraryInput.getInstance().getPodcasts()) {
+        ArrayList<Podcast> podcasts = new ArrayList<>();
+        for (Podcast podcast : Library.getInstance().getPodcasts()) {
             if (podcast.getName().startsWith(name)) {
                 podcasts.add(podcast);
             }
@@ -88,10 +86,10 @@ public class SearchBarPodcast extends SearchBar {
         return podcasts;
     }
 
-    private ArrayList<PodcastInput> SearchPodcastByOwner(String owner) {
+    private ArrayList<Podcast> SearchPodcastByOwner(String owner) {
 
-        ArrayList<PodcastInput> podcasts = new ArrayList<>();
-        for (PodcastInput podcast : LibraryInput.getInstance().getPodcasts()) {
+        ArrayList<Podcast> podcasts = new ArrayList<>();
+        for (Podcast podcast : Library.getInstance().getPodcasts()) {
             if (podcast.getOwner().equals(owner)) {
                 podcasts.add(podcast);
             }

@@ -1,13 +1,15 @@
 package main;
 
-import fileio.input.SongInput;
 import lombok.Getter;
 
 public class Player {
     public Player() {}
 
     @Getter
-    private SongInput song;
+    private Song song;
+
+    @Getter
+    private Song currentSong;
 
     private String repeat = "No Repeat";
 

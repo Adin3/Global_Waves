@@ -1,6 +1,5 @@
 package main;
 
-import fileio.input.SongInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -19,7 +18,7 @@ public class Playlist {
     private ArrayList<String> followers = new ArrayList<>();
 
     @Getter
-    private final ArrayList<SongInput> songs = new ArrayList<>();
+    private final ArrayList<Song> songs = new ArrayList<>();
 
     @Getter
     private final int time;
@@ -28,11 +27,11 @@ public class Playlist {
         this.name = name;
         this.time = time;
     }
-    public void addSong(SongInput song) {
+    public void addSong(Song song) {
         this.songs.add(song);
     }
 
-    public void removeSong(SongInput song) {
+    public void removeSong(Song song) {
         songs.remove(song);
     }
     public void changeVisibility() {
@@ -43,7 +42,7 @@ public class Playlist {
         }
     }
 
-    public SongInput getSong(int index) {
+    public Song getSong(int index) {
         return songs.get(index);
     }
 

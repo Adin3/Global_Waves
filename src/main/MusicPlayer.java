@@ -3,8 +3,6 @@ package main;
 import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fileio.input.SongInput;
-import fileio.input.UserInput;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -17,7 +15,7 @@ public class MusicPlayer extends Player{
     public MusicPlayer() {}
 
     @Getter
-    private SongInput song;
+    private Song song;
 
     private String repeat = "No Repeat";
 

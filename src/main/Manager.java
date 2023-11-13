@@ -19,7 +19,7 @@ public class Manager {
 
     private static Manager instance = null;
 
-    private static final Map<String, UserInput> users = new HashMap<>();
+    private static final Map<String, User> users = new HashMap<>();
 
     @Getter
     private static final ArrayList<Playlist> playlists = new ArrayList<>();
@@ -37,11 +37,11 @@ public class Manager {
         return instance;
     }
 
-    public static void addUser(UserInput user) {
+    public static void addUser(User user) {
         users.put(user.getUsername(), user);
     }
 
-    public static UserInput getUser(String username) {
+    public static User getUser(String username) {
         return users.get(username);
     }
 
@@ -62,7 +62,7 @@ public class Manager {
     }
 
     public static void updatePlayers(int deltaTime) {
-        for (UserInput user : users.values()) {
+        for (User user : users.values()) {
             user.getMusicplayer().updateDuration(deltaTime);
             user.getMusicplayer().updatePlayer();
         }
@@ -114,7 +114,7 @@ public class Manager {
 
         Playlist playlist = getUser(owner).getPlaylists().get(id-1);
 
-        SongInput song = Manager.musicPlayer(owner).getSong();
+        Song song = Manager.musicPlayer(owner).getSong();
 
         if (!playlist.getSongs().contains(song)) {
             playlist.addSong(song);
@@ -188,9 +188,14 @@ public class Manager {
 
     public static void like(String username) {
 
-        SongInput song = Manager.searchBar(username).getSongLoaded();
+        Song song = null;
+        if (Manager.getUser(username).getType().equals("song")) {
+            song = Manager.searchBar(username).getSongLoaded();
+        } else {
+            song = Manager.musicPlayer(username).getCurrentSong();
+        }
 
-        if (!Manager.getUser(username).getType().equals("song") && sources.get(username).isSourceLoaded()) {
+        if (song == null && sources.get(username).isSourceLoaded()) {
             Manager.partialResult.put("message", "Loaded source is not a song.");
             return;
         }
@@ -223,7 +228,7 @@ public class Manager {
                 ArrayNode node = objectMapper.createArrayNode();
 
 
-                for (SongInput sg : play.getSongs())
+                for (Song sg : play.getSongs())
                     node.add(sg.getName());
 
                 status.set("songs", node);
@@ -244,7 +249,7 @@ public class Manager {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode songs = objectMapper.createArrayNode();
 
-        for (SongInput sg : getUser(username).getLikedSongs()) {
+        for (Song sg : getUser(username).getLikedSongs()) {
             songs.add(sg.getName());
         }
 
@@ -287,11 +292,11 @@ public class Manager {
 
     public static void getTop5Songs() {
 
-        ArrayList<SongInput> tempSongs = LibraryInput.getInstance().getSongs();
+        ArrayList<Song> tempSongs = Library.getInstance().getSongs();
         int[] freqVec = new int[tempSongs.size()];
 
-        for (UserInput user : LibraryInput.getInstance().getUsers()) {
-            for (SongInput song : user.getLikedSongs()) {
+        for (User user : Library.getInstance().getUsers()) {
+            for (Song song : user.getLikedSongs()) {
                 freqVec[tempSongs.indexOf(song)]++;
             }
         }
@@ -303,7 +308,7 @@ public class Manager {
                     freqVec[i] = freqVec[j];
                     freqVec[j] = temp;
 
-                    SongInput sg = tempSongs.get(i);
+                    Song sg = tempSongs.get(i);
                     tempSongs.set(i, tempSongs.get(j));
                     tempSongs.set(j, sg);
 
@@ -314,7 +319,7 @@ public class Manager {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
-        for (SongInput sg : tempSongs.subList(0, 5)) {
+        for (Song sg : tempSongs.subList(0, 5)) {
             System.out.print(sg.getName());
             System.out.println(freqVec[tempSongs.indexOf(sg)]);
             node.add(sg.getName());

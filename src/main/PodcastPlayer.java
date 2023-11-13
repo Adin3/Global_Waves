@@ -2,18 +2,16 @@ package main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fileio.input.EpisodeInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
+
 import lombok.Getter;
 
 public class PodcastPlayer extends Player {
     public PodcastPlayer() {}
 
     @Getter
-    private PodcastInput podcast;
+    private Podcast podcast;
 
-    private EpisodeInput currentEpisode;
+    private Episode currentEpisode;
 
     private String repeat = "No Repeat";
 
@@ -38,7 +36,7 @@ public class PodcastPlayer extends Player {
     }
 
     public void load() {
-        PodcastInput temp = Manager.searchBar(owner).getPodcastLoaded();
+        Podcast temp = Manager.searchBar(owner).getPodcastLoaded();
 
         if (temp == null || !Manager.getSource(owner).isSourceSelected()) {
             Manager.partialResult.put("message", "Please select a source before attempting to load.");

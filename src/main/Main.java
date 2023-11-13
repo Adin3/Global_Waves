@@ -78,17 +78,15 @@ public final class Main {
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         LibraryInput libraryInput = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
-        LibraryInput.setInstance(libraryInput);
-        LibraryInput.getInstance().setMaxDuration();
+        Library.setInstance(libraryInput);
+        Library.getInstance().setMaxDuration();
         Command[] commands = objectMapper.readValue(new File("input/" + filePath1), Command[].class);
 
-        Manager man = Manager.getInstance();
-        LibraryInput lib = LibraryInput.getInstance();
-
-        for (UserInput user : lib.getUsers()) {
+        Library lib = Library.getInstance();
+        for (User user : lib.getUsers()) {
             Manager.addUser(user);
         }
-        for (UserInput user : lib.getUsers()) {
+        for (User user : lib.getUsers()) {
             Manager.addSource(user.getUsername());
         }
 

@@ -1,18 +1,35 @@
-package fileio.input;
+package main;
+
+import fileio.input.SongInput;
+import lombok.Getter;
+import lombok.Setter;
 
 import java.util.ArrayList;
 
-public final class SongInput {
+public class Song {
     private String name;
     private Integer duration;
+
+    @Getter
+    @Setter
+    private Integer maxDuration;
+
     private String album;
-    private ArrayList<String> tags;
+    private ArrayList<String> tags = new ArrayList<>();
     private String lyrics;
     private String genre;
     private Integer releaseYear;
     private String artist;
 
-    public SongInput() {
+    public Song(SongInput song) {
+        this.name = song.getName();
+        this.album = song.getAlbum();
+        this.artist = song.getArtist();
+        this.genre = song.getGenre();
+        this.lyrics = song.getLyrics();
+        this.duration = song.getDuration();
+        this.releaseYear = song.getReleaseYear();
+        this.tags.addAll(song.getTags());
     }
 
     public String getName() {

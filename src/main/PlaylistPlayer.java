@@ -2,7 +2,7 @@ package main;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fileio.input.SongInput;
+
 import lombok.Getter;
 
 import java.util.ArrayList;
@@ -14,7 +14,8 @@ public class PlaylistPlayer extends Player{
     @Getter
     private Playlist playlist;
 
-    private SongInput currentSong;
+    @Getter
+    private Song currentSong;
 
     private String repeat = "No Repeat";
 
@@ -73,7 +74,7 @@ public class PlaylistPlayer extends Player{
 
     public void shuffle(int seed) {
 
-        if (!Manager.getSource(owner).isSourceLoaded()) {
+        if (!Manager.getSource(owner).isSourceLoaded() && playlist == null) {
             Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
             return;
         }

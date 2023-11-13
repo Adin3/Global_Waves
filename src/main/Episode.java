@@ -1,11 +1,21 @@
-package fileio.input;
+package main;
 
-public final class EpisodeInput {
+import fileio.input.EpisodeInput;
+import lombok.Getter;
+import lombok.Setter;
+
+public class Episode {
     private String name;
     private Integer duration;
+
+    @Getter @Setter
+    private Integer maxDuration;
     private String description;
 
-    public EpisodeInput() {
+    public Episode(EpisodeInput episode) {
+        this.name = episode.getName();
+        this.duration = episode.getDuration();
+        this.description = episode.getDescription();
     }
 
     public String getName() {

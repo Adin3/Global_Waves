@@ -1,21 +1,18 @@
 package main;
 
-import fileio.input.LibraryInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
 public class SearchBar {
 
     @Getter
-    private SongInput songLoaded;
+    private Song songLoaded;
 
     @Getter
     private Playlist playlistLoaded;
 
     @Getter
-    private PodcastInput podcastLoaded;
+    private Podcast podcastLoaded;
 
     @Getter
     protected boolean sourceSearched;
