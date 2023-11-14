@@ -301,15 +301,21 @@ public class Manager {
             }
         }
 
-        for (int i = 0; i < tempSongs.size() - 1; i++) {
-            for (int j = 0; j < tempSongs.size() - 1; j++) {
-                if (freqVec[i] > freqVec[j+1]) {
-                    int temp = freqVec[i];
-                    freqVec[i] = freqVec[j];
+        for (int i = 0; i < freqVec.length; i++) {
+            System.out.print(tempSongs.get(i).getName());
+            System.out.print(" ");
+            System.out.println(freqVec[i]);
+        }
+
+        for (int i = tempSongs.size() - 1; i >= 0; i--) {
+            for (int j = tempSongs.size() - 1; j > 0; j--) {
+                if (freqVec[j] > freqVec[j-1]) {
+                    int temp = freqVec[j-1];
+                    freqVec[j-1] = freqVec[j];
                     freqVec[j] = temp;
 
-                    Song sg = tempSongs.get(i);
-                    tempSongs.set(i, tempSongs.get(j));
+                    Song sg = tempSongs.get(j-1);
+                    tempSongs.set(j-1, tempSongs.get(j));
                     tempSongs.set(j, sg);
 
                 }
@@ -326,7 +332,7 @@ public class Manager {
 
         }
         System.out.println("---------------");
-        Manager.partialResult.set("results", node);
+        Manager.partialResult.set("result", node);
 
     }
 

@@ -269,5 +269,5 @@
 }, {
   "command" : "getTop5Songs",
   "timestamp" : 3300,
-  "results" : [ "Bohemian Rhapsody", "Angie", "Stairway to Heaven", "Money Trees", "Under Pressure" ]
+  "result" : [ "Bohemian Rhapsody", "Angie", "Shape of You", "Don't", "Stairway to Heaven" ]
 } ]
