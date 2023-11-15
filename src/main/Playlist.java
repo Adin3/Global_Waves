@@ -3,7 +3,7 @@ package main;
 import lombok.Getter;
 
 import java.util.ArrayList;
-public class Playlist {
+public final class Playlist {
 
     @Getter
     private final String owner;
@@ -22,13 +22,13 @@ public class Playlist {
 
     @Getter
     private final int time;
-    public Playlist(String owner, String name, int time) {
+    public Playlist(final String owner, final String name, final int time) {
         this.owner = owner;
         this.name = name;
         this.time = time;
     }
 
-    public Playlist(Playlist playlist) {
+    public Playlist(final Playlist playlist) {
         this.owner = playlist.getOwner();
         this.name = playlist.getName();
         this.time = playlist.getTime();
@@ -36,17 +36,27 @@ public class Playlist {
         this.followers = playlist.getFollowers();
         this.songs.addAll(playlist.getSongs());
     }
-    public void addSong(Song song) {
+    /**
+     * adds song in playlist
+     */
+    public void addSong(final Song song) {
         this.songs.add(song);
     }
-
-    public void setSong(Song song, int index) {
+    /**
+     * set song on this index
+     */
+    public void setSong(final Song song, final int index) {
         songs.set(index, song);
     }
-
-    public void removeSong(Song song) {
+    /**
+     * remove song from playlist
+     */
+    public void removeSong(final Song song) {
         songs.remove(song);
     }
+    /**
+     * change the visibility of the playlist
+     */
     public void changeVisibility() {
         if (visibility.equals("public")) {
             visibility = "private";
@@ -54,18 +64,27 @@ public class Playlist {
             visibility = "public";
         }
     }
-
-    public Song getSong(int index) {
+    /**
+     * get song
+     */
+    public Song getSong(final int index) {
         return songs.get(index);
     }
-
-    public void addFollower(String username) {
+    /**
+     * add follow
+     */
+    public void addFollower(final String username) {
         followers.add(username);
     }
-    public void removeFollower(String username) {
+    /**
+     * remove follower
+     */
+    public void removeFollower(final String username) {
         followers.remove(username);
     }
-
+    /**
+     * returns number of followers
+     */
     public int numberOfFollowers() {
         return followers.size();
     }

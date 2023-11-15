@@ -7,7 +7,9 @@ import lombok.Getter;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SearchBarSong extends SearchBar{
+public class SearchBarSong extends SearchBar {
+
+    private static final int MAX_SONGS = 5;
     @Getter
     private final ArrayList<Song> song = new ArrayList<>();
 
@@ -20,10 +22,12 @@ public class SearchBarSong extends SearchBar{
     @Getter
     private final String owner;
 
-    public SearchBarSong(String owner) {
+    public SearchBarSong(final String owner) {
         this.owner = owner;
     }
-
+    /**
+     * clears search
+     */
     public void clearSearch() {
         song.clear();
         songLoaded = null;
@@ -31,81 +35,98 @@ public class SearchBarSong extends SearchBar{
         sourceSearched = false;
     }
 
-    public void select(int number, String username) {
+    /**
+     * select searched song
+     * @param number songs' id
+     * @param username user's name
+     */
+    public void select(final int number, final String username) {
         if (!Manager.getSource(username).isSourceSearched()) {
-            Manager.partialResult.put("message", "Please conduct a search before making a selection.");
+            Manager.getPartialResult().put("message",
+                    "Please conduct a search before making a selection.");
         } else {
             if (number <= song.size()) {
                 songLoaded = song.get((number - 1));
                 sourceSelected = true;
                 sourceSearched = false;
-                Manager.partialResult.put("message", "Successfully selected " + songLoaded.getName() + ".");
+                Manager.getPartialResult().put("message",
+                        "Successfully selected " + songLoaded.getName() + ".");
                 return;
             }
-            Manager.partialResult.put("message", "The selected ID is too high.");
+            Manager.getPartialResult().put("message",
+                    "The selected ID is too high.");
             Manager.getSource(username).setSourceSearched(false);
             return;
         }
         Manager.getSource(username).setSourceSearched(false);
     }
-
+    /**
+     * returns what was searched
+     */
     public void searchDone() {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
         int size = song.size();
 
-        Manager.partialResult.put("message", "Search returned " +
-                size + " results");
-        for (Song sg : song)
+        Manager.getPartialResult().put("message", "Search returned "
+                + size + " results");
+        for (Song sg : song) {
             node.add(sg.getName());
+        }
 
-        Manager.partialResult.set("results", node);
+        Manager.getPartialResult().set("results", node);
     }
 
-    public void search(Filters filter) {
+    /**
+     * search songs
+     * @param filter search filters
+     */
+    public void search(final Filters filter) {
         int options = 0;
         if (filter.getAlbum() != null) {
             options++;
-            song.addAll(SearchSongByAlbum(filter.getAlbum()));
+            song.addAll(searchSongByAlbum(filter.getAlbum()));
         }
 
         if (filter.getArtist() != null) {
             options++;
-            song.addAll(SearchSongByArtist(filter.getArtist()));
+            song.addAll(searchSongByArtist(filter.getArtist()));
         }
 
         if (filter.getName() != null) {
             options++;
-            song.addAll(SearchSongByName(filter.getName()));
+            song.addAll(searchSongByName(filter.getName()));
         }
 
         if (filter.getGenre() != null) {
             options++;
-            song.addAll(SearchSongByGenre(filter.getGenre()));
+            song.addAll(searchSongByGenre(filter.getGenre()));
         }
 
         if (filter.getLyrics() != null) {
             options++;
-            song.addAll(SearchSongByLyrics(filter.getLyrics()));
+            song.addAll(searchSongByLyrics(filter.getLyrics()));
         }
 
         if (filter.getReleaseYear() != null) {
             options++;
-            song.addAll(SearchSongByYear(filter.getReleaseYear()));
+            song.addAll(searchSongByYear(filter.getReleaseYear()));
         }
 
         if (filter.getTags() != null) {
             options++;
-            song.addAll(SearchSongByTags(filter.getTags()));
+            song.addAll(searchSongByTags(filter.getTags()));
         }
 
         if (options > 1) {
             ArrayList<Song> temp = new ArrayList<>();
 
-            for(Song s : song)
-                if(Collections.frequency(song, s) > 1)
+            for (Song s : song) {
+                if (Collections.frequency(song, s) > 1) {
                     temp.add(s);
+                }
+            }
 
             song.clear();
             song.addAll(temp);
@@ -121,96 +142,120 @@ public class SearchBarSong extends SearchBar{
             song.addAll(temp);
         }
 
-        while (song.size() > 5) {
-            song.remove(song.size()-1);
+        while (song.size() > MAX_SONGS) {
+            song.remove(song.size() - 1);
         }
     }
-    private ArrayList<Song> SearchSongByName(String name) {
+    /**
+     * search song by name
+     * @param name song's name
+     */
+    private ArrayList<Song> searchSongByName(final String name) {
 
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Library.getInstance().getSongs()) {
-            if (song.getName().startsWith(name)) {
-                songs.add(song);
+        for (Song s : Library.getInstance().getSongs()) {
+            if (s.getName().startsWith(name)) {
+                songs.add(s);
+            }
+        }
+        return songs;
+    }
+    /**
+     * search song by album
+     * @param album song's album
+     */
+    private ArrayList<Song> searchSongByAlbum(final String album) {
+
+        ArrayList<Song> songs = new ArrayList<>();
+        for (Song s : Library.getInstance().getSongs()) {
+            if (s.getAlbum().equals(album)) {
+                songs.add(s);
             }
         }
         return songs;
     }
 
-    private ArrayList<Song> SearchSongByAlbum(String album) {
+    /**
+     * search song by tags
+     * @param tags song's tags
+     */
+    private ArrayList<Song> searchSongByTags(final ArrayList<String> tags) {
 
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Library.getInstance().getSongs()) {
-            if (song.getAlbum().equals(album)) {
-                songs.add(song);
-            }
-        }
-        return songs;
-    }
-
-    private ArrayList<Song> SearchSongByTags(ArrayList<String> tags) {
-
-        ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Library.getInstance().getSongs()) {
+        for (Song s : Library.getInstance().getSongs()) {
             boolean containsAll = true;
             for (String tag : tags) {
-                if (!song.getTags().contains(tag)) {
+                if (!s.getTags().contains(tag)) {
                     containsAll = false;
                     break;
                 }
             }
             if (containsAll) {
-                songs.add(song);
+                songs.add(s);
             }
         }
         return songs;
     }
-
-    private ArrayList<Song> SearchSongByLyrics(String lyric) {
+    /**
+     * search song by lyrics
+     * @param lyric song's lyrics
+     */
+    private ArrayList<Song> searchSongByLyrics(final String lyric) {
 
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Library.getInstance().getSongs()) {
-            if (song.getLyrics().toLowerCase().contains(lyric.toLowerCase())) {
-                songs.add(song);
+        for (Song s : Library.getInstance().getSongs()) {
+            if (s.getLyrics().toLowerCase().contains(lyric.toLowerCase())) {
+                songs.add(s);
             }
         }
         return songs;
     }
-
-    private ArrayList<Song> SearchSongByGenre(String genre) {
+    /**
+     * search song by genre
+     * @param genre song's genre
+     */
+    private ArrayList<Song> searchSongByGenre(final String genre) {
 
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Library.getInstance().getSongs()) {
-            if (song.getGenre().equalsIgnoreCase(genre)) {
-                songs.add(song);
+        for (Song s : Library.getInstance().getSongs()) {
+            if (s.getGenre().equalsIgnoreCase(genre)) {
+                songs.add(s);
             }
         }
         return songs;
     }
-
-    private ArrayList<Song> SearchSongByYear(String year) {
+    /**
+     * search song by release year
+     * @param year song's release year
+     */
+    private ArrayList<Song> searchSongByYear(final String year) {
 
         ArrayList<Song> songs = new ArrayList<>();
 
-        for (Song song : Library.getInstance().getSongs()) {
+        for (Song s : Library.getInstance().getSongs()) {
             int sign;
-            if (year.startsWith("<"))
-                sign = Integer.parseInt(year.substring(1)) - song.getReleaseYear();
-            else
-                sign = song.getReleaseYear() - Integer.parseInt(year.substring(1));
+            if (year.startsWith("<")) {
+                sign = Integer.parseInt(year.substring(1)) - s.getReleaseYear();
+            } else {
+                sign = s.getReleaseYear() - Integer.parseInt(year.substring(1));
+            }
 
             if (sign > 0) {
-                songs.add(song);
+                songs.add(s);
             }
         }
         return songs;
     }
-
-    private ArrayList<Song> SearchSongByArtist(String artist) {
+    /**
+     * search song by artist
+     * @param artist song's artist
+     */
+    private ArrayList<Song> searchSongByArtist(final String artist) {
 
         ArrayList<Song> songs = new ArrayList<>();
-        for (Song song : Library.getInstance().getSongs()) {
-            if (song.getArtist().equals(artist)) {
-                songs.add(song);
+        for (Song s : Library.getInstance().getSongs()) {
+            if (s.getArtist().equals(artist)) {
+                songs.add(s);
             }
         }
         return songs;

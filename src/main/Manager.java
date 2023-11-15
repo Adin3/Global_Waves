@@ -1,77 +1,104 @@
 package main;
 
-import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
-import fileio.input.LibraryInput;
-import fileio.input.SongInput;
-import fileio.input.UserInput;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.security.auth.login.CredentialNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
-public class Manager {
+public final class Manager {
 
+    private static final int TOP5 = 5;
     private static Manager instance = null;
 
-    private static final Map<String, User> users = new HashMap<>();
+    private static Map<String, User> users = new HashMap<>();
 
     @Getter
-    private static final ArrayList<Playlist> playlists = new ArrayList<>();
+    private static ArrayList<Playlist> playlists = new ArrayList<>();
+    @Getter @Setter
+    private static ArrayNode result;
+    @Getter @Setter
+    private static ObjectNode partialResult;
+    private static Map<String, Source> sources = new HashMap<>();
 
-    public static ArrayNode result;
-    public static ObjectNode partialResult;
-    private static final Map<String, Source> sources = new HashMap<>();
-
-    private Manager() {}
-
+    private Manager() { }
+    /**
+     * Gets instance of Manager Class
+     */
     public static Manager getInstance() {
         if (instance == null) {
             instance = new Manager();
         }
         return instance;
     }
-
-    public static void addUser(User user) {
+    /**
+     * Adds user to Manager
+     * @param user the user in question
+     */
+    public static void addUser(final User user) {
         users.put(user.getUsername(), user);
     }
-
-    public static User getUser(String username) {
+    /**
+     * returns the user with specific username
+     * @param username the username of the user
+     */
+    public static User getUser(final String username) {
         return users.get(username);
     }
-
-    public static SearchBar searchBar(String username) {
+    /**
+     * returns the searchbar of a specific user
+     * @param username the username of the user
+     */
+    public static SearchBar searchBar(final String username) {
         return users.get(username).getSearchBar();
     }
-
-    public static Player musicPlayer(String username) {
+    /**
+     * returns the player of a specific user
+     * @param username the username of the user
+     */
+    public static Player musicPlayer(final String username) {
         return users.get(username).getMusicplayer();
     }
-
-    public static void addSource(String username) {
+    /**
+     * Adds a source for every user
+     * @param username the username of the user
+     */
+    public static void addSource(final String username) {
         sources.put(username, new Source());
     }
 
-    public static Source getSource(String username) {
+    /**
+     * returns the source of a specific user
+     * @param username the username of the user
+     */
+    public static Source getSource(final String username) {
         return sources.get(username);
     }
-
-    public static void updatePlayers(int deltaTime) {
+    /**
+     * updates all players
+     * @param deltaTime variation of time
+     */
+    public static void updatePlayers(final int deltaTime) {
         for (User user : users.values()) {
             user.getMusicplayer().updateDuration(deltaTime);
             user.getMusicplayer().updatePlayer();
         }
     }
-    public static void addPlaylist(String username, String name, int time) {
+    /**
+     * Adds a new playlist
+     * @param username the username of the user
+     * @param name the name of the playlist
+     * @param time the creation date
+     */
+    public static void addPlaylist(final String username, final String name, final int time) {
         for (Playlist p : playlists) {
             if (p.getName().equals(name)) {
-                Manager.partialResult.put("message", "A playlist with the same name already exists.");
+                Manager.partialResult.put("message",
+                        "A playlist with the same name already exists.");
                 return;
             }
         }
@@ -87,24 +114,28 @@ public class Manager {
 //            playlists.remove(name);
 //        }
 //    }
-
-    public static void addRemoveInPlaylist(String owner, int id) {
-//        if (!Manager.getUser(owner).getType().isEmpty()) {
-//            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
-//            return;
-//        }
+    /**
+     * adds/removes the current song in the playlist
+     * @param owner the username of the user
+     * @param id the id of the playlist
+     */
+    public static void addRemoveInPlaylist(final String owner, final int id) {
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before adding to or removing from the playlist.");
+            Manager.partialResult.put("message",
+                    "Please load a source before adding to or removing from the playlist.");
             return;
         }
 
-        if (!Manager.getUser(owner).getType().equals("song") || Manager.musicPlayer(owner).getSong() == null) {
-            Manager.partialResult.put("message", "The loaded source is not a song.");
+        if (!Manager.getUser(owner).getType().equals("song")
+                || Manager.musicPlayer(owner).getSong() == null) {
+            Manager.partialResult.put("message",
+                    "The loaded source is not a song.");
             return;
         }
 
-        if (getUser(owner).getPlaylists().size() <= (id-1)) {
-            Manager.partialResult.put("message", "The specified playlist does not exist.");
+        if (getUser(owner).getPlaylists().size() <= (id - 1)) {
+            Manager.partialResult.put("message",
+                    "The specified playlist does not exist.");
             return;
         }
 
@@ -113,7 +144,7 @@ public class Manager {
 //            return;
 //        }
 
-        Playlist playlist = getUser(owner).getPlaylists().get(id-1);
+        Playlist playlist = getUser(owner).getPlaylists().get(id - 1);
 
         Song song = Manager.musicPlayer(owner).getSong();
 
@@ -131,19 +162,24 @@ public class Manager {
             }
         }
     }
+    /**
+     * change the visibility of the playlist
+     * @param username the username of the user
+     * @param id the id of the playlist
+     */
+    public static void switchVisibility(final String username, final int id) {
 
-    public static void switchVisibility(String username, int id) {
-
-        if (getUser(username).getPlaylists().size() <= (id-1)) {
+        if (getUser(username).getPlaylists().size() <= (id - 1)) {
             Manager.partialResult.put("message", "The specified playlist ID is too high.");
             return;
         }
 
-        Playlist pl = getUser(username).getPlaylists().get(id-1);
+        Playlist pl = getUser(username).getPlaylists().get(id - 1);
 
         pl.changeVisibility();
 
-        Manager.partialResult.put("message", "Visibility status updated successfully to " + pl.getVisibility() + ".");
+        Manager.partialResult.put("message",
+                "Visibility status updated successfully to " + pl.getVisibility() + ".");
 
         for (int i = 0; i < playlists.size(); i++) {
             if (playlists.get(i).getName().equals(pl.getName())) {
@@ -151,23 +187,29 @@ public class Manager {
             }
         }
     }
-
-    public static void follow(String owner) {
+    /**
+     * follow/unfollow the current playlist
+     * @param owner the username of the user
+     */
+    public static void follow(final String owner) {
 
         if (!Manager.getSource(owner).isSourceSelected()) {
-            Manager.partialResult.put("message", "Please select a source before following or unfollowing.");
+            Manager.partialResult.put("message",
+                    "Please select a source before following or unfollowing.");
             return;
         }
 
         if (!Manager.getUser(owner).getType().equals("playlist")) {
-            Manager.partialResult.put("message", "The selected source is not a playlist.");
+            Manager.partialResult.put("message",
+                    "The selected source is not a playlist.");
             return;
         }
 
         Playlist pl = Manager.searchBar(owner).getPlaylistLoaded();
 
         if (pl.getOwner().equals(owner)) {
-            Manager.partialResult.put("message", "You cannot follow or unfollow your own playlist.");
+            Manager.partialResult.put("message",
+                    "You cannot follow or unfollow your own playlist.");
             return;
         }
 
@@ -186,8 +228,11 @@ public class Manager {
         }
     }
 
-
-    public static void like(String username) {
+    /**
+     * like/unlike the current song
+     * @param username the username of the user
+     */
+    public static void like(final String username) {
 
         Song song = null;
         if (Manager.getUser(username).getType().equals("song")) {
@@ -196,10 +241,16 @@ public class Manager {
             song = Manager.musicPlayer(username).getCurrentSong();
             if (song != null) {
                 for (Song s : Library.getInstance().getSongs()) {
-                    if (s.getName().equals(song.getName()))
+                    if (s.getName().equals(song.getName())) {
                         song = s;
+                    }
                 }
             }
+        }
+
+        if (!sources.get(username).isSourceLoaded()) {
+            Manager.partialResult.put("message", "Please load a source before liking or unliking.");
+            return;
         }
 
         if (song == null && sources.get(username).isSourceLoaded()) {
@@ -207,10 +258,6 @@ public class Manager {
             return;
         }
 
-        if (!sources.get(username).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before liking or unliking.");
-            return;
-        }
 
         if (!Manager.getUser(username).getLikedSongs().contains(song)) {
             Manager.getUser(username).addLikedSong(song);
@@ -221,7 +268,11 @@ public class Manager {
         }
     }
 
-    public static void showPlaylists(String username) {
+    /**
+     * shows all playlists created by the specific user
+     * @param username the username of the user
+     */
+    public static void showPlaylists(final String username) {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode rez = objectMapper.createArrayNode();
 
@@ -232,8 +283,9 @@ public class Manager {
                 status.put("name", play.getName());
                 ArrayNode node = objectMapper.createArrayNode();
 
-                for (Song sg : play.getSongs())
+                for (Song sg : play.getSongs()) {
                     node.add(sg.getName());
+                }
 
                 status.set("songs", node);
                 status.put("visibility", play.getVisibility());
@@ -244,7 +296,11 @@ public class Manager {
         Manager.partialResult.set("result", rez);
     }
 
-    public static void showPreferredSongs(String username) {
+    /**
+     * shows all liked songs by the specific user
+     * @param username the username of the user
+     */
+    public static void showPreferredSongs(final String username) {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode songs = objectMapper.createArrayNode();
 
@@ -255,12 +311,16 @@ public class Manager {
         Manager.partialResult.set("result", songs);
     }
 
+    /**
+     * shows top 5 playlists on app
+     */
     public static void getTop5Playlists() {
         ArrayList<Playlist> playlist = new ArrayList<>();
 
         for (Playlist play : playlists) {
-            if (play.getVisibility().equals("public"))
+            if (play.getVisibility().equals("public")) {
                 playlist.add(play);
+            }
         }
 
         for (int i = 0; i < playlist.size(); i++) {
@@ -277,18 +337,17 @@ public class Manager {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
-        for (int i = 0; i < playlist.size() && i < 5; i++) {
-//            System.out.print(pl.getName());
-//            System.out.print(pl.numberOfFollowers());
-//            System.out.println(pl.getTime());
+        for (int i = 0; i < playlist.size() && i < TOP5; i++) {
             node.add(playlist.get(i).getName());
         }
-//        System.out.println("-----------");
 
         Manager.partialResult.set("result", node);
 
     }
 
+    /**
+     * shows top 5 songs in app
+     */
     public static void getTop5Songs() {
 
         ArrayList<Song> tempSongs = Library.getInstance().getSongs();
@@ -302,13 +361,13 @@ public class Manager {
 
         for (int i = tempSongs.size() - 1; i >= 0; i--) {
             for (int j = tempSongs.size() - 1; j > 0; j--) {
-                if (freqVec[j] > freqVec[j-1]) {
-                    int temp = freqVec[j-1];
-                    freqVec[j-1] = freqVec[j];
+                if (freqVec[j] > freqVec[j - 1]) {
+                    int temp = freqVec[j - 1];
+                    freqVec[j - 1] = freqVec[j];
                     freqVec[j] = temp;
 
-                    Song sg = tempSongs.get(j-1);
-                    tempSongs.set(j-1, tempSongs.get(j));
+                    Song sg = tempSongs.get(j - 1);
+                    tempSongs.set(j - 1, tempSongs.get(j));
                     tempSongs.set(j, sg);
 
                 }
@@ -318,7 +377,7 @@ public class Manager {
         ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
-        for (Song sg : tempSongs.subList(0, 5)) {
+        for (Song sg : tempSongs.subList(0, TOP5)) {
             node.add(sg.getName());
 
         }
@@ -326,7 +385,12 @@ public class Manager {
 
     }
 
-    public static void checkSource(String username, String command) {
+    /**
+     * checks the control flow of specific user
+     * @param username the username of the user
+     * @param command the command used
+     */
+    public static void checkSource(final String username, final String command) {
 
         if (command.equals("search")) {
             sources.get(username).setSourceSearched(true);

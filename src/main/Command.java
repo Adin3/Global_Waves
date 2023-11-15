@@ -1,14 +1,11 @@
 package main;
 
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 
-import java.util.ArrayList;
 
 @Getter @Setter
-public class Command {
+public final class Command {
 
     private String command;
 

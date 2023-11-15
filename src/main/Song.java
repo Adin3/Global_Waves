@@ -6,7 +6,7 @@ import lombok.Setter;
 
 import java.util.ArrayList;
 
-public class Song {
+public final class Song {
     private String name;
     private Integer duration;
 
@@ -24,7 +24,7 @@ public class Song {
     @Getter
     private int id;
 
-    public Song(SongInput song, int id) {
+    public Song(final SongInput song, final int id) {
         this.name = song.getName();
         this.album = song.getAlbum();
         this.artist = song.getArtist();
@@ -37,7 +37,7 @@ public class Song {
         this.id = id;
     }
 
-    public Song(Song song) {
+    public Song(final Song song) {
         this.name = song.getName();
         this.album = song.getAlbum();
         this.artist = song.getArtist();

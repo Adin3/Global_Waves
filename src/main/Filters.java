@@ -6,7 +6,7 @@ import lombok.Setter;
 import java.util.ArrayList;
 
 @Getter @Setter
-public class Filters {
+public final class Filters {
 
     private String name;
 

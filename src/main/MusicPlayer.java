@@ -1,18 +1,13 @@
 package main;
 
-import com.fasterxml.jackson.core.ObjectCodec;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
-import lombok.Setter;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
 
-public class MusicPlayer extends Player{
+public final class MusicPlayer extends Player {
 
-    public MusicPlayer() {}
+    public MusicPlayer() { }
 
     @Getter
     private Song song;
@@ -27,32 +22,44 @@ public class MusicPlayer extends Player{
 
     private boolean repeatOnce = false;
 
-    public MusicPlayer(String owner) {
+    public MusicPlayer(final String owner) {
         this.owner = owner;
     }
 
     private String owner;
 
+    /**
+     * clear player
+     */
     public void clearPlayer() {
         song = null;
     }
 
+    /**
+     * load song in music player
+     */
     public void load() {
 
         if (!Manager.getSource(owner).isSourceSelected()) {
-            Manager.partialResult.put("message", "Please select a source before attempting to load.");
+            Manager.getPartialResult().put("message",
+                    "Please select a source before attempting to load.");
             return;
         }
 
         this.song = Manager.searchBar(owner).getSongLoaded();
         if (this.song != null) {
-            Manager.partialResult.put("message", "Playback loaded successfully.");
+            Manager.getPartialResult().put("message",
+                    "Playback loaded successfully.");
             song.setDuration(song.getMaxDuration());
         } else {
-            Manager.partialResult.put("message", "You can't load an empty audio collection!");
+            Manager.getPartialResult().put("message",
+                    "You can't load an empty audio collection!");
         }
     }
 
+    /**
+     * shows status
+     */
     public void status() {
         ObjectMapper objectMapper = new ObjectMapper();
         ObjectNode status = objectMapper.createObjectNode();
@@ -69,32 +76,46 @@ public class MusicPlayer extends Player{
             status.put("shuffle", shuffles());
             status.put("paused", paused());
         }
-        Manager.partialResult.set("stats", status);
+        Manager.getPartialResult().set("stats", status);
     }
 
+    /**
+     * trigger repeat
+     */
     public void repeat() {
 
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before setting the repeat status.");
             return;
         }
 
         repeatButton();
 
-        Manager.partialResult.put("message", "Repeat mode changed to " + repeat.toLowerCase() + ".");
+        Manager.getPartialResult().put("message",
+                "Repeat mode changed to " + repeat.toLowerCase() + ".");
     }
 
-    public void shuffle(int seed) {
+    /**
+     * trigger shuffle
+     */
+    public void shuffle(final int seed) {
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before using the shuffle function.");
             return;
         }
-        Manager.partialResult.put("message", "The loaded source is not a playlist.");
+        Manager.getPartialResult().put("message",
+                "The loaded source is not a playlist.");
     }
 
+    /**
+     * play the next song
+     */
     public void next() {
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before skipping to the next track.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before skipping to the next track.");
             return;
         }
 
@@ -109,21 +130,26 @@ public class MusicPlayer extends Player{
         }
 
         song.setDuration(song.getMaxDuration());
-        Manager.partialResult.put("message",
+        Manager.getPartialResult().put("message",
                 "Skipped to next track successfully. The current track is " + song.getName() + ".");
     }
 
+    /**
+     * play the previous song
+     */
     public void prev() {
 
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before returning to the previous track.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before returning to the previous track.");
             return;
         }
 
         if (!song.getDuration().equals(song.getMaxDuration())) {
             song.setDuration(song.getMaxDuration());
-            Manager.partialResult.put("message",
-                    "Returned to previous track successfully. The current track is " + song.getName() + ".");
+            Manager.getPartialResult().put("message",
+                    "Returned to previous track successfully."
+                            + " The current track is " + song.getName() + ".");
             return;
         }
 
@@ -138,55 +164,89 @@ public class MusicPlayer extends Player{
         }
 
         song.setDuration(song.getMaxDuration());
-        Manager.partialResult.put("message",
-                "Returned to previous track successfully. The current track is " + song.getName() + ".");
+        Manager.getPartialResult().put("message",
+                "Returned to previous track successfully."
+                        + " The current track is " + song.getName() + ".");
     }
 
+    /**
+     * skip forward for 90 seconds
+     */
     public void forward() {
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before attempting to forward.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before attempting to forward.");
             return;
         }
-        Manager.partialResult.put("message", "The loaded source is not a podcast.");
+        Manager.getPartialResult().put("message",
+                "The loaded source is not a podcast.");
     }
 
+    /**
+     * go backwards for 90 seconds
+     */
     public void backward() {
         if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.partialResult.put("message", "Please load a source before attempting to backward.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before attempting to backward.");
             return;
         }
-        Manager.partialResult.put("message", "The loaded source is not a podcast.");
+        Manager.getPartialResult().put("message",
+                "The loaded source is not a podcast.");
     }
 
+    /**
+     * trigger pause
+     */
     public void playPause() {
         Manager.musicPlayer(owner).pauseButton();
 
         if (Manager.musicPlayer(owner).paused()) {
-            Manager.partialResult.put("message", "Playback paused successfully.");
+            Manager.getPartialResult().put("message",
+                    "Playback paused successfully.");
         } else {
-            Manager.partialResult.put("message", "Playback resumed successfully.");
+            Manager.getPartialResult().put("message",
+                    "Playback resumed successfully.");
         }
     }
+    /**
+     * returns pause status
+     */
     public boolean paused() {
         return paused;
     }
 
+    /**
+     * returns shuffle status
+     */
     public boolean shuffles() {
         return shuffled;
     }
 
+    /**
+     * returns repeat status
+     */
     public String repeats() {
         return repeat;
     }
 
+    /**
+     * changes pause status
+     */
     public void pauseButton() {
         paused = !paused;
     }
 
+    /**
+     * changes shuffle status
+     */
     public void shuffleButton() {
         shuffled = !shuffled;
     }
 
+    /**
+     * changes repeat status
+     */
     public void repeatButton() {
         switch (repeatState) {
             case 0:
@@ -202,11 +262,23 @@ public class MusicPlayer extends Player{
                 repeat = "No Repeat";
                 repeatState = 0;
                 break;
+            default:
+                break;
         }
     }
 
-    public void updateDuration(int deltaTime) {
-        if (song == null) return;
+    /**
+     * update the duration of the current song
+     * @param deltaTime the variation of time
+     */
+    public void updateDuration(final int deltaTime) {
+        if (song == null) {
+            return;
+        }
+
+        if (paused) {
+            return;
+        }
 
         int time = song.getDuration() - deltaTime;
         savedTime = 0;
@@ -214,11 +286,15 @@ public class MusicPlayer extends Player{
             savedTime = -time;
             time = 0;
         }
-        if (!paused)
-            song.setDuration(time);
+        song.setDuration(time);
     }
+    /**
+     * updates the player
+     */
     public void updatePlayer() {
-        if (song == null) return;
+        if (song == null) {
+            return;
+        }
 
         while (savedTime != 0 && !repeat.equals("No Repeat")) {
             if (repeat.equals("Repeat Once")) {

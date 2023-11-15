@@ -4,19 +4,13 @@ import checker.Checker;
 import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
-import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.LibraryInput;
-import fileio.input.PodcastInput;
-import fileio.input.SongInput;
-import fileio.input.UserInput;
 
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
 import java.util.Objects;
 
 /**
@@ -38,7 +32,6 @@ public final class Main {
      * @param args from command line
      * @throws IOException in case of exceptions to reading / writing
      */
-    static int a = 1;
     public static void main(final String[] args) throws IOException {
         File directory = new File(CheckerConstants.TESTS_PATH);
         Path path = Paths.get(CheckerConstants.RESULT_PATH);
@@ -60,9 +53,8 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a <= 17) {
+            if (isCreated) {
                 action(file.getName(), filepath);
-                a++;
             }
         }
 
@@ -77,10 +69,12 @@ public final class Main {
     public static void action(final String filePath1,
                               final String filePath2) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        LibraryInput libraryInput = objectMapper.readValue(new File(LIBRARY_PATH), LibraryInput.class);
+        LibraryInput libraryInput = objectMapper.readValue(new File(LIBRARY_PATH),
+                LibraryInput.class);
         Library.setInstance(libraryInput);
         Library.getInstance().setMaxDuration();
-        Command[] commands = objectMapper.readValue(new File("input/" + filePath1), Command[].class);
+        Command[] commands = objectMapper.readValue(new File("input/" + filePath1),
+                Command[].class);
 
         Library lib = Library.getInstance();
         for (User user : lib.getUsers()) {
@@ -90,12 +84,10 @@ public final class Main {
             Manager.addSource(user.getUsername());
         }
 
-        Manager.result = objectMapper.createArrayNode();
+        Manager.setResult(objectMapper.createArrayNode());
 
         int deltaTime = 0;
         int lastTime = 0;
-
-        System.out.println("-----------------" + a);
 
         Manager.getPlaylists().clear();
         for (Command command : commands) {
@@ -104,16 +96,15 @@ public final class Main {
             int nextTime = command.getTimestamp();
             deltaTime = nextTime - lastTime;
             lastTime = nextTime;
-            System.out.print(command.getTimestamp());
-            System.out.print(" ");
 
             Manager.updatePlayers(deltaTime);
 
-            Manager.partialResult = objectMapper.createObjectNode();
-            Manager.partialResult.put("command", command.getCommand());
-            if (username != null)
-                Manager.partialResult.put("user", command.getUsername());
-            Manager.partialResult.put("timestamp", command.getTimestamp());
+            Manager.setPartialResult(objectMapper.createObjectNode());
+            Manager.getPartialResult().put("command", command.getCommand());
+            if (username != null) {
+                Manager.getPartialResult().put("user", command.getUsername());
+            }
+            Manager.getPartialResult().put("timestamp", command.getTimestamp());
 
             switch (command.getCommand()) {
                 case "search":
@@ -134,8 +125,9 @@ public final class Main {
 
                     break;
                 case "load":
-                    if (!Manager.getSource(username).isSourceLoaded())
+                    if (!Manager.getSource(username).isSourceLoaded()) {
                         Manager.getUser(username).setMusicPlayer();
+                    }
 
                     Manager.musicPlayer(username).load();
 
@@ -149,7 +141,8 @@ public final class Main {
 
                     break;
                 case "createPlaylist":
-                    Manager.addPlaylist(username, command.getPlaylistName(), command.getTimestamp());
+                    Manager.addPlaylist(username, command.getPlaylistName(),
+                            command.getTimestamp());
 
                     break;
                 case "addRemoveInPlaylist":
@@ -194,15 +187,18 @@ public final class Main {
                 case "getTop5Songs":
                     Manager.getTop5Songs();
                     break;
+                default:
+                    break;
             }
-            if (username != null)
+            if (username != null) {
                 Manager.checkSource(username, command.getCommand());
-            Manager.result.add(Manager.partialResult);
+            }
+            Manager.getResult().add(Manager.getPartialResult());
         }
 
 
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
-        objectWriter.writeValue(new File(filePath2), Manager.result);
+        objectWriter.writeValue(new File(filePath2), Manager.getResult());
     }
 }

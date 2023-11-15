@@ -1,17 +1,23 @@
 package main;
 
-import fileio.input.*;
+import fileio.input.PodcastInput;
+import fileio.input.UserInput;
+import fileio.input.LibraryInput;
 
 import java.util.ArrayList;
 
-public class Library {
+public final class Library {
     private static Library instance = null;
     private static ArrayList<Song> songs = new ArrayList<>();
     private static ArrayList<Podcast> podcasts = new ArrayList<>();
     private static ArrayList<User> users = new ArrayList<>();
 
-    private Library() {}
+    private Library() { }
 
+
+    /**
+     * Returns the instance of Library
+     */
     public static Library getInstance() {
         if (instance == null) {
             instance = new Library();
@@ -19,7 +25,11 @@ public class Library {
         return instance;
     }
 
-    public static void setInstance(LibraryInput lib) {
+    /**
+     * Sets the instance of library
+     * @param lib get the libraryInput info
+     */
+    public static void setInstance(final LibraryInput lib) {
         instance = new Library();
         songs.clear();
         podcasts.clear();
@@ -59,6 +69,9 @@ public class Library {
         this.users = users;
     }
 
+    /**
+     * Sets the maximum duration for all songs
+     */
     public void setMaxDuration() {
         for (Song song : songs) {
             song.setMaxDuration(song.getDuration());

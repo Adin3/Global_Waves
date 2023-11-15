@@ -4,15 +4,15 @@ import fileio.input.EpisodeInput;
 import lombok.Getter;
 import lombok.Setter;
 
-public class Episode {
-    private String name;
+public final class Episode {
+    private final String name;
     private Integer duration;
 
     @Getter @Setter
     private Integer maxDuration;
     private String description;
 
-    public Episode(EpisodeInput episode) {
+    public Episode(final EpisodeInput episode) {
         this.name = episode.getName();
         this.duration = episode.getDuration();
         this.description = episode.getDescription();
@@ -20,10 +20,6 @@ public class Episode {
 
     public String getName() {
         return name;
-    }
-
-    public void setName(final String name) {
-        this.name = name;
     }
 
     public Integer getDuration() {

@@ -3,7 +3,7 @@ package main;
 import lombok.Getter;
 
 public class Player {
-    public Player() {}
+    public Player() { }
 
     @Getter
     private Song song;
@@ -18,54 +18,111 @@ public class Player {
     private boolean paused = false;
 
     private boolean shuffled = false;
-
-    public void clearPlayer() {};
+    /**
+     * clear player
+     */
+    public void clearPlayer() { };
+    /**
+     * load song
+     */
     public void load() {
-        Manager.partialResult.put("message", "Please select a source before attempting to load.");
+        Manager.getPartialResult().put("message",
+                "Please select a source before attempting to load.");
     }
 
-    public void status() {}
-    public void playPause() {}
+    /**
+     * shows status
+     */
+    public void status() { }
 
+    /**
+     * trigger pause
+     */
+    public void playPause() { }
+
+    /**
+     * shows pause status
+     */
     public boolean paused() {
         return false;
     }
 
+    /**
+     * shows shuffle status
+     */
     public boolean shuffles() {
         return false;
     }
 
+    /**
+     * trigger repeat
+     */
     public void repeat() {
-        Manager.partialResult.put("message", "Please load a source before setting the repeat status.");
+        Manager.getPartialResult().put("message",
+                "Please load a source before setting the repeat status.");
     }
 
-    public void shuffle(int seed) {
-        Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
+    /**
+     * trigger shuffle
+     */
+    public void shuffle(final int seed) {
+        Manager.getPartialResult().put("message",
+                "Please load a source before using the shuffle function.");
     }
 
+    /**
+     * play next song
+     */
     public void next() {
-        Manager.partialResult.put("message", "Please load a source before skipping to the next track.");
+        Manager.getPartialResult().put("message",
+                "Please load a source before skipping to the next track.");
     }
 
+    /**
+     * play previous song
+     */
     public void prev() {
-        Manager.partialResult.put("message", "Please load a source before returning to the previous track.");
+        Manager.getPartialResult().put("message",
+                "Please load a source before returning to the previous track.");
     }
 
+    /**
+     * skip forward
+     */
     public void forward() {
-        Manager.partialResult.put("message", "Please load a source before skipping forward.");
+        Manager.getPartialResult().put("message",
+                "Please load a source before skipping forward.");
     }
 
+    /**
+     * go backwards
+     */
     public void backward() {
-        Manager.partialResult.put("message", "Please select a source before rewinding.");
+        Manager.getPartialResult().put("message", "Please select a source before rewinding.");
     }
 
-    public void pauseButton() {}
+    /**
+     * changes pause status
+     */
+    public void pauseButton() { }
 
-    public void shuffleButton() {}
+    /**
+     * changes shuffle status
+     */
+    public void shuffleButton() { }
 
-    public void repeatButton() {}
+    /**
+     * changes repeat status
+     */
+    public void repeatButton() { }
 
-    public void updateDuration(int deltaTime) {}
+    /**
+     * update song duration
+     */
+    public void updateDuration(final int deltaTime) { }
 
-    public void updatePlayer() {}
+    /**
+     * update the player
+     */
+    public void updatePlayer() { }
 }

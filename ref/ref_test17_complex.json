@@ -4766,13 +4766,13 @@
   "command" : "next",
   "user" : "henry26",
   "timestamp" : 5570,
-  "message" : "Skipped to next track successfully. The current track is Dream On."
+  "message" : "Please load a source before skipping to the next track."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 5570,
   "stats" : {
-    "name" : "Dream On",
+    "name" : "",
     "remainedTime" : 0,
     "repeat" : "No Repeat",
     "shuffle" : false,
@@ -4948,15 +4948,15 @@
   "command" : "repeat",
   "user" : "henry26",
   "timestamp" : 5670,
-  "message" : "Repeat mode changed to repeat all."
+  "message" : "Please load a source before setting the repeat status."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 5670,
   "stats" : {
-    "name" : "Dream On",
+    "name" : "",
     "remainedTime" : 0,
-    "repeat" : "Repeat All",
+    "repeat" : "No Repeat",
     "shuffle" : false,
     "paused" : true
   }
@@ -5145,17 +5145,17 @@
   "command" : "next",
   "user" : "henry26",
   "timestamp" : 5770,
-  "message" : "Skipped to next track successfully. The current track is Dream On."
+  "message" : "Please load a source before skipping to the next track."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 5770,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "playPause",
@@ -5316,17 +5316,17 @@
   "command" : "shuffle",
   "user" : "henry26",
   "timestamp" : 5870,
-  "message" : "Shuffle function activated successfully."
+  "message" : "Please load a source before using the shuffle function."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 5870,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 167,
-    "repeat" : "Repeat All",
-    "shuffle" : true,
-    "paused" : false
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
+    "shuffle" : false,
+    "paused" : true
   }
 }, {
   "command" : "switchVisibility",
@@ -5518,17 +5518,17 @@
   "command" : "shuffle",
   "user" : "henry26",
   "timestamp" : 5970,
-  "message" : "Shuffle function deactivated successfully."
+  "message" : "Please load a source before using the shuffle function."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 5970,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 67,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "shuffle",
@@ -5695,22 +5695,22 @@
   "user" : "henry26",
   "timestamp" : 6070,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 234,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6070,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 234,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "playPause",
@@ -5865,17 +5865,17 @@
   "command" : "prev",
   "user" : "henry26",
   "timestamp" : 6170,
-  "message" : "Returned to previous track successfully. The current track is Dream On."
+  "message" : "Please load a source before returning to the previous track."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6170,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "next",
@@ -6035,17 +6035,17 @@
   "command" : "next",
   "user" : "henry26",
   "timestamp" : 6270,
-  "message" : "Skipped to next track successfully. The current track is Dream On."
+  "message" : "Please load a source before skipping to the next track."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6270,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "switchVisibility",
@@ -6222,22 +6222,22 @@
   "user" : "henry26",
   "timestamp" : 6370,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 167,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6370,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 167,
-    "repeat" : "Repeat All",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "like",
@@ -6397,17 +6397,17 @@
   "command" : "shuffle",
   "user" : "henry26",
   "timestamp" : 6470,
-  "message" : "Shuffle function activated successfully."
+  "message" : "Please load a source before using the shuffle function."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6470,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 67,
-    "repeat" : "Repeat All",
-    "shuffle" : true,
-    "paused" : false
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
+    "shuffle" : false,
+    "paused" : true
   }
 }, {
   "command" : "next",
@@ -6568,17 +6568,17 @@
   "command" : "repeat",
   "user" : "henry26",
   "timestamp" : 6570,
-  "message" : "Repeat mode changed to repeat current song."
+  "message" : "Please load a source before setting the repeat status."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6570,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 234,
-    "repeat" : "Repeat Current Song",
-    "shuffle" : true,
-    "paused" : false
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
+    "shuffle" : false,
+    "paused" : true
   }
 }, {
   "command" : "repeat",
@@ -6734,17 +6734,17 @@
   "command" : "shuffle",
   "user" : "henry26",
   "timestamp" : 6670,
-  "message" : "Shuffle function deactivated successfully."
+  "message" : "Please load a source before using the shuffle function."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6670,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 134,
-    "repeat" : "Repeat Current Song",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "shuffle",
@@ -6904,22 +6904,22 @@
   "command" : "prev",
   "user" : "henry26",
   "timestamp" : 6770,
-  "message" : "Returned to previous track successfully. The current track is Dream On."
+  "message" : "Please load a source before returning to the previous track."
 }, {
   "command" : "prev",
   "user" : "henry26",
   "timestamp" : 6770,
-  "message" : "Returned to previous track successfully. The current track is Dream On."
+  "message" : "Please load a source before returning to the previous track."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6770,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
-    "repeat" : "Repeat Current Song",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "next",
@@ -7106,17 +7106,17 @@
   "command" : "like",
   "user" : "henry26",
   "timestamp" : 6870,
-  "message" : "Like registered successfully."
+  "message" : "Please load a source before liking or unliking."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6870,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 167,
-    "repeat" : "Repeat Current Song",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "switchVisibility",
@@ -7288,17 +7288,17 @@
   "command" : "like",
   "user" : "henry26",
   "timestamp" : 6970,
-  "message" : "Unlike registered successfully."
+  "message" : "Please load a source before liking or unliking."
 }, {
   "command" : "status",
   "user" : "henry26",
   "timestamp" : 6970,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 67,
-    "repeat" : "Repeat Current Song",
+    "name" : "",
+    "remainedTime" : 0,
+    "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "shuffle",
@@ -7427,7 +7427,7 @@
   "command" : "follow",
   "user" : "frank21",
   "timestamp" : 7040,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -7443,7 +7443,7 @@
   "command" : "follow",
   "user" : "grace25",
   "timestamp" : 7050,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -7475,7 +7475,7 @@
   "command" : "follow",
   "user" : "irene33",
   "timestamp" : 7070,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -7523,7 +7523,7 @@
   "command" : "follow",
   "user" : "bob35",
   "timestamp" : 7100,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -8131,7 +8131,7 @@
   "command" : "follow",
   "user" : "jack29",
   "timestamp" : 7480,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -8195,7 +8195,7 @@
   "command" : "follow",
   "user" : "david27",
   "timestamp" : 7520,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "emily30",
@@ -8483,7 +8483,7 @@
   "command" : "follow",
   "user" : "bob35",
   "timestamp" : 7700,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -8819,7 +8819,7 @@
   "command" : "follow",
   "user" : "carol19",
   "timestamp" : 7910,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -9235,7 +9235,7 @@
   "command" : "follow",
   "user" : "irene33",
   "timestamp" : 8170,
-  "message" : "Playlist followed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -9603,7 +9603,7 @@
   "command" : "follow",
   "user" : "bob35",
   "timestamp" : 8400,
-  "message" : "Playlist unfollowed successfully."
+  "message" : "You cannot follow or unfollow your own playlist."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -9765,7 +9765,7 @@
     "name" : "Electric Harmonies Odyssey #2",
     "songs" : [ "Dream On", "Big Pimpin'", "Sad But True", "Shape of You", "Don't" ],
     "visibility" : "public",
-    "followers" : 2
+    "followers" : 1
   } ]
 }, {
   "command" : "showPreferredSongs",
@@ -9780,7 +9780,7 @@
     "name" : "Groovy Grooves Dream #1",
     "songs" : [ "Maps", "Under Pressure", "Stairway to Heaven", "Start Me Up", "Shape of You" ],
     "visibility" : "private",
-    "followers" : 1
+    "followers" : 0
   }, {
     "name" : "Groovy Grooves Expedition #2",
     "songs" : [ "Love Story", "Don't", "Money Trees", "Maps" ],
@@ -9800,7 +9800,7 @@
     "name" : "Breezy Bangers Quest #1",
     "songs" : [ "Blank Space", "Big Pimpin'", "Begin Again", "Paint It Black", "Love Story" ],
     "visibility" : "public",
-    "followers" : 4
+    "followers" : 3
   }, {
     "name" : "Stellar Tunes Quest #2",
     "songs" : [ "Start Me Up", "Dream On", "Angie", "Gimme Shelter", "Begin Again", "Black Dog", "Stairway to Heaven" ],
@@ -9845,7 +9845,7 @@
     "name" : "Classic Grooves Trek #2",
     "songs" : [ "Gimme Shelter", "Bohemian Rhapsody", "Love Story", "Black Dog", "Thinking Out Loud" ],
     "visibility" : "public",
-    "followers" : 3
+    "followers" : 2
   } ]
 }, {
   "command" : "showPreferredSongs",
@@ -9860,7 +9860,7 @@
     "name" : "Groovy Vibes Odyssey #1",
     "songs" : [ "Delicate", "Under Pressure", "Money Trees", "Love Story", "The Man", "Shape of You" ],
     "visibility" : "public",
-    "followers" : 5
+    "followers" : 4
   }, {
     "name" : "Dynamic Tracks Adventure #2",
     "songs" : [ "Begin Again", "Gimme Shelter", "Start Me Up" ],
@@ -9900,12 +9900,12 @@
     "name" : "Chill Sounds Voyage #1",
     "songs" : [ "The Man", "Blank Space", "Shape of You", "Sad But True", "Don't", "Money Trees", "Happier", "Paint It Black", "Begin Again" ],
     "visibility" : "public",
-    "followers" : 4
+    "followers" : 3
   }, {
     "name" : "Electric Melodies Escape #2",
     "songs" : [ "Dream On", "Don't", "Thinking Out Loud", "Black Dog" ],
     "visibility" : "private",
-    "followers" : 1
+    "followers" : 0
   } ]
 }, {
   "command" : "showPreferredSongs",
@@ -9920,7 +9920,7 @@
     "name" : "Vibey Bangers Safari #1",
     "songs" : [ "Don't", "Start Me Up", "Stairway to Heaven", "Thinking Out Loud", "Black Dog", "The Man" ],
     "visibility" : "public",
-    "followers" : 3
+    "followers" : 2
   }, {
     "name" : "Groovy Rhythms Dream #2",
     "songs" : [ "Shape of You", "Money Trees", "Delicate", "Start Me Up", "Blank Space", "Begin Again", "Sad But True" ],
@@ -9935,7 +9935,7 @@
 }, {
   "command" : "getTop5Playlists",
   "timestamp" : 8580,
-  "result" : [ "Chill Melodies Voyage #1", "Dynamic Tracks Adventure #2", "Stellar Tunes Quest #2", "Groovy Vibes Odyssey #1", "Breezy Rhythms Trek #1" ]
+  "result" : [ "Chill Melodies Voyage #1", "Dynamic Tracks Adventure #2", "Stellar Tunes Quest #2", "Breezy Rhythms Trek #1", "Chill Sounds Journey #1" ]
 }, {
   "command" : "getTop5Songs",
   "timestamp" : 8580,

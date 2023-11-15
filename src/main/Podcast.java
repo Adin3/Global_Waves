@@ -5,12 +5,12 @@ import fileio.input.PodcastInput;
 
 import java.util.ArrayList;
 
-public class Podcast {
+public final class Podcast {
     private String name;
     private String owner;
     private ArrayList<Episode> episodes = new ArrayList<>();
 
-    public Podcast(PodcastInput podcast) {
+    public Podcast(final PodcastInput podcast) {
         this.name = podcast.getName();
         this.owner = podcast.getOwner();
         for (EpisodeInput episode : podcast.getEpisodes()) {

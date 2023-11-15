@@ -1,12 +1,11 @@
 package main;
 
-import fileio.input.SongInput;
 import fileio.input.UserInput;
 import lombok.Getter;
 
 import java.util.ArrayList;
 
-public class User {
+public final class User {
     private String username;
     private int age;
     private String city;
@@ -26,7 +25,7 @@ public class User {
     @Getter
     private final ArrayList<Song> likedSongs = new ArrayList<>();
 
-    public User(UserInput user) {
+    public User(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
         this.username = user.getUsername();
@@ -55,19 +54,33 @@ public class User {
     public void setCity(final String city) {
         this.city = city;
     }
-
-    public void addPlaylist(Playlist playlist) {
+    /**
+     * adds playlist to user
+     * @param playlist a playlist
+     */
+    public void addPlaylist(final Playlist playlist) {
         playlists.add(playlist);
     }
 
-    public void addLikedSong(Song song) {
+    /**
+     * adds song to liked song collection
+     * @param song to be liked song
+     */
+    public void addLikedSong(final Song song) {
         likedSongs.add(song);
     }
 
-    public void removeLikedSong(Song song) {
+    /**
+     * removes song from liked song collection
+     * @param song liked song
+     */
+    public void removeLikedSong(final Song song) {
         likedSongs.remove(song);
     }
 
+    /**
+     * creates new player based on searches
+     */
     public void setMusicPlayer() {
         switch (type) {
             case "song":
@@ -79,20 +92,17 @@ public class User {
             case "playlist":
                 musicplayer = new PlaylistPlayer(username);
                 break;
+            default:
+                break;
         }
     }
-
-    public void setPlaylistPlayer() {
-
-    }
-
-    public void setPodcastPlayer() {
-
-    }
-
-    public void setSearchBar(String type) {
-        this.type = type;
-        switch (type) {
+    /**
+     * creates a searchbar depending on the type searched
+     * @param commandType search type
+     */
+    public void setSearchBar(final String commandType) {
+        this.type = commandType;
+        switch (this.type) {
             case "song":
                 searchBar = new SearchBarSong(username);
                 break;
@@ -102,10 +112,8 @@ public class User {
             case "playlist":
                 searchBar = new SearchBarPlaylist(username);
                 break;
+            default:
+                break;
         }
-    }
-
-    public void removePlayer() {
-
     }
 }

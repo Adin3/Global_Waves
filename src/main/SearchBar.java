@@ -1,8 +1,6 @@
 package main;
 
 import lombok.Getter;
-
-import java.util.ArrayList;
 public class SearchBar {
 
     @Getter
@@ -19,13 +17,24 @@ public class SearchBar {
 
     @Getter
     protected boolean sourceSelected;
-    public SearchBar() {}
+    public SearchBar() { }
+    /**
+     * clears the search
+     */
+    public void clearSearch() { }
 
-    public void clearSearch() {}
+    /**
+     * select the searched item
+     */
+    public void select(final int number, final String username) { }
 
-    public void select(int number, String username) {}
+    /**
+     * search items by filters
+     */
+    public void search(final Filters filter) { }
 
-    public void search(Filters filter) {}
-
-    public void searchDone() {}
+    /**
+     * returns what was searched
+     */
+    public void searchDone() { }
 }
