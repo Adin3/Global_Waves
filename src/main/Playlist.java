@@ -27,8 +27,21 @@ public class Playlist {
         this.name = name;
         this.time = time;
     }
+
+    public Playlist(Playlist playlist) {
+        this.owner = playlist.getOwner();
+        this.name = playlist.getName();
+        this.time = playlist.getTime();
+        this.visibility = playlist.getVisibility();
+        this.followers = playlist.getFollowers();
+        this.songs.addAll(playlist.getSongs());
+    }
     public void addSong(Song song) {
         this.songs.add(song);
+    }
+
+    public void setSong(Song song, int index) {
+        songs.set(index, song);
     }
 
     public void removeSong(Song song) {

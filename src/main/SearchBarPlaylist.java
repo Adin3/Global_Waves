@@ -63,17 +63,43 @@ public class SearchBarPlaylist extends SearchBar{
     }
 
     public void search(Filters filter) {
-        if (filter.getName() != null)
+        int options = 0;
+        if (filter.getName() != null) {
+            options++;
             playlists.addAll(SearchPlaylistByName(filter.getName()));
+        }
 
-        if (filter.getOwner() != null)
+        if (filter.getOwner() != null) {
+            options++;
             playlists.addAll(SearchPlaylistByOwner(filter.getOwner()));
+        }
 
         for(int i = 0; i < playlists.size(); i++) {
             if(playlists.get(i).getVisibility().equals("private") && !playlists.get(i).getOwner().equals(owner)) {
                 playlists.remove(i);
                 i--;
             }
+        }
+
+        if (options > 1) {
+            ArrayList<Playlist> temp = new ArrayList<>();
+
+            for(Playlist p : playlists)
+                if(Collections.frequency(playlists, p) > 1)
+                    temp.add(p);
+
+            playlists.clear();
+            playlists.addAll(temp);
+            temp.clear();
+
+            for (Playlist p : playlists) {
+                if (!temp.contains(p)) {
+                    temp.add(p);
+                }
+            }
+
+            playlists.clear();
+            playlists.addAll(temp);
         }
 
         while (playlists.size() > 5) {

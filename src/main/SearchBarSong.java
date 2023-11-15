@@ -5,6 +5,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 public class SearchBarSong extends SearchBar{
     @Getter
@@ -31,7 +32,7 @@ public class SearchBarSong extends SearchBar{
     }
 
     public void select(int number, String username) {
-        if (song.isEmpty() || !Manager.getSource(username).isSourceSearched()) {
+        if (!Manager.getSource(username).isSourceSearched()) {
             Manager.partialResult.put("message", "Please conduct a search before making a selection.");
         } else {
             if (number <= song.size()) {
@@ -42,8 +43,10 @@ public class SearchBarSong extends SearchBar{
                 return;
             }
             Manager.partialResult.put("message", "The selected ID is too high.");
+            Manager.getSource(username).setSourceSearched(false);
             return;
         }
+        Manager.getSource(username).setSourceSearched(false);
     }
 
     public void searchDone() {
@@ -58,31 +61,64 @@ public class SearchBarSong extends SearchBar{
             node.add(sg.getName());
 
         Manager.partialResult.set("results", node);
-        sourceSearched = true;
     }
 
     public void search(Filters filter) {
-
+        int options = 0;
         if (filter.getAlbum() != null) {
+            options++;
             song.addAll(SearchSongByAlbum(filter.getAlbum()));
         }
-        else if (filter.getArtist() != null) {
+
+        if (filter.getArtist() != null) {
+            options++;
             song.addAll(SearchSongByArtist(filter.getArtist()));
         }
-        else if (filter.getName() != null) {
+
+        if (filter.getName() != null) {
+            options++;
             song.addAll(SearchSongByName(filter.getName()));
         }
-        else if (filter.getGenre() != null) {
+
+        if (filter.getGenre() != null) {
+            options++;
             song.addAll(SearchSongByGenre(filter.getGenre()));
         }
-        else if (filter.getLyrics() != null) {
+
+        if (filter.getLyrics() != null) {
+            options++;
             song.addAll(SearchSongByLyrics(filter.getLyrics()));
         }
-        else if (filter.getReleaseYear() != null) {
+
+        if (filter.getReleaseYear() != null) {
+            options++;
             song.addAll(SearchSongByYear(filter.getReleaseYear()));
         }
-        else if (filter.getTags() != null) {
+
+        if (filter.getTags() != null) {
+            options++;
             song.addAll(SearchSongByTags(filter.getTags()));
+        }
+
+        if (options > 1) {
+            ArrayList<Song> temp = new ArrayList<>();
+
+            for(Song s : song)
+                if(Collections.frequency(song, s) > 1)
+                    temp.add(s);
+
+            song.clear();
+            song.addAll(temp);
+            temp.clear();
+
+            for (Song s : song) {
+                if (!temp.contains(s)) {
+                    temp.add(s);
+                }
+            }
+
+            song.clear();
+            song.addAll(temp);
         }
 
         while (song.size() > 5) {

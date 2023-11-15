@@ -21,7 +21,23 @@ public class Song {
     private Integer releaseYear;
     private String artist;
 
-    public Song(SongInput song) {
+    @Getter
+    private int id;
+
+    public Song(SongInput song, int id) {
+        this.name = song.getName();
+        this.album = song.getAlbum();
+        this.artist = song.getArtist();
+        this.genre = song.getGenre();
+        this.lyrics = song.getLyrics();
+        this.duration = song.getDuration();
+        this.maxDuration = song.getDuration();
+        this.releaseYear = song.getReleaseYear();
+        this.tags.addAll(song.getTags());
+        this.id = id;
+    }
+
+    public Song(Song song) {
         this.name = song.getName();
         this.album = song.getAlbum();
         this.artist = song.getArtist();
@@ -30,6 +46,8 @@ public class Song {
         this.duration = song.getDuration();
         this.releaseYear = song.getReleaseYear();
         this.tags.addAll(song.getTags());
+        this.maxDuration = song.getMaxDuration();
+        this.id = song.getId();
     }
 
     public String getName() {

@@ -24,8 +24,8 @@ public class Library {
         songs.clear();
         podcasts.clear();
         users.clear();
-        for (SongInput song : lib.getSongs()) {
-            songs.add(new Song(song));
+        for (int i = 0;  i < lib.getSongs().size(); i++) {
+            songs.add(new Song(lib.getSongs().get(i), i));
         }
         for (PodcastInput podcast : lib.getPodcasts()) {
             podcasts.add(new Podcast(podcast));

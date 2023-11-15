@@ -60,7 +60,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a <= 15) {
+            if (isCreated && a <= 17) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -104,7 +104,8 @@ public final class Main {
             int nextTime = command.getTimestamp();
             deltaTime = nextTime - lastTime;
             lastTime = nextTime;
-
+            System.out.print(command.getTimestamp());
+            System.out.print(" ");
 
             Manager.updatePlayers(deltaTime);
 

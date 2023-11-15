@@ -27,7 +27,10 @@ public class PlaylistPlayer extends Player{
 
     private int playlistPosition;
 
+    private int previousPlaylistPosition = 0;
     private int[] shuffledIndexes;
+
+    ArrayList<Song> unshuffledplaylist = new ArrayList<>();
 
     public PlaylistPlayer(String owner) {
         this.owner = owner;
@@ -55,9 +58,10 @@ public class PlaylistPlayer extends Player{
         }
 
         Manager.partialResult.put("message", "Playback loaded successfully.");
-        currentSong = playlist.getSong(0);
+        currentSong = new Song(playlist.getSong(0));
         currentSong.setDuration(currentSong.getMaxDuration());
         playlistPosition = 0;
+        previousPlaylistPosition = 0;
     }
 
     public void repeat() {
@@ -74,7 +78,7 @@ public class PlaylistPlayer extends Player{
 
     public void shuffle(int seed) {
 
-        if (!Manager.getSource(owner).isSourceLoaded() && playlist == null) {
+        if (!Manager.getSource(owner).isSourceLoaded() || playlist == null || currentSong == null) {
             Manager.partialResult.put("message", "Please load a source before using the shuffle function.");
             return;
         }
@@ -86,34 +90,67 @@ public class PlaylistPlayer extends Player{
             createShuffledVec(seed);
         } else {
             Manager.partialResult.put("message", "Shuffle function deactivated successfully.");
+            if (currentSong != null) {
+                for (int i = 0; i < playlist.getSongs().size(); i++) {
+                    playlist.setSong(unshuffledplaylist.get(i), i);
+                }
+
+                for (int i = 0; i < playlist.getSongs().size(); i++) {
+                    if (playlist.getSongs().get(i).getName().equals(currentSong.getName())) {
+                        playlistPosition = i;
+                    }
+                }
+            }
         }
     }
 
     private void createShuffledVec(int seed) {
         final Random rand = new Random(seed);
         rand.setSeed(seed);
+        unshuffledplaylist.addAll(playlist.getSongs());
 
         shuffledIndexes = new int[playlist.getSongs().size()];
 
+//        for (int i = 0; i < playlist.getSongs().size(); i++) {
+//            System.out.print(playlist.getSongs().get(i).getName());
+//            System.out.print(" ");
+//            System.out.println(i);
+//        }
+//        System.out.println(playlistPosition);
+
         for (int i = 0; i < playlist.getSongs().size(); i++) {
             shuffledIndexes[i] = i;
-            System.out.println(shuffledIndexes[i]);
+            //System.out.println(shuffledIndexes[i]);
         }
 
-        for (int i = shuffledIndexes.length - 1; i > 0; i--) {
+        for (int i = shuffledIndexes.length - 1; i >= 0; i--) {
             int index = rand.nextInt(i + 1);
             int temp = shuffledIndexes[index];
             shuffledIndexes[index] = shuffledIndexes[i];
             shuffledIndexes[i] = temp;
         }
 
+
         for (int i = 0; i < playlist.getSongs().size(); i++) {
-            System.out.println(shuffledIndexes[i]);
+            playlist.setSong(unshuffledplaylist.get(shuffledIndexes[i]), i);
         }
+
+        for (int i = 0; i < playlist.getSongs().size(); i++) {
+            if (playlist.getSongs().get(i).getName().equals(currentSong.getName())) {
+                playlistPosition = i;
+            }
+        }
+
+//        for (int i = 0; i < playlist.getSongs().size(); i++) {
+//            System.out.print(playlist.getSongs().get(shuffledIndexes[i]).getName());
+//            System.out.print(" ");
+//            System.out.println(shuffledIndexes[i]);
+//        }
+//        System.out.println(playlistPosition);
     }
 
     public void next() {
-        if (!Manager.getSource(owner).isSourceLoaded()) {
+        if (!Manager.getSource(owner).isSourceLoaded() || currentSong == null) {
             Manager.partialResult.put("message", "Please load a source before skipping to the next track.");
             return;
         }
@@ -125,8 +162,9 @@ public class PlaylistPlayer extends Player{
             return;
         }
 
-        boolean end = playlistPosition >= playlist.getSongs().size();
+        boolean end = playlistPosition + 1 >= playlist.getSongs().size();
         if (repeat.equals("Repeat All")) {
+            previousPlaylistPosition = playlistPosition;
             if (end) {
                 playlistPosition = 0;
             } else {
@@ -134,28 +172,33 @@ public class PlaylistPlayer extends Player{
             }
 
             currentSong.setDuration(currentSong.getMaxDuration());
-            currentSong = playlist.getSong(playlistPosition);
+            currentSong = new Song(playlist.getSong(playlistPosition));
             currentSong.setDuration(currentSong.getMaxDuration());
             Manager.partialResult.put("message",
                     "Skipped to next track successfully. The current track is " + currentSong.getName() + ".");
+            paused = false;
             return;
         }
 
         if (end) {
-            currentSong = null;
+            Manager.partialResult.put("message",
+                    "Skipped to next track successfully. The current track is " + currentSong.getName() + ".");
+            currentSong.setDuration(0);
+            paused = true;
             return;
         }
-
+        previousPlaylistPosition = playlistPosition;
         playlistPosition++;
         currentSong.setDuration(currentSong.getMaxDuration());
-        currentSong = playlist.getSong(playlistPosition);
+        currentSong = new Song(playlist.getSong(playlistPosition));
         currentSong.setDuration(currentSong.getMaxDuration());
         Manager.partialResult.put("message",
                 "Skipped to next track successfully. The current track is " + currentSong.getName() + ".");
+        paused = false;
     }
 
     public void prev() {
-        if (!Manager.getSource(owner).isSourceLoaded()) {
+        if (!Manager.getSource(owner).isSourceLoaded() || currentSong == null) {
             Manager.partialResult.put("message", "Please load a source before returning to the previous track.");
             return;
         }
@@ -164,6 +207,7 @@ public class PlaylistPlayer extends Player{
             currentSong.setDuration(currentSong.getMaxDuration());
             Manager.partialResult.put("message",
                     "Returned to previous track successfully. The current track is " + currentSong.getName() + ".");
+            paused = false;
             return;
         }
 
@@ -171,36 +215,20 @@ public class PlaylistPlayer extends Player{
             currentSong.setDuration(currentSong.getMaxDuration());
             Manager.partialResult.put("message",
                     "Returned to previous track successfully. The current track is " + currentSong.getName() + ".");
+            paused = false;
             return;
         }
 
-        boolean end = playlistPosition <= 0;
-        if (repeat.equals("Repeat All")) {
-            if (end) {
-                playlistPosition = playlist.getSongs().size() - 1;
-            } else {
-                playlistPosition--;
-            }
+        int temp = previousPlaylistPosition;
+        previousPlaylistPosition = playlistPosition;
+        playlistPosition = temp;
 
-            currentSong.setDuration(currentSong.getMaxDuration());
-            currentSong = playlist.getSong(playlistPosition);
-            currentSong.setDuration(currentSong.getMaxDuration());
-            Manager.partialResult.put("message",
-                    "Returned to previous track successfully. The current track is " + currentSong.getName() + ".");
-            return;
-        }
-
-        if (end) {
-            currentSong = null;
-            return;
-        }
-
-        playlistPosition--;
         currentSong.setDuration(currentSong.getMaxDuration());
-        currentSong = playlist.getSong(playlistPosition);
+        currentSong = new Song(playlist.getSong(playlistPosition));
         currentSong.setDuration(currentSong.getMaxDuration());
         Manager.partialResult.put("message",
                 "Returned to previous track successfully. The current track is " + currentSong.getName() + ".");
+        paused = false;
     }
 
     public void forward() {
@@ -284,7 +312,12 @@ public class PlaylistPlayer extends Player{
     }
 
     public void updateDuration(int deltaTime) {
+        if (owner.equals("carol19")) {
+            System.out.println(playlistPosition);
+        }
         if (currentSong == null) return;
+
+        if (paused) return;
 
         int time = currentSong.getDuration() - deltaTime;
         savedTime = 0;
@@ -293,19 +326,19 @@ public class PlaylistPlayer extends Player{
             savedTime = -time;
             time = 0;
         }
-        if (!paused)
-            currentSong.setDuration(time);
+        currentSong.setDuration(time);
     }
     public void updatePlayer() {
         if (currentSong == null) return;
 
-        if (currentSong.getDuration() == 0) {
+        if (currentSong.getDuration() == 0 && !paused) {
             while (savedTime != 0) {
                 if (playlistPosition >= playlist.getSongs().size() && repeat.equals("No Repeat")) {
                     currentSong = null;
                     paused = true;
                     shuffled = false;
                     repeat = "No Repeat";
+                    Manager.getSource(owner).setSourceLoaded(false);
                     break;
                 }
 
@@ -316,11 +349,7 @@ public class PlaylistPlayer extends Player{
                 }
 
                 currentSong.setDuration(currentSong.getMaxDuration());
-                if (shuffled) {
-                    currentSong = playlist.getSong(shuffledIndexes[playlistPosition]);
-                } else {
-                    currentSong = playlist.getSong(playlistPosition);
-                }
+                currentSong = new Song(playlist.getSong(playlistPosition));
 //                currentSong = playlist.getSong(playlistPosition);
                 currentSong.setDuration(currentSong.getMaxDuration());
                 updateDuration(savedTime);

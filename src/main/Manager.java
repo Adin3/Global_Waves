@@ -14,6 +14,7 @@ import javax.security.auth.login.CredentialNotFoundException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class Manager {
 
@@ -97,12 +98,12 @@ public class Manager {
             return;
         }
 
-        if (!Manager.getUser(owner).getType().equals("song")) {
+        if (!Manager.getUser(owner).getType().equals("song") || Manager.musicPlayer(owner).getSong() == null) {
             Manager.partialResult.put("message", "The loaded source is not a song.");
             return;
         }
 
-        if (getUser(owner).getPlaylists().size() < (id-1)) {
+        if (getUser(owner).getPlaylists().size() <= (id-1)) {
             Manager.partialResult.put("message", "The specified playlist does not exist.");
             return;
         }
@@ -133,7 +134,7 @@ public class Manager {
 
     public static void switchVisibility(String username, int id) {
 
-        if (getUser(username).getPlaylists().size() < (id-1)) {
+        if (getUser(username).getPlaylists().size() <= (id-1)) {
             Manager.partialResult.put("message", "The specified playlist ID is too high.");
             return;
         }
@@ -193,6 +194,12 @@ public class Manager {
             song = Manager.searchBar(username).getSongLoaded();
         } else {
             song = Manager.musicPlayer(username).getCurrentSong();
+            if (song != null) {
+                for (Song s : Library.getInstance().getSongs()) {
+                    if (s.getName().equals(song.getName()))
+                        song = s;
+                }
+            }
         }
 
         if (song == null && sources.get(username).isSourceLoaded()) {
@@ -204,8 +211,6 @@ public class Manager {
             Manager.partialResult.put("message", "Please load a source before liking or unliking.");
             return;
         }
-
-
 
         if (!Manager.getUser(username).getLikedSongs().contains(song)) {
             Manager.getUser(username).addLikedSong(song);
@@ -227,16 +232,10 @@ public class Manager {
                 status.put("name", play.getName());
                 ArrayNode node = objectMapper.createArrayNode();
 
-
                 for (Song sg : play.getSongs())
                     node.add(sg.getName());
 
                 status.set("songs", node);
-//                if (play.isVisibility()) {
-//                    status.put("visibility", "public");
-//                } else {
-//                    status.put("visibility", "private");
-//                }
                 status.put("visibility", play.getVisibility());
                 status.put("followers", play.getFollowers().size());
             }
@@ -301,12 +300,6 @@ public class Manager {
             }
         }
 
-        for (int i = 0; i < freqVec.length; i++) {
-            System.out.print(tempSongs.get(i).getName());
-            System.out.print(" ");
-            System.out.println(freqVec[i]);
-        }
-
         for (int i = tempSongs.size() - 1; i >= 0; i--) {
             for (int j = tempSongs.size() - 1; j > 0; j--) {
                 if (freqVec[j] > freqVec[j-1]) {
@@ -326,12 +319,9 @@ public class Manager {
         ArrayNode node = objectMapper.createArrayNode();
 
         for (Song sg : tempSongs.subList(0, 5)) {
-            System.out.print(sg.getName());
-            System.out.println(freqVec[tempSongs.indexOf(sg)]);
             node.add(sg.getName());
 
         }
-        System.out.println("---------------");
         Manager.partialResult.set("result", node);
 
     }

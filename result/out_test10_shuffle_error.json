@@ -236,27 +236,27 @@
   "command" : "shuffle",
   "user" : "bob35",
   "timestamp" : 3680,
-  "message" : "Shuffle function deactivated successfully."
+  "message" : "Please load a source before using the shuffle function."
 }, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 3690,
   "stats" : {
-    "name" : "Whole Lotta Love",
-    "remainedTime" : 245,
+    "name" : "",
+    "remainedTime" : 0,
     "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 }, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 3740,
   "stats" : {
-    "name" : "Whole Lotta Love",
-    "remainedTime" : 195,
+    "name" : "",
+    "remainedTime" : 0,
     "repeat" : "No Repeat",
     "shuffle" : false,
-    "paused" : false
+    "paused" : true
   }
 } ]
