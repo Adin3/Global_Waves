@@ -62,4 +62,4 @@ se calculeaza in main variabila deltaTime care reprezinta variatia de timp dintr
 
 se paseaza deltaTime in updatePlayers care updateaza fiecare player activ
 
-<div align="center"><img src=https://tenor.com/ro/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif" width="500px"></div>
+<div align="center"><img src="https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif" width="500px"></div>
