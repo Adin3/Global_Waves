@@ -42,6 +42,8 @@ si campuri utile precum *users* care asigura maparea dintre username si user pen
 
 Tot in clasa Manager se poate gasi metoda checkSource care verifica control flowul userului in functie de ce comenzi sau apelat
 
+Se comporta asemenea unui state machine
+
 metoda se foloseste de un obiect de tip Source care contine trei flaguri
 -SourceSearched
 -SourceSelected
@@ -63,5 +65,14 @@ cu ajutorul acestor flaguri se poate verifica la runtime daca utilizatorul are v
 se calculeaza in main variabila deltaTime care reprezinta variatia de timp dintre doua comenzi apelate (efectiv Δt)
 
 se paseaza deltaTime in updatePlayers care updateaza fiecare player activ
+
+Daca mai rămâne timp după ce se scade toata durata din melodie, se trece la următoarea melodie după parametrii player-ului (repeat shuffle)
+
+Daca inca mai rămâne timp se repeta pașii
+
+##Observatii
+
+In main, metoda action se afla logica din spatele programului
+
 
 <div align="center"><img src="https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif" width="500px"></div>
