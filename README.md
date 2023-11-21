@@ -33,6 +33,8 @@ Cele trei clase player mostenesc clasa mama Player care contine metodele load, r
 
 Clasa Manager este un Utility Class care se ocupa de administrarea programului
 
+Se folosește de design patternul Singleton care  asigura că există o singură instanta a clasei Manager
+
 Contine multiple metode ce fac legaturi intre clase sau a metode care nu se potriveau unei clase specifice, 
 si campuri utile precum *users* care asigura maparea dintre username si user pentru accesarea informatilor mai usor
 
