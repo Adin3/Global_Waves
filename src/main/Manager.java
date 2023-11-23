@@ -326,7 +326,9 @@ public final class Manager {
         for (int i = 0; i < playlist.size(); i++) {
             for (int j = 0; j < playlist.size(); j++) {
                 if (playlist.get(i).numberOfFollowers() > playlist.get(j).numberOfFollowers()
-                        || playlist.get(i).getTime() < playlist.get(j).getTime()) {
+                        || (playlist.get(i).getTime() < playlist.get(j).getTime()
+                        && playlist.get(i).numberOfFollowers()
+                        == playlist.get(j).numberOfFollowers())) {
                     Playlist temp = playlist.get(i);
                     playlist.set(i, playlist.get(j));
                     playlist.set(j, temp);

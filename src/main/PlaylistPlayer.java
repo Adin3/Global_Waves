@@ -56,7 +56,7 @@ public class PlaylistPlayer extends Player {
             return;
         }
 
-        this.playlist = temp;
+        this.playlist = new Playlist(temp);
 
         if (this.playlist.getSongs().isEmpty()) {
             Manager.getPartialResult().put("message",
@@ -210,8 +210,7 @@ public class PlaylistPlayer extends Player {
 
         if (end) {
             Manager.getPartialResult().put("message",
-                    "Skipped to next track successfully."
-                            + " The current track is " + currentSong.getName() + ".");
+                    "Please load a source before skipping to the next track.");
             currentSong = null;
             paused = true;
             Manager.getSource(owner).setSourceLoaded(false);
@@ -256,10 +255,11 @@ public class PlaylistPlayer extends Player {
             return;
         }
 
-        int temp = previousPlaylistPosition;
-        previousPlaylistPosition = playlistPosition;
-        playlistPosition = temp;
+        if (playlistPosition <= 0) {
+            playlistPosition++;
+        }
 
+        playlistPosition--;
         currentSong.setDuration(currentSong.getMaxDuration());
         currentSong = new Song(playlist.getSong(playlistPosition));
         currentSong.setDuration(currentSong.getMaxDuration());
