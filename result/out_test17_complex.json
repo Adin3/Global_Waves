@@ -4766,7 +4766,7 @@
   "command" : "next",
   "user" : "henry26",
   "timestamp" : 5570,
-  "message" : "Skipped to next track successfully. The current track is Dream On."
+  "message" : "Please load a source before skipping to the next track."
 }, {
   "command" : "status",
   "user" : "henry26",
@@ -4847,14 +4847,14 @@
   "command" : "prev",
   "user" : "bob35",
   "timestamp" : 5610,
-  "message" : "Returned to previous track successfully. The current track is Angie."
+  "message" : "Returned to previous track successfully. The current track is Gimme Shelter."
 }, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 5610,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 273,
+    "name" : "Gimme Shelter",
+    "remainedTime" : 271,
     "repeat" : "No Repeat",
     "shuffle" : true,
     "paused" : false
@@ -5029,8 +5029,8 @@
   "user" : "bob35",
   "timestamp" : 5710,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 173,
+    "name" : "Gimme Shelter",
+    "remainedTime" : 171,
     "repeat" : "No Repeat",
     "shuffle" : true,
     "paused" : true
@@ -5215,8 +5215,8 @@
   "user" : "bob35",
   "timestamp" : 5810,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 173,
+    "name" : "Gimme Shelter",
+    "remainedTime" : 171,
     "repeat" : "No Repeat",
     "shuffle" : true,
     "paused" : true
@@ -5390,14 +5390,14 @@
   "command" : "prev",
   "user" : "bob35",
   "timestamp" : 5910,
-  "message" : "Returned to previous track successfully. The current track is Angie."
+  "message" : "Returned to previous track successfully. The current track is Gimme Shelter."
 }, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 5910,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 273,
+    "name" : "Gimme Shelter",
+    "remainedTime" : 271,
     "repeat" : "No Repeat",
     "shuffle" : true,
     "paused" : false
@@ -5593,8 +5593,8 @@
   "user" : "bob35",
   "timestamp" : 6010,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 173,
+    "name" : "Gimme Shelter",
+    "remainedTime" : 171,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -5770,8 +5770,8 @@
   "user" : "bob35",
   "timestamp" : 6110,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 73,
+    "name" : "Gimme Shelter",
+    "remainedTime" : 71,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -5935,8 +5935,8 @@
   "user" : "bob35",
   "timestamp" : 6210,
   "stats" : {
-    "name" : "Whatever You Need",
-    "remainedTime" : 183,
+    "name" : "Money Trees",
+    "remainedTime" : 358,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6114,14 +6114,14 @@
   "command" : "next",
   "user" : "bob35",
   "timestamp" : 6310,
-  "message" : "Skipped to next track successfully. The current track is Gimme Shelter."
+  "message" : "Skipped to next track successfully. The current track is Sad But True."
 }, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 6310,
   "stats" : {
-    "name" : "Gimme Shelter",
-    "remainedTime" : 271,
+    "name" : "Sad But True",
+    "remainedTime" : 324,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6296,14 +6296,14 @@
   "command" : "prev",
   "user" : "bob35",
   "timestamp" : 6410,
-  "message" : "Returned to previous track successfully. The current track is Gimme Shelter."
+  "message" : "Returned to previous track successfully. The current track is Sad But True."
 }, {
   "command" : "status",
   "user" : "bob35",
   "timestamp" : 6410,
   "stats" : {
-    "name" : "Gimme Shelter",
-    "remainedTime" : 271,
+    "name" : "Sad But True",
+    "remainedTime" : 324,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6467,8 +6467,8 @@
   "user" : "bob35",
   "timestamp" : 6510,
   "stats" : {
-    "name" : "Gimme Shelter",
-    "remainedTime" : 171,
+    "name" : "Sad But True",
+    "remainedTime" : 224,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6482,14 +6482,14 @@
   "command" : "prev",
   "user" : "carol19",
   "timestamp" : 6520,
-  "message" : "Returned to previous track successfully. The current track is Love Story."
+  "message" : "Returned to previous track successfully. The current track is Don't."
 }, {
   "command" : "status",
   "user" : "carol19",
   "timestamp" : 6520,
   "stats" : {
-    "name" : "Love Story",
-    "remainedTime" : 236,
+    "name" : "Don't",
+    "remainedTime" : 219,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6638,8 +6638,8 @@
   "user" : "bob35",
   "timestamp" : 6610,
   "stats" : {
-    "name" : "Gimme Shelter",
-    "remainedTime" : 71,
+    "name" : "Sad But True",
+    "remainedTime" : 124,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6649,8 +6649,8 @@
   "user" : "carol19",
   "timestamp" : 6620,
   "stats" : {
-    "name" : "Love Story",
-    "remainedTime" : 136,
+    "name" : "Don't",
+    "remainedTime" : 119,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6660,8 +6660,8 @@
   "user" : "carol19",
   "timestamp" : 6620,
   "stats" : {
-    "name" : "Love Story",
-    "remainedTime" : 136,
+    "name" : "Don't",
+    "remainedTime" : 119,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6809,8 +6809,8 @@
   "user" : "bob35",
   "timestamp" : 6710,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 358,
+    "name" : "Sad But True",
+    "remainedTime" : 24,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : true
@@ -6819,19 +6819,19 @@
   "command" : "prev",
   "user" : "carol19",
   "timestamp" : 6720,
-  "message" : "Returned to previous track successfully. The current track is Love Story."
+  "message" : "Returned to previous track successfully. The current track is Don't."
 }, {
   "command" : "prev",
   "user" : "carol19",
   "timestamp" : 6720,
-  "message" : "Returned to previous track successfully. The current track is Money Trees."
+  "message" : "Returned to previous track successfully. The current track is Love Story."
 }, {
   "command" : "status",
   "user" : "carol19",
   "timestamp" : 6720,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 387,
+    "name" : "Love Story",
+    "remainedTime" : 236,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6972,14 +6972,14 @@
   "command" : "prev",
   "user" : "alice22",
   "timestamp" : 6800,
-  "message" : "Returned to previous track successfully. The current track is Sad But True."
+  "message" : "Returned to previous track successfully. The current track is The Man."
 }, {
   "command" : "status",
   "user" : "alice22",
   "timestamp" : 6800,
   "stats" : {
-    "name" : "Sad But True",
-    "remainedTime" : 324,
+    "name" : "The Man",
+    "remainedTime" : 190,
     "repeat" : "No Repeat",
     "shuffle" : false,
     "paused" : false
@@ -6989,8 +6989,8 @@
   "user" : "bob35",
   "timestamp" : 6810,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 358,
+    "name" : "Sad But True",
+    "remainedTime" : 24,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : true
@@ -7000,8 +7000,8 @@
   "user" : "bob35",
   "timestamp" : 6810,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 358,
+    "name" : "Sad But True",
+    "remainedTime" : 24,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : true
@@ -7016,8 +7016,8 @@
   "user" : "carol19",
   "timestamp" : 6820,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 287,
+    "name" : "Love Story",
+    "remainedTime" : 136,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -7031,14 +7031,14 @@
   "command" : "prev",
   "user" : "david27",
   "timestamp" : 6830,
-  "message" : "Returned to previous track successfully. The current track is Dream On."
+  "message" : "Returned to previous track successfully. The current track is Start Me Up."
 }, {
   "command" : "status",
   "user" : "david27",
   "timestamp" : 6830,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
+    "name" : "Start Me Up",
+    "remainedTime" : 212,
     "repeat" : "No Repeat",
     "shuffle" : false,
     "paused" : false
@@ -7159,14 +7159,14 @@
   "command" : "next",
   "user" : "alice22",
   "timestamp" : 6900,
-  "message" : "Skipped to next track successfully. The current track is Love Story."
+  "message" : "Skipped to next track successfully. The current track is Money Trees."
 }, {
   "command" : "status",
   "user" : "alice22",
   "timestamp" : 6900,
   "stats" : {
-    "name" : "Love Story",
-    "remainedTime" : 236,
+    "name" : "Money Trees",
+    "remainedTime" : 387,
     "repeat" : "No Repeat",
     "shuffle" : false,
     "paused" : false
@@ -7181,8 +7181,8 @@
   "user" : "bob35",
   "timestamp" : 6910,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 358,
+    "name" : "Sad But True",
+    "remainedTime" : 24,
     "repeat" : "Repeat Current Song",
     "shuffle" : false,
     "paused" : true
@@ -7192,8 +7192,8 @@
   "user" : "carol19",
   "timestamp" : 6920,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 187,
+    "name" : "Love Story",
+    "remainedTime" : 36,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -7203,8 +7203,8 @@
   "user" : "carol19",
   "timestamp" : 6920,
   "stats" : {
-    "name" : "Money Trees",
-    "remainedTime" : 187,
+    "name" : "Love Story",
+    "remainedTime" : 36,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -7218,14 +7218,14 @@
   "command" : "next",
   "user" : "david27",
   "timestamp" : 6930,
-  "message" : "Skipped to next track successfully. The current track is Angie."
+  "message" : "Skipped to next track successfully. The current track is Dream On."
 }, {
   "command" : "status",
   "user" : "david27",
   "timestamp" : 6930,
   "stats" : {
-    "name" : "Angie",
-    "remainedTime" : 273,
+    "name" : "Dream On",
+    "remainedTime" : 267,
     "repeat" : "No Repeat",
     "shuffle" : false,
     "paused" : false
@@ -9771,7 +9771,7 @@
   "command" : "showPreferredSongs",
   "user" : "bob35",
   "timestamp" : 8500,
-  "result" : [ "Angie", "Whatever You Need" ]
+  "result" : [ "Gimme Shelter", "Money Trees" ]
 }, {
   "command" : "showPlaylists",
   "user" : "carol19",
@@ -9818,7 +9818,7 @@
   "timestamp" : 8530,
   "result" : [ {
     "name" : "Chill Sounds Journey #1",
-    "songs" : [ "Start Me Up", "Delicate", "Shape of You", "Black Dog", "Begin Again", "Don't", "Happier" ],
+    "songs" : [ "Start Me Up", "Shape of You", "Black Dog", "Begin Again", "Don't", "Delicate", "Happier" ],
     "visibility" : "public",
     "followers" : 4
   }, {
@@ -9838,7 +9838,7 @@
   "timestamp" : 8540,
   "result" : [ {
     "name" : "Chill Melodies Voyage #1",
-    "songs" : [ "Shape of You", "Black Dog", "Start Me Up", "Begin Again", "Whatever You Need", "Dream On", "Delicate" ],
+    "songs" : [ "Start Me Up", "Whatever You Need", "Dream On", "Begin Again", "Black Dog", "Shape of You", "Delicate" ],
     "visibility" : "public",
     "followers" : 6
   }, {
@@ -9903,7 +9903,7 @@
     "followers" : 3
   }, {
     "name" : "Electric Melodies Escape #2",
-    "songs" : [ "Dream On", "Black Dog", "Don't", "Thinking Out Loud" ],
+    "songs" : [ "Dream On", "Don't", "Thinking Out Loud", "Black Dog" ],
     "visibility" : "private",
     "followers" : 0
   } ]
@@ -9923,7 +9923,7 @@
     "followers" : 2
   }, {
     "name" : "Groovy Rhythms Dream #2",
-    "songs" : [ "Begin Again", "Blank Space", "Start Me Up", "Money Trees", "Sad But True", "Shape of You", "Delicate" ],
+    "songs" : [ "Shape of You", "Money Trees", "Delicate", "Start Me Up", "Blank Space", "Begin Again", "Sad But True" ],
     "visibility" : "private",
     "followers" : 0
   } ]
@@ -9935,9 +9935,9 @@
 }, {
   "command" : "getTop5Playlists",
   "timestamp" : 8580,
-  "result" : [ "Chill Melodies Voyage #1", "Groovy Vibes Odyssey #1", "Dynamic Grooves Expedition #1", "Chill Sounds Voyage #1", "Vibey Bangers Safari #1" ]
+  "result" : [ "Chill Melodies Voyage #1", "Dynamic Tracks Adventure #2", "Stellar Tunes Quest #2", "Breezy Rhythms Trek #1", "Chill Sounds Journey #1" ]
 }, {
   "command" : "getTop5Songs",
   "timestamp" : 8580,
-  "result" : [ "Start Me Up", "Love Story", "Don't", "Dream On", "Whatever You Need" ]
+  "result" : [ "Start Me Up", "Love Story", "Gimme Shelter", "Don't", "Money Trees" ]
 } ]
