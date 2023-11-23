@@ -70,9 +70,9 @@ Daca mai rămâne timp după ce se scade toata durata din melodie, se trece la u
 
 Daca inca mai rămâne timp se repeta pașii
 
-## Observatii
+##Observatii
 
-In main, in metoda action, se afla logica din spatele programului
+In main, metoda action se afla logica din spatele programului
 
 
 <div align="center"><img src="https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif" width="500px"></div>

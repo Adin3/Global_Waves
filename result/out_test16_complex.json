@@ -4829,7 +4829,7 @@
   "command" : "next",
   "user" : "bob35",
   "timestamp" : 5610,
-  "message" : "Please load a source before skipping to the next track."
+  "message" : "Skipped to next track successfully. The current track is Bohemian Rhapsody."
 }, {
   "command" : "status",
   "user" : "bob35",
@@ -5588,7 +5588,7 @@
   "command" : "next",
   "user" : "david27",
   "timestamp" : 6030,
-  "message" : "Please load a source before skipping to the next track."
+  "message" : "Skipped to next track successfully. The current track is Under Pressure."
 }, {
   "command" : "status",
   "user" : "david27",
@@ -6179,14 +6179,14 @@
   "command" : "prev",
   "user" : "grace25",
   "timestamp" : 6360,
-  "message" : "Returned to previous track successfully. The current track is Dream On."
+  "message" : "Returned to previous track successfully. The current track is Stairway to Heaven."
 }, {
   "command" : "status",
   "user" : "grace25",
   "timestamp" : 6360,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
+    "name" : "Stairway to Heaven",
+    "remainedTime" : 482,
     "repeat" : "Repeat All",
     "shuffle" : false,
     "paused" : false
@@ -6362,8 +6362,8 @@
   "user" : "grace25",
   "timestamp" : 6460,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 167,
+    "name" : "Stairway to Heaven",
+    "remainedTime" : 382,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -6526,19 +6526,19 @@
   "command" : "prev",
   "user" : "grace25",
   "timestamp" : 6560,
-  "message" : "Returned to previous track successfully. The current track is Dream On."
+  "message" : "Returned to previous track successfully. The current track is Stairway to Heaven."
 }, {
   "command" : "prev",
   "user" : "grace25",
   "timestamp" : 6560,
-  "message" : "Returned to previous track successfully. The current track is Stairway to Heaven."
+  "message" : "Returned to previous track successfully. The current track is Dream On."
 }, {
   "command" : "status",
   "user" : "grace25",
   "timestamp" : 6560,
   "stats" : {
-    "name" : "Stairway to Heaven",
-    "remainedTime" : 482,
+    "name" : "Dream On",
+    "remainedTime" : 267,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -6713,8 +6713,8 @@
   "user" : "grace25",
   "timestamp" : 6660,
   "stats" : {
-    "name" : "Stairway to Heaven",
-    "remainedTime" : 382,
+    "name" : "Dream On",
+    "remainedTime" : 167,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : true
@@ -6888,14 +6888,14 @@
   "command" : "next",
   "user" : "grace25",
   "timestamp" : 6760,
-  "message" : "Skipped to next track successfully. The current track is Dream On."
+  "message" : "Skipped to next track successfully. The current track is Love Story."
 }, {
   "command" : "status",
   "user" : "grace25",
   "timestamp" : 6760,
   "stats" : {
-    "name" : "Dream On",
-    "remainedTime" : 267,
+    "name" : "Love Story",
+    "remainedTime" : 236,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -7080,14 +7080,14 @@
   "command" : "next",
   "user" : "grace25",
   "timestamp" : 6860,
-  "message" : "Skipped to next track successfully. The current track is Love Story."
+  "message" : "Skipped to next track successfully. The current track is The Man."
 }, {
   "command" : "status",
   "user" : "grace25",
   "timestamp" : 6860,
   "stats" : {
-    "name" : "Love Story",
-    "remainedTime" : 236,
+    "name" : "The Man",
+    "remainedTime" : 190,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -7256,14 +7256,14 @@
   "command" : "next",
   "user" : "grace25",
   "timestamp" : 6960,
-  "message" : "Skipped to next track successfully. The current track is The Man."
+  "message" : "Skipped to next track successfully. The current track is The Unforgiven."
 }, {
   "command" : "status",
   "user" : "grace25",
   "timestamp" : 6960,
   "stats" : {
-    "name" : "The Man",
-    "remainedTime" : 190,
+    "name" : "The Unforgiven",
+    "remainedTime" : 386,
     "repeat" : "Repeat All",
     "shuffle" : true,
     "paused" : false
@@ -9757,7 +9757,7 @@
     "followers" : 0
   }, {
     "name" : "Dynamic Tracks Trek #2",
-    "songs" : [ "Bohemian Rhapsody", "The Unforgiven", "Begin Again" ],
+    "songs" : [ "Begin Again", "The Unforgiven", "Bohemian Rhapsody" ],
     "visibility" : "public",
     "followers" : 6
   } ]
@@ -9852,7 +9852,7 @@
   "timestamp" : 8550,
   "result" : [ {
     "name" : "Classic Tunes Dream #1",
-    "songs" : [ "Dream On", "Start Me Up", "Stairway to Heaven", "Love Story", "The Unforgiven", "The Man" ],
+    "songs" : [ "Stairway to Heaven", "Dream On", "Love Story", "The Man", "The Unforgiven", "Start Me Up" ],
     "visibility" : "public",
     "followers" : 4
   }, {
@@ -9872,7 +9872,7 @@
   "timestamp" : 8560,
   "result" : [ {
     "name" : "Vibey Tracks Safari #1",
-    "songs" : [ "Whatever You Need", "Money Trees", "Don't", "The Man", "Start Me Up", "Maps", "Black Dog", "Begin Again" ],
+    "songs" : [ "Maps", "Don't", "Black Dog", "Begin Again", "Money Trees", "Whatever You Need", "The Man", "Start Me Up" ],
     "visibility" : "private",
     "followers" : 0
   }, {
@@ -9917,7 +9917,7 @@
     "followers" : 4
   }, {
     "name" : "Mellow Tracks Safari #2",
-    "songs" : [ "Maps", "The Man", "Blank Space", "Money Trees", "Shape of You", "The Unforgiven", "Big Pimpin'", "Love Story" ],
+    "songs" : [ "Money Trees", "The Unforgiven", "Maps", "Love Story", "The Man", "Shape of You", "Blank Space", "Big Pimpin'" ],
     "visibility" : "private",
     "followers" : 0
   } ]
