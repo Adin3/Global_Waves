@@ -1,4 +1,7 @@
-package program.Page;
+package program.page;
+
+import program.Manager;
+
 public class Page {
     private PageStrategy printingStrategy;
 
@@ -10,9 +13,15 @@ public class Page {
         switch (pageName) {
             case "Home" -> setPrintingStrategy(new HomePage());
             case "LikedContent" -> setPrintingStrategy(new LikedContent());
-            case "Artist" -> setPrintingStrategy(new ArtistPage());
-            case "Host" -> setPrintingStrategy(new HostPage());
             default -> {
+                if (Manager.getArtists().contains(pageName)) {
+                    setPrintingStrategy(new ArtistPage(pageName));
+                    return true;
+                }
+                if (Manager.getHosts().contains(pageName)) {
+                    setPrintingStrategy(new HostPage(pageName));
+                    return true;
+                }
                 return false;
             }
         }

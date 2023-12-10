@@ -1,6 +1,8 @@
 package program.searchbar;
 
 import lombok.Getter;
+import program.Manager;
+import program.format.Album;
 import program.format.Playlist;
 import program.format.Podcast;
 import program.format.Song;
@@ -22,6 +24,11 @@ public class SearchBar {
 
     @Getter
     protected boolean sourceSelected;
+
+    public Album getAlbumLoaded() {
+        return null;
+    }
+
     public SearchBar() { }
     /**
      * clears the search
@@ -31,7 +38,10 @@ public class SearchBar {
     /**
      * select the searched item
      */
-    public void select(final int number, final String username) { }
+    public void select(final int number, final String username) {
+        Manager.getPartialResult().put("message",
+                "Please conduct a search before making a selection.");
+    }
 
     /**
      * search items by filters

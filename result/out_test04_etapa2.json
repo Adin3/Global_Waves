@@ -40,7 +40,8 @@
   "message" : "The username irene33 is already taken."
 }, {
   "command" : "getAllUsers",
-  "timestamp" : 45
+  "timestamp" : 45,
+  "result" : [ "alice22", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "henry26", "irene33", "jack29", "melodicmind42", "rhythmicrider58", "harmonyhunter73", "melodymaster", "rhythmrider", "beatblazer", "harmonichero" ]
 }, {
   "command" : "addAlbum",
   "user" : "rhythmrider",
@@ -60,7 +61,8 @@
 }, {
   "command" : "select",
   "user" : "alice22",
-  "timestamp" : 65
+  "timestamp" : 65,
+  "message" : "Please conduct a search before making a selection."
 }, {
   "command" : "select",
   "user" : "melodicmind42",
@@ -95,33 +97,39 @@
 }, {
   "command" : "deleteUser",
   "user" : "beatblazer",
-  "timestamp" : 150
+  "timestamp" : 150,
+  "message" : "beatblazer can't be deleted."
 }, {
   "command" : "search",
   "user" : "alice22",
-  "timestamp" : 190
+  "timestamp" : 190,
+  "message" : "Search returned 1 results",
+  "results" : [ "Beat Odyssey" ]
 }, {
   "command" : "select",
   "user" : "alice22",
-  "timestamp" : 280
+  "timestamp" : 280,
+  "message" : "Successfully selected Beat Odyssey."
 }, {
   "command" : "load",
   "user" : "alice22",
   "timestamp" : 285,
-  "message" : "Please select a source before attempting to load."
+  "message" : "Playback loaded successfully."
 }, {
   "command" : "deleteUser",
   "user" : "beatblazer",
-  "timestamp" : 1158
+  "timestamp" : 1158,
+  "message" : "beatblazer can't be deleted."
 }, {
   "command" : "prev",
   "user" : "alice22",
   "timestamp" : 1159,
-  "message" : "Please load a source before returning to the previous track."
+  "message" : "Returned to previous track successfully. The current track is Melodic Motion."
 }, {
   "command" : "deleteUser",
   "user" : "beatblazer",
-  "timestamp" : 1380
+  "timestamp" : 1380,
+  "message" : "beatblazer can't be deleted."
 }, {
   "command" : "search",
   "user" : "melodicmind42",

@@ -3,7 +3,8 @@ package program.format;
 import fileio.input.PodcastInput;
 import fileio.input.UserInput;
 import fileio.input.LibraryInput;
-import program.User;
+import program.Manager;
+import program.user.User;
 
 import java.util.ArrayList;
 
@@ -42,6 +43,7 @@ public final class Library {
             podcasts.add(new Podcast(podcast));
         }
         for (UserInput user : lib.getUsers()) {
+            Manager.getNormals().add(user.getUsername());
             users.add(new User(user));
         }
     }

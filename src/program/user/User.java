@@ -1,22 +1,18 @@
-package program;
+package program.user;
 
 import fileio.input.UserInput;
 import lombok.Getter;
-import program.Page.Page;
+import program.format.Event;
+import program.format.Merch;
+import program.page.Page;
 import program.format.Playlist;
 import program.format.Song;
-import program.player.MusicPlayer;
-import program.player.Player;
-import program.player.PlaylistPlayer;
-import program.player.PodcastPlayer;
-import program.searchbar.SearchBar;
-import program.searchbar.SearchBarPlaylist;
-import program.searchbar.SearchBarPodcast;
-import program.searchbar.SearchBarSong;
+import program.player.*;
+import program.searchbar.*;
 
 import java.util.ArrayList;
 
-public final class User {
+public class User {
     private String username;
     private int age;
     private String city;
@@ -48,6 +44,12 @@ public final class User {
     @Getter
     private final ArrayList<Song> likedSongs = new ArrayList<>();
 
+    @Getter
+    private final ArrayList<Event> events = new ArrayList<>();
+
+    @Getter
+    private final ArrayList<Merch> merch = new ArrayList<>();
+
     public ArrayList<String> getFollowedPlaylists() {
         return followedPlaylist;
     }
@@ -59,10 +61,12 @@ public final class User {
 
     private userStatus status = userStatus.ONLINE;
 
+    public User() {}
     public User(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
         this.username = user.getUsername();
+        this.userType = "user";
     }
 
     public User(String username, int age, String city, String userType) {
@@ -81,6 +85,10 @@ public final class User {
 
     public boolean isOffline() {
         return status == userStatus.OFFLINE;
+    }
+
+    public boolean isNotNormalUser() {
+        return !userType.equals("user");
     }
 
     public String getUsername() {
@@ -135,17 +143,11 @@ public final class User {
      */
     public void setMusicPlayer() {
         switch (formatType) {
-            case "song":
-                musicplayer = new MusicPlayer(username);
-                break;
-            case "podcast":
-                musicplayer = new PodcastPlayer(username);
-                break;
-            case "playlist":
-                musicplayer = new PlaylistPlayer(username);
-                break;
-            default:
-                break;
+            case "song" -> musicplayer = new MusicPlayer(username);
+            case "podcast" -> musicplayer = new PodcastPlayer(username);
+            case "playlist" -> musicplayer = new PlaylistPlayer(username);
+            case "album" -> musicplayer = new AlbumPlayer(username);
+            default -> {}
         }
     }
     /**
@@ -155,17 +157,13 @@ public final class User {
     public void setSearchBar(final String commandType) {
         this.formatType = commandType;
         switch (this.formatType) {
-            case "song":
-                searchBar = new SearchBarSong(username);
-                break;
-            case "podcast":
-                searchBar = new SearchBarPodcast(username);
-                break;
-            case "playlist":
-                searchBar = new SearchBarPlaylist(username);
-                break;
-            default:
-                break;
+            case "song" -> searchBar = new SearchBarSong(username);
+            case "podcast" -> searchBar = new SearchBarPodcast(username);
+            case "playlist" -> searchBar = new SearchBarPlaylist(username);
+            case "artist", "host" -> searchBar = new SearchBarUser(username);
+            case "album" -> searchBar = new SearchBarAlbum(username);
+            default -> {
+            }
         }
     }
 }

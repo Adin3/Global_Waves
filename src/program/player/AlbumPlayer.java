@@ -5,17 +5,18 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.Getter;
 import program.Manager;
+import program.format.Album;
 import program.format.Playlist;
 import program.format.Song;
 
 import java.util.ArrayList;
 import java.util.Random;
 
-public class PlaylistPlayer extends Player {
-    public PlaylistPlayer() { }
+public class AlbumPlayer extends Player {
+    public AlbumPlayer() { }
 
     @Getter
-    private Playlist playlist;
+    private Album playlist;
 
     @Getter
     private Song currentSong;
@@ -35,7 +36,7 @@ public class PlaylistPlayer extends Player {
 
     private ArrayList<Song> unshuffledplaylist = new ArrayList<>();
 
-    public PlaylistPlayer(final String owner) {
+    public AlbumPlayer(final String owner) {
         this.owner = owner;
     }
 
@@ -51,7 +52,7 @@ public class PlaylistPlayer extends Player {
      * load song
      */
     public void load() {
-        Playlist temp = Manager.searchBar(owner).getPlaylistLoaded();
+        Album temp = Manager.searchBar(owner).getAlbumLoaded();
 
         if (temp == null || !Manager.getSource(owner).isSourceSelected()) {
             Manager.getPartialResult().put("message",
@@ -59,7 +60,7 @@ public class PlaylistPlayer extends Player {
             return;
         }
 
-        this.playlist = new Playlist(temp);
+        this.playlist = new Album(temp);
 
         if (this.playlist.getSongs().isEmpty()) {
             Manager.getPartialResult().put("message",

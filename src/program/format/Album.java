@@ -33,6 +33,14 @@ public class Album {
         this.description = description;
     }
 
+    public Album(Album album) {
+        this.owner = album.getOwner();
+        this.name = album.getName();
+        this.releaseYear = album.getReleaseYear();
+        this.description = album.getDescription();
+        this.songs.addAll(album.getSongs());
+    }
+
     /**
      * adds song in playlist
      */

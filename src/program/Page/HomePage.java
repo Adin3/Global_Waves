@@ -1,7 +1,7 @@
-package program.Page;
+package program.page;
 
 import program.Manager;
-import program.User;
+import program.user.User;
 import program.format.Song;
 
 class HomePage implements PageStrategy {
