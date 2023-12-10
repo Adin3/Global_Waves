@@ -1,4 +1,4 @@
-package program.Page;
+package program.page;
 public class Page {
     private PageStrategy printingStrategy;
 

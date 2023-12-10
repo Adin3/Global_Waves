@@ -1,8 +1,8 @@
-package program;
+package program.user;
 
 import fileio.input.UserInput;
 import lombok.Getter;
-import program.Page.Page;
+import program.page.Page;
 import program.format.Playlist;
 import program.format.Song;
 import program.player.MusicPlayer;
@@ -16,7 +16,7 @@ import program.searchbar.SearchBarSong;
 
 import java.util.ArrayList;
 
-public final class User {
+public class User {
     private String username;
     private int age;
     private String city;
@@ -59,10 +59,12 @@ public final class User {
 
     private userStatus status = userStatus.ONLINE;
 
+    public User() {}
     public User(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
         this.username = user.getUsername();
+        this.userType = "normal";
     }
 
     public User(String username, int age, String city, String userType) {
@@ -81,6 +83,10 @@ public final class User {
 
     public boolean isOffline() {
         return status == userStatus.OFFLINE;
+    }
+
+    public boolean isNotNormalUser() {
+        return !userType.equals("normal");
     }
 
     public String getUsername() {

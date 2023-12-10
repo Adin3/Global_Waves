@@ -1,4 +1,4 @@
-package program.Page;
+package program.page;
 
 class HostPage implements PageStrategy {
     @Override
