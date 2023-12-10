@@ -1,4 +1,4 @@
-package program.page;
+package program.Page;
 
 class ArtistPage implements PageStrategy {
     @Override

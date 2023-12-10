@@ -21,7 +21,7 @@
 }, {
   "command" : "getOnlineUsers",
   "timestamp" : 25,
-  "result" : [ "alice22", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "henry26", "irene33", "jack29" ]
+  "result" : [ "alice22", "beatblazer", "bob35", "carol19", "david27", "emily30", "frank21", "grace25", "harmonichero", "henry26", "irene33", "jack29", "melodymaster", "rhythmrider" ]
 }, {
   "command" : "addAlbum",
   "user" : "melodymaster",
@@ -31,7 +31,10 @@
   "command" : "showAlbums",
   "user" : "beatblazer",
   "timestamp" : 40,
-  "result" : [ ]
+  "result" : [ {
+    "name" : "Harmonic Horizons",
+    "songs" : [ "Vibrant Echoes", "Synth Symphony", "Retro Rhythms", "Digital Dreams", "Night Pulse" ]
+  } ]
 }, {
   "command" : "addEvent",
   "user" : "melodymaster",

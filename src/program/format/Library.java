@@ -3,7 +3,7 @@ package program.format;
 import fileio.input.PodcastInput;
 import fileio.input.UserInput;
 import fileio.input.LibraryInput;
-import program.user.User;
+import program.User;
 
 import java.util.ArrayList;
 

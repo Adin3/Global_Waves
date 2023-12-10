@@ -5,11 +5,10 @@ import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import fileio.input.LibraryInput;
-import program.CommandList;
 import program.command.Command;
 import program.format.Library;
 import program.Manager;
-import program.user.User;
+import program.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -99,7 +98,6 @@ public final class Main {
 
         for (Command command : commands) {
             Manager.getCurrentCommand(command);
-            CommandList.setCommand(command);
             Manager.updateDeltaTime();
 
             Manager.updatePlayers();
@@ -107,33 +105,32 @@ public final class Main {
             Manager.commandInfo();
 
             switch (command.getCommand()) {
-                case "search" -> CommandList.search();
-                case "select" -> CommandList.select();
-                case "load" -> CommandList.load();
-                case "status" -> CommandList.status();
-                case "playPause" -> CommandList.playPause();
-                case "createPlaylist" -> CommandList.createPlaylist();
-                case "addRemoveInPlaylist" -> CommandList.addRemoveInPlaylist();
-                case "like" -> CommandList.like();
-                case "showPlaylists" -> CommandList.showPlaylists();
-                case "showPreferredSongs" -> CommandList.showPreferredSongs();
-                case "repeat" -> CommandList.repeat();
-                case "shuffle" -> CommandList.shuffle();
-                case "next" -> CommandList.next();
-                case "prev" -> CommandList.prev();
-                case "forward" -> CommandList.forward();
-                case "backward" -> CommandList.backward();
-                case "follow" -> CommandList.follow();
-                case "switchVisibility" -> CommandList.switchVisibility();
-                case "getTop5Playlists" -> CommandList.getTop5Playlists();
-                case "getTop5Songs" -> CommandList.getTop5Songs();
-                case "switchConnectionStatus" -> CommandList.switchConnectionStatus();
-                case "getOnlineUsers" -> CommandList.getOnlineUsers();
-                case "addUser" -> CommandList.addUser();
-                case "addAlbum" -> CommandList.addAlbum();
-                case "showAlbums" -> CommandList.showAlbums();
-                case "printCurrentPage" -> CommandList.printCurrentPage();
-                case "addEvent" -> CommandList.addEvent();
+                case "search" -> Manager.search();
+                case "select" -> Manager.select();
+                case "load" -> Manager.load();
+                case "status" -> Manager.status();
+                case "playPause" -> Manager.playPause();
+                case "createPlaylist" -> Manager.createPlaylist();
+                case "addRemoveInPlaylist" -> Manager.addRemoveInPlaylist();
+                case "like" -> Manager.like();
+                case "showPlaylists" -> Manager.showPlaylists();
+                case "showPreferredSongs" -> Manager.showPreferredSongs();
+                case "repeat" -> Manager.repeat();
+                case "shuffle" -> Manager.shuffle();
+                case "next" -> Manager.next();
+                case "prev" -> Manager.prev();
+                case "forward" -> Manager.forward();
+                case "backward" -> Manager.backward();
+                case "follow" -> Manager.follow();
+                case "switchVisibility" -> Manager.switchVisibility();
+                case "getTop5Playlists" -> Manager.getTop5Playlists();
+                case "getTop5Songs" -> Manager.getTop5Songs();
+                case "switchConnectionStatus" -> Manager.switchConnectionStatus();
+                case "getOnlineUsers" -> Manager.getOnlineUsers();
+                case "addUser" -> Manager.addUser();
+                case "addAlbum" -> Manager.addAlbum();
+                case "showAlbums" -> Manager.showAlbums();
+                case "printCurrentPage" -> Manager.printCurrentPage();
                 default -> {}
             }
             Manager.checkSource();
