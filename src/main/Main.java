@@ -5,6 +5,10 @@ import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import fileio.input.LibraryInput;
+import program.command.Command;
+import program.format.Library;
+import program.Manager;
+import program.User;
 
 import java.io.File;
 import java.io.IOException;
@@ -44,7 +48,7 @@ public final class Main {
             resultFile.delete();
         }
         Files.createDirectories(path);
-
+        int a = 0;
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.getName().startsWith("library")) {
                 continue;
@@ -53,8 +57,9 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated) {
+            if (isCreated && a < 5) {
                 action(file.getName(), filepath);
+                a++;
             }
         }
 
@@ -76,6 +81,11 @@ public final class Main {
         Command[] commands = objectMapper.readValue(new File("input/" + filePath1),
                 Command[].class);
 
+        Manager.getPlaylists().clear();
+        Manager.getAlbums().clear();
+        Manager.getUsers().clear();
+        Manager.getSources().clear();
+
         Library lib = Library.getInstance();
         for (User user : lib.getUsers()) {
             Manager.addUser(user);
@@ -86,113 +96,44 @@ public final class Main {
 
         Manager.setResult(objectMapper.createArrayNode());
 
-        int deltaTime = 0;
-        int lastTime = 0;
-
-        Manager.getPlaylists().clear();
         for (Command command : commands) {
+            Manager.getCurrentCommand(command);
+            Manager.updateDeltaTime();
 
-            String username = command.getUsername();
-            int nextTime = command.getTimestamp();
-            deltaTime = nextTime - lastTime;
-            lastTime = nextTime;
+            Manager.updatePlayers();
 
-            Manager.updatePlayers(deltaTime);
-
-            Manager.setPartialResult(objectMapper.createObjectNode());
-            Manager.getPartialResult().put("command", command.getCommand());
-            if (username != null) {
-                Manager.getPartialResult().put("user", command.getUsername());
-            }
-            Manager.getPartialResult().put("timestamp", command.getTimestamp());
+            Manager.commandInfo();
 
             switch (command.getCommand()) {
-                case "search":
-
-                    Manager.getUser(username).setSearchBar(command.getType());
-
-                    Manager.searchBar(username).clearSearch();
-
-                    Manager.musicPlayer(username).clearPlayer();
-
-                    Manager.searchBar(username).search(command.getFilters());
-
-                    Manager.searchBar(username).searchDone();
-
-                    break;
-                case "select":
-                    Manager.searchBar(username).select(command.getItemNumber(), username);
-
-                    break;
-                case "load":
-                    if (!Manager.getSource(username).isSourceLoaded()) {
-                        Manager.getUser(username).setMusicPlayer();
-                    }
-
-                    Manager.musicPlayer(username).load();
-
-                    break;
-                case "status":
-                    Manager.musicPlayer(username).status();
-
-                    break;
-                case "playPause":
-                    Manager.musicPlayer(username).playPause();
-
-                    break;
-                case "createPlaylist":
-                    Manager.addPlaylist(username, command.getPlaylistName(),
-                            command.getTimestamp());
-
-                    break;
-                case "addRemoveInPlaylist":
-                    Manager.addRemoveInPlaylist(username, command.getPlaylistId());
-                    break;
-                case "like":
-                    Manager.like(username);
-                    break;
-                case "showPlaylists":
-                    Manager.showPlaylists(username);
-                    break;
-                case "showPreferredSongs":
-                    Manager.showPreferredSongs(username);
-                    break;
-                case "repeat":
-                    Manager.musicPlayer(username).repeat();
-                    break;
-                case "shuffle":
-                    Manager.musicPlayer(username).shuffle(command.getSeed());
-                    break;
-                case "next":
-                    Manager.musicPlayer(username).next();
-                    break;
-                case "prev":
-                    Manager.musicPlayer(username).prev();
-                    break;
-                case "forward":
-                    Manager.musicPlayer(username).forward();
-                    break;
-                case "backward":
-                    Manager.musicPlayer(username).backward();
-                    break;
-                case "follow":
-                    Manager.follow(username);
-                    break;
-                case "switchVisibility":
-                    Manager.switchVisibility(username, command.getPlaylistId());
-                    break;
-                case "getTop5Playlists":
-                    Manager.getTop5Playlists();
-                    break;
-                case "getTop5Songs":
-                    Manager.getTop5Songs();
-                    break;
-                default:
-                    break;
+                case "search" -> Manager.search();
+                case "select" -> Manager.select();
+                case "load" -> Manager.load();
+                case "status" -> Manager.status();
+                case "playPause" -> Manager.playPause();
+                case "createPlaylist" -> Manager.createPlaylist();
+                case "addRemoveInPlaylist" -> Manager.addRemoveInPlaylist();
+                case "like" -> Manager.like();
+                case "showPlaylists" -> Manager.showPlaylists();
+                case "showPreferredSongs" -> Manager.showPreferredSongs();
+                case "repeat" -> Manager.repeat();
+                case "shuffle" -> Manager.shuffle();
+                case "next" -> Manager.next();
+                case "prev" -> Manager.prev();
+                case "forward" -> Manager.forward();
+                case "backward" -> Manager.backward();
+                case "follow" -> Manager.follow();
+                case "switchVisibility" -> Manager.switchVisibility();
+                case "getTop5Playlists" -> Manager.getTop5Playlists();
+                case "getTop5Songs" -> Manager.getTop5Songs();
+                case "switchConnectionStatus" -> Manager.switchConnectionStatus();
+                case "getOnlineUsers" -> Manager.getOnlineUsers();
+                case "addUser" -> Manager.addUser();
+                case "addAlbum" -> Manager.addAlbum();
+                case "showAlbums" -> Manager.showAlbums();
+                case "printCurrentPage" -> Manager.printCurrentPage();
+                default -> {}
             }
-            if (username != null) {
-                Manager.checkSource(username, command.getCommand());
-            }
+            Manager.checkSource();
             Manager.getResult().add(Manager.getPartialResult());
         }
 
