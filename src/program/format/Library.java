@@ -4,6 +4,7 @@ import fileio.input.PodcastInput;
 import fileio.input.UserInput;
 import fileio.input.LibraryInput;
 import program.Manager;
+import program.user.NormalUser;
 import program.user.User;
 
 import java.util.ArrayList;
@@ -44,7 +45,7 @@ public final class Library {
         }
         for (UserInput user : lib.getUsers()) {
             Manager.getNormals().add(user.getUsername());
-            users.add(new User(user));
+            users.add(new NormalUser(user));
         }
     }
 

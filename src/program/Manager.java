@@ -42,6 +42,7 @@ public final class Manager {
     @Getter
     private static Map<String, Source> sources = new HashMap<>();
 
+    @Getter
     private static Command command;
 
     private static int deltaTime = 0;
@@ -121,10 +122,7 @@ public final class Manager {
      */
     public static void updatePlayers() {
         for (User user : users.values()) {
-            if (userExists() && !getCurrentUser().isOffline()) {
-                user.getMusicplayer().updateDuration(deltaTime);
-                user.getMusicplayer().updatePlayer();
-            }
+            user.updatePlayer(Manager.deltaTime);
         }
     }
 

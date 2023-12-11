@@ -1,65 +1,91 @@
 package program.user;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
-import program.format.Event;
-import program.format.Merch;
+import lombok.Setter;
+import program.Manager;
+import program.command.Command;
+import program.format.*;
 import program.page.Page;
-import program.format.Playlist;
-import program.format.Song;
 import program.player.*;
 import program.searchbar.*;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashSet;
+import java.util.Objects;
 
 public class User {
-    private String username;
-    private int age;
-    private String city;
+    protected static ObjectMapper objectMapper = new ObjectMapper();
+
+    @Getter @Setter
+    protected String username;
+
+    @Getter @Setter
+    protected int age;
+
+    @Getter @Setter
+    protected String city;
 
     @Getter
-    private Player musicplayer = new Player();
+    protected String userType;
 
-    @Getter
-    private SearchBar searchBar = new SearchBar();
-
-    @Getter
-    private String formatType;
-
-    @Getter
-    private String userType;
-
-    @Getter
-    private Page currentPage = new Page();
-
-    @Getter
-    private final ArrayList<Playlist> playlists = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<String> albums = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<String> followedPlaylist = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<Song> likedSongs = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<Event> events = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<Merch> merch = new ArrayList<>();
-
-    public ArrayList<String> getFollowedPlaylists() {
-        return followedPlaylist;
+    public Player getMusicplayer() {
+        return null;
     }
 
-    private enum userStatus {
+    public SearchBar getSearchBar() {
+        return null;
+    }
+
+    public String getFormatType() {
+        return null;
+    }
+
+    public Page getCurrentPage() {
+        return null;
+    }
+
+    public ArrayList<Playlist> getPlaylists() {
+        return null;
+    }
+
+    public ArrayList<String> getAlbums() {
+        return null;
+    }
+
+    public ArrayList<String> getFollowedPlaylist() {
+        return null;
+    }
+
+    public ArrayList<Song> getLikedSongs() {
+        return null;
+    }
+
+    public ArrayList<Event> getEvents() {
+        return null;
+    }
+
+    public ArrayList<Merch> getMerch() {
+        return null;
+    }
+
+    public ArrayList<String> getFollowedPlaylists() {
+        return null;
+    }
+    public userStatus getStatus() {
+        return null;
+    }
+
+    protected enum userStatus {
         ONLINE,
         OFFLINE,
     }
 
-    private userStatus status = userStatus.ONLINE;
+    protected userStatus status = userStatus.ONLINE;
 
     public User() {}
     public User(final UserInput user) {
@@ -76,94 +102,185 @@ public class User {
         this.userType = userType;
     }
 
-    public void changeStatus() {
-        switch (status) {
-            case ONLINE -> status = userStatus.OFFLINE;
-            case OFFLINE -> status = userStatus.ONLINE;
-        }
-    }
+    public void updatePlayer(int deltaTime) {}
+    public void changeStatus() {}
 
     public boolean isOffline() {
-        return status == userStatus.OFFLINE;
+        return false;
     }
 
     public boolean isNotNormalUser() {
         return !userType.equals("user");
     }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(final String username) {
-        this.username = username;
-    }
-
-    public int getAge() {
-        return age;
-    }
-
-    public void setAge(final int age) {
-        this.age = age;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public void setCity(final String city) {
-        this.city = city;
-    }
     /**
      * adds playlist to user
      * @param playlist a playlist
      */
-    public void addPlaylist(final Playlist playlist) {
-        playlists.add(playlist);
-    }
+    public void addPlaylist(final Playlist playlist) {}
 
     /**
      * adds song to liked song collection
      * @param song to be liked song
      */
-    public void addLikedSong(final Song song) {
-        likedSongs.add(song);
-    }
+    public void addLikedSong(final Song song) {}
 
     /**
      * removes song from liked song collection
      * @param song liked song
      */
-    public void removeLikedSong(final Song song) {
-        likedSongs.remove(song);
-    }
+    public void removeLikedSong(final Song song) {}
 
     /**
      * creates new player based on searches
      */
-    public void setMusicPlayer() {
-        switch (formatType) {
-            case "song" -> musicplayer = new MusicPlayer(username);
-            case "podcast" -> musicplayer = new PodcastPlayer(username);
-            case "playlist" -> musicplayer = new PlaylistPlayer(username);
-            case "album" -> musicplayer = new AlbumPlayer(username);
-            default -> {}
-        }
-    }
+    public void setMusicPlayer() {}
     /**
      * creates a searchbar depending on the type searched
      * @param commandType search type
      */
-    public void setSearchBar(final String commandType) {
-        this.formatType = commandType;
-        switch (this.formatType) {
-            case "song" -> searchBar = new SearchBarSong(username);
-            case "podcast" -> searchBar = new SearchBarPodcast(username);
-            case "playlist" -> searchBar = new SearchBarPlaylist(username);
-            case "artist", "host" -> searchBar = new SearchBarUser(username);
-            case "album" -> searchBar = new SearchBarAlbum(username);
-            default -> {
-            }
-        }
+    public void setSearchBar(final String commandType) {}
+
+    public void search() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void select() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void load() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void status() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void playPause() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void repeat() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void shuffle() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void next() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void prev() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void forward() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void backward() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+    /**
+     * Adds a new playlist
+     */
+    public void createPlaylist() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    /**
+     * adds/removes the current song in the playlist
+     */
+    public void addRemoveInPlaylist() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+    /**
+     * change the visibility of the playlist
+     */
+    public void switchVisibility() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+    /**
+     * follow/unfollow the current playlist
+     */
+    public void follow() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    /**
+     * like/unlike the current song
+     */
+    public void like() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    /**
+     * shows all playlists created by the specific user
+     */
+    public void showPlaylists() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    /**
+     * shows all liked songs by the specific user
+     */
+    public void showPreferredSongs() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    /**
+     * shows top 5 playlists on app
+     */
+    public void getTop5Playlists() {
+        Manager.getPartialResult().put("message", "not a user.");
+    }
+
+    /**
+     * shows top 5 songs in app
+     */
+    public void getTop5Songs() {
+        Manager.getPartialResult().put("message", "not a user.");
+    }
+
+    public void switchConnectionStatus() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void getOnlineUsers() {
+        Manager.getPartialResult().put("message", "not a user.");
+    }
+
+    public void addUser() {
+        Manager.getPartialResult().put("message", "not a user.");
+    }
+
+    public void addAlbum() {
+        Manager.getPartialResult().put("message", username + " is not an artist.");
+    }
+
+    public void showAlbums() {
+        Manager.getPartialResult().put("message", username + " is not an artist.");
+    }
+
+    public void printCurrentPage() {
+        Manager.getPartialResult().put("message", username + " is not a user.");
+    }
+
+    public void addEvent() {
+        Manager.getPartialResult().put("message", username + " is not an artist.");
+    }
+
+    public void addMerch() {
+        Manager.getPartialResult().put("message", username + " is not an artist.");
+    }
+
+    public void getAllUsers() {
+        Manager.getPartialResult().put("message", "not a user.");
+    }
+
+    public void deleteUser() {
+        Manager.getPartialResult().put("message", "not a user.");
     }
 }

@@ -7,6 +7,9 @@ import lombok.Getter;
 import lombok.Setter;
 import program.command.Command;
 import program.format.*;
+import program.user.ArtistUser;
+import program.user.HostUser;
+import program.user.NormalUser;
 import program.user.User;
 
 import java.util.*;
@@ -26,22 +29,7 @@ public class CommandList {
             return;
         }
 
-        if (Manager.getCurrentUser().isOffline()) {
-            ArrayNode results = objectMapper.createArrayNode();
-            Manager.getPartialResult().set("results", results);
-            Manager.getPartialResult().put("message", username + " is offline.");
-            return;
-        }
-
-        Manager.getUser(username).setSearchBar(command.getType());
-
-        Manager.searchBar(username).clearSearch();
-
-        Manager.musicPlayer(username).clearPlayer();
-
-        Manager.searchBar(username).search(command.getFilters());
-
-        Manager.searchBar(username).searchDone();
+        Manager.getCurrentUser().search();
     }
 
     public static void select() {
@@ -49,7 +37,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.searchBar(username).select(command.getItemNumber(), username);
+        Manager.getCurrentUser().select();
     }
 
     public static void load() {
@@ -58,11 +46,7 @@ public class CommandList {
             return;
         }
 
-        if (!Manager.getSource(username).isSourceLoaded()) {
-            Manager.getUser(username).setMusicPlayer();
-        }
-
-        Manager.musicPlayer(username).load();
+        Manager.getCurrentUser().load();
     }
 
     public static void status() {
@@ -70,7 +54,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).status();
+        Manager.getCurrentUser().status();
     }
 
     public static void playPause() {
@@ -78,7 +62,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).playPause();
+        Manager.getCurrentUser().playPause();
     }
 
     public static void repeat() {
@@ -86,7 +70,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).repeat();
+        Manager.getCurrentUser().repeat();
     }
 
     public static void shuffle() {
@@ -94,7 +78,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).shuffle(command.getSeed());
+        Manager.getCurrentUser().shuffle();
     }
 
     public static void next() {
@@ -102,7 +86,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).next();
+        Manager.getCurrentUser().next();
     }
 
     public static void prev() {
@@ -110,7 +94,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).prev();
+        Manager.getCurrentUser().prev();
     }
 
     public static void forward() {
@@ -118,7 +102,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).forward();
+        Manager.getCurrentUser().forward();
     }
 
     public static void backward() {
@@ -126,7 +110,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        Manager.musicPlayer(username).backward();
+        Manager.getCurrentUser().backward();
     }
     /**
      * Adds a new playlist
@@ -140,18 +124,7 @@ public class CommandList {
             return;
         }
 
-        for (Playlist p : Manager.getPlaylists()) {
-            if (p.getName().equals(name)) {
-                Manager.getPartialResult().put("message",
-                        "A playlist with the same name already exists.");
-                return;
-            }
-        }
-
-        Playlist p = new Playlist(username, name, time);
-        Manager.getPlaylists().add(p);
-        Manager.getUsers().get(username).addPlaylist(p);
-        Manager.getPartialResult().put("message", "Playlist created successfully.");
+        Manager.getCurrentUser().createPlaylist();
     }
 
     /**
@@ -165,42 +138,7 @@ public class CommandList {
             return;
         }
 
-        if (!Manager.getSource(owner).isSourceLoaded()) {
-            Manager.getPartialResult().put("message",
-                    "Please load a source before adding to or removing from the playlist.");
-            return;
-        }
-
-        if (!Manager.getUser(owner).getFormatType().equals("song")
-                || Manager.musicPlayer(owner).getSong() == null) {
-            Manager.getPartialResult().put("message",
-                    "The loaded source is not a song.");
-            return;
-        }
-
-        if (Manager.getUser(owner).getPlaylists().size() <= (id - 1)) {
-            Manager.getPartialResult().put("message",
-                    "The specified playlist does not exist.");
-            return;
-        }
-
-        Playlist playlist = Manager.getUser(owner).getPlaylists().get(id - 1);
-
-        Song song = Manager.musicPlayer(owner).getSong();
-
-        if (!playlist.getSongs().contains(song)) {
-            playlist.addSong(song);
-            Manager.getPartialResult().put("message", "Successfully added to playlist.");
-        } else {
-            playlist.removeSong(song);
-            Manager.getPartialResult().put("message", "Successfully removed from playlist.");
-        }
-
-        for (int i = 0; i < Manager.getPlaylists().size(); i++) {
-            if (Manager.getPlaylists().get(i).getName().equals(playlist.getName())) {
-                Manager.getPlaylists().set(i, playlist);
-            }
-        }
+        Manager.getCurrentUser().addRemoveInPlaylist();
     }
     /**
      * change the visibility of the playlist
@@ -213,23 +151,7 @@ public class CommandList {
             return;
         }
 
-        if (Manager.getUser(username).getPlaylists().size() <= (id - 1)) {
-            Manager.getPartialResult().put("message", "The specified playlist ID is too high.");
-            return;
-        }
-
-        Playlist pl = Manager.getUser(username).getPlaylists().get(id - 1);
-
-        pl.changeVisibility();
-
-        Manager.getPartialResult().put("message",
-                "Visibility status updated successfully to " + pl.getVisibility() + ".");
-
-        for (int i = 0; i < Manager.getPlaylists().size(); i++) {
-            if (Manager.getPlaylists().get(i).getName().equals(pl.getName())) {
-                Manager.getPlaylists().set(i, pl);
-            }
-        }
+        Manager.getCurrentUser().switchVisibility();
     }
     /**
      * follow/unfollow the current playlist
@@ -240,39 +162,8 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        if (!Manager.getSource(owner).isSourceSelected()) {
-            Manager.getPartialResult().put("message",
-                    "Please select a source before following or unfollowing.");
-            return;
-        }
 
-        if (!Manager.getUser(owner).getFormatType().equals("playlist")) {
-            Manager.getPartialResult().put("message",
-                    "The selected source is not a playlist.");
-            return;
-        }
-
-        Playlist pl = Manager.searchBar(owner).getPlaylistLoaded();
-
-        if (pl.getOwner().equals(owner)) {
-            Manager.getPartialResult().put("message",
-                    "You cannot follow or unfollow your own playlist.");
-            return;
-        }
-
-        if (pl.getFollowers().contains(owner)) {
-            pl.removeFollower(owner);
-            Manager.getPartialResult().put("message", "Playlist unfollowed successfully.");
-        } else {
-            pl.addFollower(owner);
-            Manager.getPartialResult().put("message", "Playlist followed successfully.");
-        }
-
-        for (int i = 0; i < Manager.getPlaylists().size(); i++) {
-            if (Manager.getPlaylists().get(i).getName().equals(pl.getName())) {
-                Manager.getPlaylists().set(i, pl);
-            }
-        }
+        Manager.getCurrentUser().follow();
     }
 
     /**
@@ -284,43 +175,7 @@ public class CommandList {
             return;
         }
 
-        if (Manager.getCurrentUser().isOffline()) {
-            Manager.getPartialResult().put("message", username + " is offline.");
-            return;
-        }
-
-        Song song = null;
-        if (Manager.getUser(username).getFormatType().equals("song")) {
-            song = Manager.searchBar(username).getSongLoaded();
-        } else {
-            song = Manager.musicPlayer(username).getCurrentSong();
-            if (song != null) {
-                for (Song s : Library.getInstance().getSongs()) {
-                    if (s.getName().equals(song.getName())) {
-                        song = s;
-                    }
-                }
-            }
-        }
-
-        if (!Manager.getSources().get(username).isSourceLoaded()) {
-            Manager.getPartialResult().put("message", "Please load a source before liking or unliking.");
-            return;
-        }
-
-        if (song == null && Manager.getSources().get(username).isSourceLoaded()) {
-            Manager.getPartialResult().put("message", "Loaded source is not a song.");
-            return;
-        }
-
-
-        if (!Manager.getUser(username).getLikedSongs().contains(song)) {
-            Manager.getUser(username).addLikedSong(song);
-            Manager.getPartialResult().put("message", "Like registered successfully.");
-        } else {
-            Manager.getUser(username).removeLikedSong(song);
-            Manager.getPartialResult().put("message", "Unlike registered successfully.");
-        }
+        Manager.getCurrentUser().like();
     }
 
     /**
@@ -331,27 +186,8 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode rez = objectMapper.createArrayNode();
 
-        for (Playlist play : Manager.getUser(username).getPlaylists()) {
-            ObjectNode status = objectMapper.createObjectNode();
-            if (play != null) {
-
-                status.put("name", play.getName());
-                ArrayNode node = objectMapper.createArrayNode();
-
-                for (Song sg : play.getSongs()) {
-                    node.add(sg.getName());
-                }
-
-                status.set("songs", node);
-                status.put("visibility", play.getVisibility());
-                status.put("followers", play.getFollowers().size());
-            }
-            rez.add(status);
-        }
-        Manager.getPartialResult().set("result", rez);
+        Manager.getCurrentUser().showPlaylists();
     }
 
     /**
@@ -362,14 +198,7 @@ public class CommandList {
         if (Manager.checkUser()) {
             return;
         }
-        ObjectMapper objectMapper = new ObjectMapper();
-        ArrayNode songs = objectMapper.createArrayNode();
-
-        for (Song sg : Manager.getUser(username).getLikedSongs()) {
-            songs.add(sg.getName());
-        }
-
-        Manager.getPartialResult().set("result", songs);
+        Manager.getCurrentUser().showPreferredSongs();
     }
 
     /**
@@ -454,8 +283,7 @@ public class CommandList {
             return;
         }
 
-        Manager.getCurrentUser().changeStatus();
-        Manager.getPartialResult().put("message", username + " has changed status successfully.");
+        Manager.getCurrentUser().switchConnectionStatus();
     }
 
     public static void getOnlineUsers() {
@@ -476,15 +304,26 @@ public class CommandList {
             return;
         }
 
-        User user = new User(command.getUsername(), command.getAge(),
-                command.getCity(), command.getType());
+        User user = new User();
+        switch (command.getType()) {
+            case "artist" -> {
+                Manager.getArtists().add(username);
+                user = new ArtistUser(command.getUsername(), command.getAge(),
+                        command.getCity(), command.getType());
+            }
+            case "host" -> {
+                Manager.getHosts().add(username);
+                user = new HostUser(command.getUsername(), command.getAge(),
+                        command.getCity(), command.getType());
+            }
+            case "user" -> {
+                Manager.getNormals().add(username);
+                user = new NormalUser(command.getUsername(), command.getAge(),
+                        command.getCity(), command.getType());
+            }
+        }
         Manager.getUsers().put(username, user);
         Manager.addSource(username);
-        switch (command.getType()) {
-            case "artist" -> Manager.getArtists().add(username);
-            case "host" -> Manager.getHosts().add(username);
-            case "user" -> Manager.getNormals().add(username);
-        }
         Manager.getPartialResult().put("message", "The username "
                 + username + " has been added successfully.");
     }
@@ -495,55 +334,11 @@ public class CommandList {
             return;
         }
 
-        if (!Objects.equals(Manager.getCurrentUser().getUserType(), "artist")) {
-            Manager.getPartialResult().put("message",
-                    username + " is not an artist.");
-            return;
-        }
-
-        if (Manager.getCurrentUser().getAlbums().contains(command.getName())) {
-            Manager.getPartialResult().put("message",
-                    username + " has another album with the same name.");
-            return;
-        }
-
-        HashSet<String> set = new HashSet<>();
-        for (Song song : command.getSongs()) {
-            if (!set.add(song.getName())) {
-                Manager.getPartialResult().put("message",
-                        username + " has the same song at least twice in this album.");
-                return;
-            }
-        }
-
-        Album album = new Album(command.getUsername(), command.getName(),
-                command.getReleaseYear(), command.getDescription());
-
-        for (Song song : command.getSongs()) {
-            song.setMaxDuration(song.getDuration());
-            Library.getInstance().getSongs().add(song);
-            album.addSong(song);
-        }
-
-        Manager.getAlbums().put(command.getName(), album);
-        Manager.getCurrentUser().getAlbums().add(album.getName());
-
-        Manager.getPartialResult().put("message",
-                username + " has added new album successfully.");
+        Manager.getCurrentUser().addAlbum();
     }
 
     public static void showAlbums() {
-        ArrayNode result = objectMapper.createArrayNode();
-        for (String albumName : Manager.getCurrentUser().getAlbums()) {
-            Album album = Manager.getAlbums().get(albumName);
-            ObjectNode albumNode = objectMapper.createObjectNode();
-            albumNode.put("name", album.getName());
-            ArrayNode songs = objectMapper.createArrayNode();
-            album.getSongs().forEach((s) -> songs.add(s.getName()));
-            albumNode.set("songs", songs);
-            result.add(albumNode);
-        }
-        Manager.getPartialResult().set("result", result);
+        Manager.getCurrentUser().showAlbums();
     }
 
     public static void printCurrentPage() {
@@ -552,8 +347,7 @@ public class CommandList {
                     Manager.getCurrentUser().getUsername() + " is offline.");
             return;
         }
-        Manager.getPartialResult().put("message",
-                Manager.getCurrentUser().getCurrentPage().printCurrentPage());
+        Manager.getCurrentUser().printCurrentPage();
     }
 
     public static void addEvent() {
@@ -562,32 +356,7 @@ public class CommandList {
             return;
         }
 
-        if (!Objects.equals(Manager.getCurrentUser().getUserType(), "artist")) {
-            Manager.getPartialResult().put("message",
-                    username + " is not an artist.");
-            return;
-        }
-
-        for (Event event1 : Manager.getCurrentUser().getEvents()) {
-            if (event1.getName().equals(command.getName())) {
-                Manager.getPartialResult().put("message",
-                        username + " has another event with the same name.");
-                return;
-            }
-        }
-
-        Event event = new Event(command.getName(), command.getDescription(),
-                command.getDate());
-
-        if (!event.checkDate()) {
-            Manager.getPartialResult().put("message", "Event for "
-                    + username + " does not have a valid date.");
-            return;
-        }
-
-        Manager.getCurrentUser().getEvents().add(event);
-        Manager.getPartialResult().put("message",
-                username + " has added new event successfully.");
+        Manager.getCurrentUser().addEvent();
     }
 
     public static void addMerch() {
@@ -596,31 +365,7 @@ public class CommandList {
             return;
         }
 
-        if (!Objects.equals(Manager.getCurrentUser().getUserType(), "artist")) {
-            Manager.getPartialResult().put("message",
-                    username + " is not an artist.");
-            return;
-        }
-
-        for (Merch merch : Manager.getCurrentUser().getMerch()) {
-            if (merch.getName().equals(command.getName())) {
-                Manager.getPartialResult().put("message",
-                        username + " has merchandise with the same name.");
-                return;
-            }
-        }
-
-        Merch merch = new Merch(command.getName(), command.getPrice(), command.getDescription());
-
-        if (!merch.validMerch()) {
-            Manager.getPartialResult().put("message", "Price for merchandise"
-                    + " can not be negative.");
-            return;
-        }
-
-        Manager.getCurrentUser().getMerch().add(merch);
-        Manager.getPartialResult().put("message",
-                username + " has added new merchandise successfully.");
+        Manager.getCurrentUser().addMerch();
     }
 
     public static void getAllUsers() {
