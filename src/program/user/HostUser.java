@@ -1,5 +1,7 @@
 package program.user;
 
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.Manager;
@@ -70,5 +72,29 @@ public class HostUser extends User {
 
         Manager.getPartialResult().put("message",
                 username + " has successfully added new announcement.");
+    }
+
+    public void removeAnnouncement() {
+        boolean exists = false;
+        for (Announcement announce : announcements) {
+            if (announce.getName().equals(Manager.getCommand().getName())) {
+                exists = true;
+            }
+        }
+
+        if (!exists) {
+            Manager.getPartialResult().put("message",
+                    username + " has no announcement with the given name.");
+            return;
+        }
+
+        announcements.removeIf(announcement ->
+                announcement.getName().equals(Manager.getCommand().getName()));
+        Manager.getPartialResult().put("message",
+                username + " has successfully deleted the announcement.");
+    }
+
+    public void showPodcasts() {
+        
     }
 }

@@ -52,14 +52,14 @@ public final class Podcast {
     public String toString() {
         StringBuilder result = new StringBuilder();
         result.append(name);
-        result.append(":\\n\\t[");
+        result.append(":\n\t[");
         for (int i = 0; i < getEpisodes().size(); i++) {
             result.append(getEpisodes().get(i));
             if (i < getEpisodes().size() - 1) {
                 result.append(", ");
             }
         }
-        result.append("]");
+        result.append("]\n");
         return result.toString();
     }
 }

@@ -134,6 +134,8 @@ public final class Main {
                 case "deleteUser" -> CommandList.deleteUser();
                 case "addPodcast" -> CommandList.addPodcast();
                 case "addAnnouncement" -> CommandList.addAnnouncement();
+                case "removeAnnouncement" -> CommandList.removeAnnouncement();
+                case "showPodcasts" -> CommandList.showPodcasts();
                 default -> {}
             }
             Manager.checkSource();

@@ -18,6 +18,6 @@ public class Announcement {
         this.description = description;
     }
     public String toString() {
-        return name + "\n\t" + description + "\n";
+        return name + ":\n\t" + description + "\n";
     }
 }

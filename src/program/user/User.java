@@ -306,4 +306,12 @@ public class User {
     public void addAnnouncement() {
         Manager.getPartialResult().put("message", username + " is not a host.");
     }
+
+    public void removeAnnouncement() {
+        Manager.getPartialResult().put("message", username + " is not a host.");
+    }
+
+    public void showPodcasts() {
+        Manager.getPartialResult().put("message", username + " is not a host.");
+    }
 }

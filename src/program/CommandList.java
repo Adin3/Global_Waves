@@ -406,4 +406,22 @@ public class CommandList {
 
         Manager.getUser(username).addAnnouncement();
     }
+
+    public static void removeAnnouncement() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).removeAnnouncement();
+    }
+
+    public static void showPodcasts() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).showPodcasts();
+    }
 }
