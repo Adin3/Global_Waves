@@ -2,6 +2,7 @@ package program.command;
 
 import lombok.Getter;
 import lombok.Setter;
+import program.format.Episode;
 import program.format.Song;
 
 import java.util.ArrayList;
@@ -43,4 +44,6 @@ public final class Command {
     private String date;
 
     private int price;
+
+    private ArrayList<Episode> episodes;
 }

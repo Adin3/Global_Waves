@@ -2,6 +2,7 @@ package program.player;
 
 import lombok.Getter;
 import program.Manager;
+import program.format.Album;
 import program.format.Song;
 
 public class Player {
@@ -12,6 +13,9 @@ public class Player {
 
     @Getter
     private Song currentSong;
+
+    @Getter
+    private Album album;
 
     private String repeat = "No Repeat";
 

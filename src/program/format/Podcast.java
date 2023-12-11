@@ -18,6 +18,12 @@ public final class Podcast {
         }
     }
 
+    public Podcast(final String name, final String owner, final ArrayList<Episode> episodes) {
+        this.name = name;
+        this.owner = owner;
+        this.episodes.addAll(episodes);
+    }
+
     public String getName() {
         return name;
     }
@@ -40,5 +46,20 @@ public final class Podcast {
 
     public void setEpisodes(final ArrayList<Episode> episodes) {
         this.episodes = episodes;
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder result = new StringBuilder();
+        result.append(name);
+        result.append(":\\n\\t[");
+        for (int i = 0; i < getEpisodes().size(); i++) {
+            result.append(getEpisodes().get(i));
+            if (i < getEpisodes().size() - 1) {
+                result.append(", ");
+            }
+        }
+        result.append("]");
+        return result.toString();
     }
 }

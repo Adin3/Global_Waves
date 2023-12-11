@@ -5,7 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 public final class Episode {
-    private final String name;
+    private String name;
     private Integer duration;
 
     @Getter @Setter
@@ -18,6 +18,7 @@ public final class Episode {
         this.description = episode.getDescription();
     }
 
+    public Episode() {}
     public String getName() {
         return name;
     }
@@ -36,5 +37,10 @@ public final class Episode {
 
     public void setDescription(final String description) {
         this.description = description;
+    }
+
+    @Override
+    public String toString() {
+        return name + " - " + description;
     }
 }

@@ -129,13 +129,13 @@
   "command" : "deleteUser",
   "user" : "beatblazer",
   "timestamp" : 1380,
-  "message" : "beatblazer can't be deleted."
+  "message" : "beatblazer was successfully deleted."
 }, {
   "command" : "search",
   "user" : "melodicmind42",
   "timestamp" : 1385,
-  "message" : "Search returned 2 results",
-  "results" : [ "Rapid Rhythms", "Rapid Fire" ]
+  "message" : "Search returned 1 results",
+  "results" : [ "Rapid Rhythms" ]
 }, {
   "command" : "select",
   "user" : "melodicmind42",
@@ -155,5 +155,5 @@
   "command" : "printCurrentPage",
   "user" : "melodicmind42",
   "timestamp" : 1480,
-  "message" : "Liked songs:\n\t[Rhythmic RevolutionRapid Rhythms]\n\nFollowed playlists:\n\t[]"
+  "message" : "Liked songs:\n\t[Rapid Rhythms]\n\nFollowed playlists:\n\t[]"
 } ]

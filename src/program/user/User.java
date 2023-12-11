@@ -33,6 +33,9 @@ public class User {
     @Getter
     protected String userType;
 
+    @Getter
+    protected int numberOfReferences = 0;
+
     public Player getMusicplayer() {
         return null;
     }
@@ -47,6 +50,14 @@ public class User {
 
     public Page getCurrentPage() {
         return null;
+    }
+
+    public void addReference() {
+        numberOfReferences++;
+    }
+
+    public void removeReference() {
+        numberOfReferences--;
     }
 
     public ArrayList<Playlist> getPlaylists() {
@@ -76,6 +87,10 @@ public class User {
     public ArrayList<String> getFollowedPlaylists() {
         return null;
     }
+
+    public ArrayList<String> getPodcasts() { return null;}
+
+    public ArrayList<Announcement> getAnnouncements() { return null; }
     public userStatus getStatus() {
         return null;
     }
@@ -282,5 +297,13 @@ public class User {
 
     public void deleteUser() {
         Manager.getPartialResult().put("message", "not a user.");
+    }
+
+    public void addPodcast() {
+        Manager.getPartialResult().put("message", username + " is not a host.");
+    }
+
+    public void addAnnouncement() {
+        Manager.getPartialResult().put("message", username + " is not a host.");
     }
 }

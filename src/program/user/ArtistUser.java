@@ -148,4 +148,46 @@ public class ArtistUser extends User {
         Manager.getPartialResult().put("message",
                 username + " has added new merchandise successfully.");
     }
+
+    @Override
+    public void deleteUser() {
+        boolean used = isUsed();
+
+        if (!used) {
+            Library.getInstance().getSongs().removeIf(song -> song.getArtist().equals(username));
+            Manager.getAlbums().values().removeIf(album -> album.getOwner().equals(username));
+            Manager.getArtists().remove(username);
+            Manager.getSources().remove(username);
+            Manager.getUsers().remove(username);
+            Manager.getUsers().values().forEach(user -> {
+                if (user.getLikedSongs() != null) {
+                    user.getLikedSongs().removeIf(song ->
+                            Objects.equals(song.getArtist(), username)
+                    );
+                }
+            });
+            Manager.getPartialResult().put("message",
+                    username + " was successfully deleted.");
+            return;
+        }
+        Manager.getPartialResult().put("message",
+                username + " can't be deleted.");
+    }
+
+    private boolean isUsed() {
+        boolean used = false;
+        for (User user : Manager.getUsers().values()) {
+            if (user.getUserType().equals("user")) {
+                Song song = user.getMusicplayer().getSong();
+                if (song != null && song.getArtist().equals(username)) {
+                    used = true; break;
+                }
+                Song album = user.getMusicplayer().getCurrentSong();
+                if (album != null && album.getArtist().equals(username)) {
+                    used = true; break;
+                }
+            }
+        }
+        return used;
+    }
 }

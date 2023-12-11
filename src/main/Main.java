@@ -58,7 +58,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 5) {
+            if (isCreated && a < 6) {
                 action(file.getName(), filepath);
                 a++;
             }
@@ -132,6 +132,8 @@ public final class Main {
                 case "addMerch" -> CommandList.addMerch();
                 case "getAllUsers" -> CommandList.getAllUsers();
                 case "deleteUser" -> CommandList.deleteUser();
+                case "addPodcast" -> CommandList.addPodcast();
+                case "addAnnouncement" -> CommandList.addAnnouncement();
                 default -> {}
             }
             Manager.checkSource();

@@ -382,7 +382,28 @@ public class CommandList {
 
     public static void deleteUser() {
         final String username = command.getUsername();
-        Manager.getPartialResult().put("message",
-                username + " can't be deleted.");
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).deleteUser();
+    }
+
+    public static void addPodcast() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).addPodcast();
+    }
+
+    public static void addAnnouncement() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).addAnnouncement();
     }
 }
