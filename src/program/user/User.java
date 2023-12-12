@@ -314,4 +314,8 @@ public class User {
     public void showPodcasts() {
         Manager.getPartialResult().put("message", username + " is not a host.");
     }
+
+    public void removeAlbum() {Manager.getPartialResult().put("message", username + " is not an artist.");}
+
+    public void changePage() {Manager.getPartialResult().put("message", username + " is not a user.");}
 }

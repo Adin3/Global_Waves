@@ -34,7 +34,7 @@ public final class Manager {
     private static Map<String, Album> albums = new HashMap<>();
 
     @Getter
-    private static ArrayList<Playlist> playlists = new ArrayList<>();
+    private static Map<String, Playlist> playlists = new HashMap<>();
     @Getter @Setter
     private static ArrayNode result;
     @Getter @Setter

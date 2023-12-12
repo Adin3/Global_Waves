@@ -207,7 +207,7 @@ public class CommandList {
     public static void getTop5Playlists() {
         ArrayList<Playlist> playlist = new ArrayList<>();
 
-        for (Playlist play : Manager.getPlaylists()) {
+        for (Playlist play : Manager.getPlaylists().values()) {
             if (play.getVisibility().equals("public")) {
                 playlist.add(play);
             }
@@ -423,5 +423,23 @@ public class CommandList {
         }
 
         Manager.getUser(username).showPodcasts();
+    }
+
+    public static void removeAlbum() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).removeAlbum();
+    }
+
+    public static void changePage() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).changePage();
     }
 }

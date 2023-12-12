@@ -141,7 +141,7 @@ public class SearchBarPlaylist extends SearchBar {
     private ArrayList<Playlist> searchPlaylistByName(final String name) {
 
         ArrayList<Playlist> play = new ArrayList<>();
-        for (Playlist pl : Manager.getPlaylists()) {
+        for (Playlist pl : Manager.getPlaylists().values()) {
             if (pl.getName().startsWith(name)) {
                 play.add(pl);
             }
@@ -156,7 +156,7 @@ public class SearchBarPlaylist extends SearchBar {
     private ArrayList<Playlist> searchPlaylistByOwner(final String playlistOwner) {
 
         ArrayList<Playlist> play = new ArrayList<>();
-        for (Playlist pl : Manager.getPlaylists()) {
+        for (Playlist pl : Manager.getPlaylists().values()) {
             if (pl.getOwner().equals(playlistOwner)) {
                 play.add(pl);
             }

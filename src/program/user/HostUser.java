@@ -95,6 +95,17 @@ public class HostUser extends User {
     }
 
     public void showPodcasts() {
-        
+        ArrayNode result = objectMapper.createArrayNode();
+        for (Podcast podcast : Library.getInstance().getPodcasts()) {
+            if (podcast.getOwner().equals(username)) {
+                ObjectNode albumNode = objectMapper.createObjectNode();
+                albumNode.put("name", podcast.getName());
+                ArrayNode episodes = objectMapper.createArrayNode();
+                podcast.getEpisodes().forEach((e) -> episodes.add(e.getName()));
+                albumNode.set("episodes", episodes);
+                result.add(albumNode);
+            }
+        }
+        Manager.getPartialResult().set("result", result);
     }
 }

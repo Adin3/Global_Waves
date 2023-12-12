@@ -12,6 +12,7 @@ import program.player.*;
 import program.searchbar.*;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class NormalUser extends User {
 
@@ -218,7 +219,7 @@ public class NormalUser extends User {
             return;
         }
 
-        for (Playlist p : Manager.getPlaylists()) {
+        for (Playlist p : Manager.getPlaylists().values()) {
             if (p.getName().equals(name)) {
                 Manager.getPartialResult().put("message",
                         "A playlist with the same name already exists.");
@@ -227,7 +228,7 @@ public class NormalUser extends User {
         }
 
         Playlist p = new Playlist(username, name, time);
-        Manager.getPlaylists().add(p);
+        Manager.getPlaylists().put(p.getName(), p);
         Manager.getUsers().get(username).addPlaylist(p);
         Manager.getPartialResult().put("message", "Playlist created successfully.");
     }
@@ -245,8 +246,7 @@ public class NormalUser extends User {
             return;
         }
 
-        if (!Manager.getUser(owner).getFormatType().equals("song")
-                || Manager.musicPlayer(owner).getSong() == null) {
+        if (Manager.musicPlayer(owner).getSong() == null) {
             Manager.getPartialResult().put("message",
                     "The loaded source is not a song.");
             return;
@@ -270,11 +270,8 @@ public class NormalUser extends User {
             Manager.getPartialResult().put("message", "Successfully removed from playlist.");
         }
 
-        for (int i = 0; i < Manager.getPlaylists().size(); i++) {
-            if (Manager.getPlaylists().get(i).getName().equals(playlist.getName())) {
-                Manager.getPlaylists().set(i, playlist);
-            }
-        }
+        Manager.getPlaylists().remove(playlist.getName());
+        Manager.getPlaylists().put(playlist.getName(), playlist);
     }
     /**
      * change the visibility of the playlist
@@ -293,11 +290,8 @@ public class NormalUser extends User {
         Manager.getPartialResult().put("message",
                 "Visibility status updated successfully to " + pl.getVisibility() + ".");
 
-        for (int i = 0; i < Manager.getPlaylists().size(); i++) {
-            if (Manager.getPlaylists().get(i).getName().equals(pl.getName())) {
-                Manager.getPlaylists().set(i, pl);
-            }
-        }
+        Manager.getPlaylists().remove(pl.getName());
+        Manager.getPlaylists().put(pl.getName(), pl);
     }
     public void follow() {
         final String owner = Manager.getCommand().getUsername();
@@ -324,17 +318,16 @@ public class NormalUser extends User {
 
         if (pl.getFollowers().contains(owner)) {
             pl.removeFollower(owner);
+            followedPlaylist.remove(pl.getName());
             Manager.getPartialResult().put("message", "Playlist unfollowed successfully.");
         } else {
             pl.addFollower(owner);
+            followedPlaylist.add(pl.getName());
             Manager.getPartialResult().put("message", "Playlist followed successfully.");
         }
 
-        for (int i = 0; i < Manager.getPlaylists().size(); i++) {
-            if (Manager.getPlaylists().get(i).getName().equals(pl.getName())) {
-                Manager.getPlaylists().set(i, pl);
-            }
-        }
+        Manager.getPlaylists().remove(pl.getName());
+        Manager.getPlaylists().put(pl.getName(), pl);
     }
 
     /**
@@ -443,5 +436,56 @@ public class NormalUser extends User {
         }
         Manager.getPartialResult().put("message",
                 Manager.getCurrentUser().getCurrentPage().printCurrentPage());
+    }
+
+    public void changePage() {
+        if (Manager.getCurrentUser().isOffline()) {
+            Manager.getPartialResult().put("message",
+                    username + " is offline.");
+            return;
+        }
+
+        if (currentPage.changePage(Manager.getCommand().getNextPage())) {
+            Manager.getPartialResult().put("message",
+                    username + " accessed " + Manager.getCommand().getNextPage() + " successfully.");
+        } else {
+            Manager.getPartialResult().put("message",
+                    username + " is trying to access a non-existent page.");
+        }
+    }
+
+    public void deleteUser() {
+        boolean used = isUsed();
+
+        if (!used) {
+            Manager.getNormals().remove(username);
+            Manager.getSources().remove(username);
+            Manager.getUsers().remove(username);
+            Manager.getUsers().values().forEach(user -> {
+                if (user.getFollowedPlaylist() != null) {
+                    user.getFollowedPlaylist().removeIf(pl ->
+                            Manager.getPlaylists().get(pl).getOwner().equals(username)
+                    );
+                }
+            });
+            Manager.getPartialResult().put("message",
+                    username + " was successfully deleted.");
+            return;
+        }
+        Manager.getPartialResult().put("message",
+                username + " can't be deleted.");
+    }
+
+    private boolean isUsed() {
+        boolean used = false;
+        for (User user : Manager.getUsers().values()) {
+            if (user.getUserType().equals("user")) {
+                Playlist play = user.getMusicplayer().getPlaylist();
+                if (play != null && play.getOwner().equals(username)) {
+                    used = true; break;
+                }
+            }
+        }
+        return used;
     }
 }

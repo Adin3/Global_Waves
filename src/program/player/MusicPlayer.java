@@ -71,6 +71,7 @@ public final class MusicPlayer extends Player {
             status.put("repeat", "No Repeat");
             status.put("shuffle", false);
             status.put("paused", true);
+            Manager.getSource(owner).setSourceLoaded(false);
         } else {
             status.put("name", song.getName());
             status.put("remainedTime", song.getDuration());

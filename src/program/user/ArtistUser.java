@@ -190,4 +190,9 @@ public class ArtistUser extends User {
         }
         return used;
     }
+
+    public void removeAlbum() {
+        Manager.getPartialResult().put("message",
+                username + " can't delete this album.");
+    }
 }

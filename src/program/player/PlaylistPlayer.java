@@ -294,6 +294,7 @@ public class PlaylistPlayer extends Player {
             status.put("repeat", "No Repeat");
             status.put("shuffle", false);
             status.put("paused", true);
+            Manager.getSource(owner).setSourceLoaded(false);
         } else {
             status.put("name", currentSong.getName());
             status.put("remainedTime", currentSong.getDuration());

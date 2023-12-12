@@ -46,4 +46,6 @@ public final class Command {
     private int price;
 
     private ArrayList<Episode> episodes;
+
+    private String nextPage;
 }
