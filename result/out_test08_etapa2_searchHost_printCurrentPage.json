@@ -197,7 +197,8 @@
 }, {
   "command" : "removePodcast",
   "user" : "soundseeker",
-  "timestamp" : 3233
+  "timestamp" : 3233,
+  "message" : "soundseeker doesn't have a podcast with the given name."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -212,7 +213,8 @@
 }, {
   "command" : "removePodcast",
   "user" : "soundseeker",
-  "timestamp" : 3243
+  "timestamp" : 3243,
+  "message" : "soundseeker deleted the podcast successfully."
 }, {
   "command" : "load",
   "user" : "alice22",
@@ -240,9 +242,6 @@
   "result" : [ {
     "name" : "Auditory Adventures",
     "episodes" : [ "Exploring Sonic Landscapes", "The Future of Music Technology", "Cultural Beats" ]
-  }, {
-    "name" : "Harmony & History",
-    "episodes" : [ "The Roots of Blues", "Classical Music's Modern Impact", "Jazz Journeys", "The Folk Revival" ]
   } ]
 }, {
   "command" : "follow",
@@ -342,13 +341,13 @@
     "name" : "2010 hits",
     "songs" : [ "Freedom", "Happier" ],
     "visibility" : "public",
-    "followers" : 1
+    "followers" : 0
   } ]
 }, {
   "command" : "deleteUser",
   "user" : "soundseeker",
   "timestamp" : 4010,
-  "message" : "not a user."
+  "message" : "soundseeker can't be deleted."
 }, {
   "command" : "status",
   "user" : "carol19",
@@ -364,5 +363,5 @@
   "command" : "deleteUser",
   "user" : "soundseeker",
   "timestamp" : 100000,
-  "message" : "not a user."
+  "message" : "soundseeker can't be deleted."
 } ]

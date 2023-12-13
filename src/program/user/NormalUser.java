@@ -32,19 +32,10 @@ public class NormalUser extends User {
     private final ArrayList<Playlist> playlists = new ArrayList<>();
 
     @Getter
-    private final ArrayList<String> albums = new ArrayList<>();
-
-    @Getter
     private final ArrayList<String> followedPlaylist = new ArrayList<>();
 
     @Getter
     private final ArrayList<Song> likedSongs = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<Event> events = new ArrayList<>();
-
-    @Getter
-    private final ArrayList<Merch> merch = new ArrayList<>();
 
     public ArrayList<String> getFollowedPlaylists() {
         return followedPlaylist;
@@ -468,6 +459,8 @@ public class NormalUser extends User {
                     );
                 }
             });
+            Manager.getPlaylists().values().forEach(playlist ->
+                playlist.removeFollower(username));
             Manager.getPartialResult().put("message",
                     username + " was successfully deleted.");
             return;

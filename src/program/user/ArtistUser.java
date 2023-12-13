@@ -10,9 +10,7 @@ import program.page.Page;
 import program.player.*;
 import program.searchbar.*;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 
 public class ArtistUser extends User {
 
@@ -20,10 +18,10 @@ public class ArtistUser extends User {
     private final ArrayList<String> albums = new ArrayList<>();
 
     @Getter
-    private final ArrayList<Event> events = new ArrayList<>();
+    private final Map<String, Event> events = new LinkedHashMap<>();
 
     @Getter
-    private final ArrayList<Merch> merch = new ArrayList<>();
+    private final Map<String, Merch> merchs = new LinkedHashMap<>();
 
     public ArtistUser() {}
     public ArtistUser(final UserInput user) {
@@ -92,18 +90,10 @@ public class ArtistUser extends User {
         Manager.getPartialResult().set("result", result);
     }
     public void addEvent() {
-        if (!Objects.equals(Manager.getCurrentUser().getUserType(), "artist")) {
+        if (events.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
-                    username + " is not an artist.");
+                    username + " has another event with the same name.");
             return;
-        }
-
-        for (Event event1 : Manager.getCurrentUser().getEvents()) {
-            if (event1.getName().equals(Manager.getCommand().getName())) {
-                Manager.getPartialResult().put("message",
-                        username + " has another event with the same name.");
-                return;
-            }
         }
 
         Event event = new Event(Manager.getCommand().getName(), Manager.getCommand().getDescription(),
@@ -115,24 +105,16 @@ public class ArtistUser extends User {
             return;
         }
 
-        Manager.getCurrentUser().getEvents().add(event);
+        events.put(event.getName(), event);
         Manager.getPartialResult().put("message",
                 username + " has added new event successfully.");
     }
 
     public void addMerch() {
-        if (!Objects.equals(Manager.getCurrentUser().getUserType(), "artist")) {
+        if (merchs.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
-                    username + " is not an artist.");
+                    username + " has merchandise with the same name.");
             return;
-        }
-
-        for (Merch merch : Manager.getCurrentUser().getMerch()) {
-            if (merch.getName().equals(Manager.getCommand().getName())) {
-                Manager.getPartialResult().put("message",
-                        username + " has merchandise with the same name.");
-                return;
-            }
         }
 
         Merch merch = new Merch(Manager.getCommand().getName(),
@@ -144,7 +126,7 @@ public class ArtistUser extends User {
             return;
         }
 
-        Manager.getCurrentUser().getMerch().add(merch);
+        merchs.put(merch.getName(), merch);
         Manager.getPartialResult().put("message",
                 username + " has added new merchandise successfully.");
     }
@@ -192,7 +174,24 @@ public class ArtistUser extends User {
     }
 
     public void removeAlbum() {
+        if (!albums.contains(Manager.getCommand().getName())) {
+            Manager.getPartialResult().put("message",
+                    username + " doesn't have an album with the given name.");
+            return;
+        }
         Manager.getPartialResult().put("message",
                 username + " can't delete this album.");
+    }
+
+    public void removeEvent() {
+        if (!events.containsKey(Manager.getCommand().getName())) {
+            Manager.getPartialResult().put("message",
+                    username + " doesn't have an event with the given name.");
+            return;
+        }
+
+        events.remove(Manager.getCommand().getName());
+        Manager.getPartialResult().put("message",
+                username + " deleted the event successfully.");
     }
 }

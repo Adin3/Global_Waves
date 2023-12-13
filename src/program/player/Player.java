@@ -4,6 +4,7 @@ import lombok.Getter;
 import program.Manager;
 import program.format.Album;
 import program.format.Playlist;
+import program.format.Podcast;
 import program.format.Song;
 
 public class Player {
@@ -25,6 +26,10 @@ public class Player {
     private boolean paused = false;
 
     private boolean shuffled = false;
+
+    public Podcast getPodcast() {
+        return null;
+    }
 
     public Playlist getPlaylist() {
         return null;

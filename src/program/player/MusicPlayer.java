@@ -109,7 +109,7 @@ public final class MusicPlayer extends Player {
             return;
         }
         Manager.getPartialResult().put("message",
-                "The loaded source is not a playlist.");
+                "The loaded source is not a playlist or an album.");
     }
 
     /**

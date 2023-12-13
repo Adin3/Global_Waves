@@ -9,6 +9,7 @@ import program.format.*;
 
 import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.Objects;
 
 public class HostUser extends User {
 
@@ -107,5 +108,63 @@ public class HostUser extends User {
             }
         }
         Manager.getPartialResult().set("result", result);
+    }
+
+    public void deleteUser() {
+        boolean used = isUsed();
+
+        if (!used) {
+            Library.getInstance().getPodcasts().removeIf(podcast -> podcast.getOwner().equals(username));
+            Manager.getHosts().remove(username);
+            Manager.getSources().remove(username);
+            Manager.getUsers().remove(username);
+            Manager.getPartialResult().put("message",
+                    username + " was successfully deleted.");
+            return;
+        }
+        Manager.getPartialResult().put("message",
+                username + " can't be deleted.");
+    }
+
+    private boolean isUsed() {
+        boolean used = false;
+        for (User user : Manager.getUsers().values()) {
+            if (user.getUserType().equals("user")) {
+                Podcast podcast = user.getMusicplayer().getPodcast();
+                if (podcast != null && podcast.getOwner().equals(username)) {
+                    used = true; break;
+                }
+            }
+        }
+        return used;
+    }
+
+    public void removePodcast() {
+        if (!podcasts.contains(Manager.getCommand().getName())) {
+            Manager.getPartialResult().put("message",
+                    username + " doesn't have a podcast with the given name.");
+            return;
+        }
+
+        boolean used = false;
+        for (User user : Manager.getUsers().values()) {
+            if (user.getUserType().equals("user")) {
+                Podcast podcast = user.getMusicplayer().getPodcast();
+                if (podcast != null && podcast.getName().equals(Manager.getCommand().getName())) {
+                    used = true; break;
+                }
+            }
+        }
+
+        if (used) {
+            Manager.getPartialResult().put("message",
+                    username + " can't delete this podcast.");
+        } else {
+            podcasts.remove(Manager.getCommand().getName());
+            Library.getInstance().getPodcasts().removeIf(podcast ->
+                    podcast.getName().equals(Manager.getCommand().getName()));
+            Manager.getPartialResult().put("message",
+                    username + " deleted the podcast successfully.");
+        }
     }
 }

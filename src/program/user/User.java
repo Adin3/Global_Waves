@@ -13,10 +13,7 @@ import program.page.Page;
 import program.player.*;
 import program.searchbar.*;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashSet;
-import java.util.Objects;
+import java.util.*;
 
 public class User {
     protected static ObjectMapper objectMapper = new ObjectMapper();
@@ -76,11 +73,11 @@ public class User {
         return null;
     }
 
-    public ArrayList<Event> getEvents() {
+    public Map<String, Event> getEvents() {
         return null;
     }
 
-    public ArrayList<Merch> getMerch() {
+    public Map<String, Merch> getMerchs() {
         return null;
     }
 
@@ -318,4 +315,8 @@ public class User {
     public void removeAlbum() {Manager.getPartialResult().put("message", username + " is not an artist.");}
 
     public void changePage() {Manager.getPartialResult().put("message", username + " is not a user.");}
+
+    public void removePodcast() {Manager.getPartialResult().put("message", username + " is not a host.");}
+
+    public void removeEvent() {Manager.getPartialResult().put("message", username + " is not an artist.");}
 }

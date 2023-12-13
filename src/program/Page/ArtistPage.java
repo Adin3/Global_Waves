@@ -6,6 +6,8 @@ import program.format.Merch;
 import program.format.Song;
 import program.user.User;
 
+import java.util.ArrayList;
+
 class ArtistPage implements PageStrategy {
     private String artist;
 
@@ -24,17 +26,19 @@ class ArtistPage implements PageStrategy {
         }
 
         result.append("]\n\nMerch:\n\t[");
-        for (int i = 0; i < user.getMerch().size(); i++) {
-            result.append(user.getMerch().get(i));
-            if (i < user.getMerch().size() - 1) {
+        ArrayList<Merch> merch = new ArrayList<>(user.getMerchs().values());
+        for (int i = 0; i < merch.size(); i++) {
+            result.append(merch.get(i));
+            if (i < merch.size() - 1) {
                 result.append(", ");
             }
         }
 
         result.append("]\n\nEvents:\n\t[");
-        for (int i = 0; i < user.getEvents().size(); i++) {
-            result.append(user.getEvents().get(i));
-            if (i < user.getEvents().size() - 1) {
+        ArrayList<Event> event = new ArrayList<>(user.getEvents().values());
+        for (int i = 0; i < event.size(); i++) {
+            result.append(event.get(i));
+            if (i < event.size() - 1) {
                 result.append(", ");
             }
         }

@@ -442,4 +442,22 @@ public class CommandList {
 
         Manager.getUser(username).changePage();
     }
+
+    public static void removePodcast() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).removePodcast();
+    }
+
+    public static void removeEvent() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).removeEvent();
+    }
 }
