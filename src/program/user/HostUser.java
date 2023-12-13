@@ -134,6 +134,9 @@ public class HostUser extends User {
                 if (podcast != null && podcast.getOwner().equals(username)) {
                     used = true; break;
                 }
+                if (username.equals(user.getCurrentPage().getNonUserName())) {
+                    used = true; break;
+                }
             }
         }
         return used;

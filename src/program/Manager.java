@@ -143,6 +143,15 @@ public final class Manager {
         Manager.getPartialResult().put("timestamp", command.getTimestamp());
     }
 
+    public static <T> T findObjectByCondition(List<T> list, T condition) {
+        for (T obj : list) {
+            if (condition.equals(obj)) {
+                return obj;
+            }
+        }
+        return null;
+    }
+
     public static void getCurrentCommand(Command command) {
         Manager.command = command;
     }

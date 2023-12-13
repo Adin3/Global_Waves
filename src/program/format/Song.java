@@ -5,6 +5,7 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public final class Song {
     private String name;
@@ -20,6 +21,9 @@ public final class Song {
     private String genre;
     private Integer releaseYear;
     private String artist;
+
+    @Getter
+    private int likes;
 
     @Getter
     private int id;
@@ -114,5 +118,33 @@ public final class Song {
 
     public void setArtist(final String artist) {
         this.artist = artist;
+    }
+
+    public void addLike() {
+        likes++;
+    }
+
+    public void removeLike() {
+        likes--;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Song song = (Song) o;
+        return Objects.equals(name, song.name)
+                && Objects.equals(maxDuration, song.maxDuration)
+                && Objects.equals(album, song.album)
+                && Objects.equals(tags, song.tags)
+                && Objects.equals(lyrics, song.lyrics)
+                && Objects.equals(genre, song.genre)
+                && Objects.equals(releaseYear, song.releaseYear)
+                && Objects.equals(artist, song.artist);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(name, maxDuration, album, tags, lyrics, genre, releaseYear, artist);
     }
 }

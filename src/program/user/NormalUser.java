@@ -26,7 +26,7 @@ public class NormalUser extends User {
     private String formatType;
 
     @Getter
-    private Page currentPage = new Page();
+    private final Page currentPage = new Page();
 
     @Getter
     private final ArrayList<Playlist> playlists = new ArrayList<>();
@@ -362,9 +362,17 @@ public class NormalUser extends User {
 
         if (!Manager.getUser(username).getLikedSongs().contains(song)) {
             Manager.getUser(username).addLikedSong(song);
+            Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
+            if (s != null) {
+                s.addLike();
+            }
             Manager.getPartialResult().put("message", "Like registered successfully.");
         } else {
             Manager.getUser(username).removeLikedSong(song);
+            Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
+            if (s != null) {
+                s.removeLike();
+            }
             Manager.getPartialResult().put("message", "Unlike registered successfully.");
         }
     }
@@ -474,7 +482,8 @@ public class NormalUser extends User {
         for (User user : Manager.getUsers().values()) {
             if (user.getUserType().equals("user")) {
                 Playlist play = user.getMusicplayer().getPlaylist();
-                if (play != null && play.getOwner().equals(username)) {
+                if (play != null && play.getOwner().equals(username)
+                        && user.getMusicplayer().getCurrentSong() != null) {
                     used = true; break;
                 }
             }

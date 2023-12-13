@@ -168,6 +168,9 @@ public class ArtistUser extends User {
                 if (album != null && album.getArtist().equals(username)) {
                     used = true; break;
                 }
+                if (username.equals(user.getCurrentPage().getNonUserName())) {
+                    used = true; break;
+                }
             }
         }
         return used;

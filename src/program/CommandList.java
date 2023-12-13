@@ -242,7 +242,7 @@ public class CommandList {
      */
     public static void getTop5Songs() {
 
-        ArrayList<Song> tempSongs = Library.getInstance().getSongs();
+        ArrayList<Song> tempSongs = new ArrayList<>(Library.getInstance().getSongs());
         int[] freqVec = new int[tempSongs.size()];
 
         for (User user : Library.getInstance().getUsers()) {
@@ -459,5 +459,30 @@ public class CommandList {
         }
 
         Manager.getUser(username).removeEvent();
+    }
+
+    public static void getTop5Albums() {
+
+        Map<String, Integer> albumsLikes = new HashMap<>();
+        for (Album album : Manager.getAlbums().values()) {
+            int numberOfLikes = 0;
+            for (Song song : album.getSongs()) {
+                Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
+                if (s != null) {
+                    numberOfLikes += s.getLikes();
+                }
+            }
+            albumsLikes.put(album.getName(), numberOfLikes);
+        }
+
+        List<Map.Entry<String, Integer>> sortAlbums = new ArrayList<>(albumsLikes.entrySet());
+
+        sortAlbums.sort(Comparator.comparing(Map.Entry::getValue));
+        ArrayNode result = objectMapper.createArrayNode();
+        for (int i = sortAlbums.size() - 1; i >= 0 && i > sortAlbums.size() - 6; i--) {
+            result.add(sortAlbums.get(i).getKey());
+            System.out.println(sortAlbums.get(i).getKey() + " " + sortAlbums.get(i).getValue());
+        }
+        Manager.getPartialResult().set("result", result);
     }
 }
