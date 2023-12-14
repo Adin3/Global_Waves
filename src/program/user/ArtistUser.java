@@ -4,14 +4,17 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
-import program.Duplet;
 import program.Manager;
-import program.format.*;
-import program.page.Page;
-import program.player.*;
-import program.searchbar.*;
+import program.format.Event;
+import program.format.Merch;
+import program.format.Library;
+import program.format.Song;
+import program.format.Album;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Objects;
 
 public class ArtistUser extends User {
 
@@ -24,7 +27,7 @@ public class ArtistUser extends User {
     @Getter
     private final Map<String, Merch> merchs = new LinkedHashMap<>();
 
-    public ArtistUser() {}
+    public ArtistUser() { }
     public ArtistUser(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
@@ -32,13 +35,16 @@ public class ArtistUser extends User {
         this.userType = "artist";
     }
 
-    public ArtistUser(String username, int age, String city, String userType) {
+    public ArtistUser(final String username, final int age,
+                      final String city, final String userType) {
         this.username = username;
         this.age = age;
         this.city = city;
         this.userType = userType;
     }
-
+    /**
+     * adds new album in the system
+     */
     public void addAlbum() {
         if (albums.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
@@ -70,7 +76,9 @@ public class ArtistUser extends User {
         Manager.getPartialResult().put("message",
                 username + " has added new album successfully.");
     }
-
+    /**
+     * show all albums made by the artist
+     */
     public void showAlbums() {
         ArrayNode result = objectMapper.createArrayNode();
         for (Album albumName : Manager.getCurrentUser().getAlbums().values()) {
@@ -84,6 +92,9 @@ public class ArtistUser extends User {
         }
         Manager.getPartialResult().set("result", result);
     }
+    /**
+     * adds new event
+     */
     public void addEvent() {
         if (events.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
@@ -91,7 +102,8 @@ public class ArtistUser extends User {
             return;
         }
 
-        Event event = new Event(Manager.getCommand().getName(), Manager.getCommand().getDescription(),
+        Event event = new Event(Manager.getCommand().getName(),
+                Manager.getCommand().getDescription(),
                 Manager.getCommand().getDate());
 
         if (!event.checkDate()) {
@@ -104,7 +116,9 @@ public class ArtistUser extends User {
         Manager.getPartialResult().put("message",
                 username + " has added new event successfully.");
     }
-
+    /**
+     * adds new merch
+     */
     public void addMerch() {
         if (merchs.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
@@ -125,7 +139,9 @@ public class ArtistUser extends User {
         Manager.getPartialResult().put("message",
                 username + " has added new merchandise successfully.");
     }
-
+    /**
+     * deletes the artist
+     */
     @Override
     public void deleteUser() {
         boolean used = isUsed();
@@ -170,7 +186,9 @@ public class ArtistUser extends User {
         }
         return used;
     }
-
+    /**
+     * removes an album from library
+     */
     public void removeAlbum() {
         if (!albums.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
@@ -180,7 +198,9 @@ public class ArtistUser extends User {
         Manager.getPartialResult().put("message",
                 username + " can't delete this album.");
     }
-
+    /**
+     * removes an event
+     */
     public void removeEvent() {
         if (!events.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",

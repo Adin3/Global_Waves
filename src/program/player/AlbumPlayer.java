@@ -6,7 +6,6 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import program.Manager;
 import program.format.Album;
-import program.format.Playlist;
 import program.format.Song;
 
 import java.util.ArrayList;
@@ -48,6 +47,9 @@ public class AlbumPlayer extends Player {
         currentSong = null;
     }
 
+    /**
+     * returns the current song
+     */
     public Song getSong() {
         return currentSong;
     }
@@ -65,7 +67,6 @@ public class AlbumPlayer extends Player {
 
         this.album = new Album(temp);
         String user = this.album.getOwner();
-        Manager.getUser(user).addReference();
 
         if (this.album.getSongs().isEmpty()) {
             Manager.getPartialResult().put("message",

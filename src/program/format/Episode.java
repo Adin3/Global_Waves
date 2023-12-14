@@ -18,7 +18,7 @@ public final class Episode {
         this.description = episode.getDescription();
     }
 
-    public Episode() {}
+    public Episode() { }
     public String getName() {
         return name;
     }

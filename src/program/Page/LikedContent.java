@@ -7,10 +7,12 @@ import program.format.Song;
 import program.user.User;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Map;
 
-class LikedContent implements PageStrategy {
+public class LikedContent implements PageStrategy {
+    /**
+     * prints the liked content page of the current user
+     */
     @Override
     public String printCurrentPage() {
         StringBuilder result = new StringBuilder("Liked songs:\n\t[");
@@ -19,20 +21,6 @@ class LikedContent implements PageStrategy {
         for (Song s : user.getLikedSongs()) {
             likedSongs.add(Manager.findObjectByCondition(Library.getInstance().getSongs(), s));
         }
-//
-//        likedSongs.sort(new Comparator<>() {
-//            @Override
-//            public int compare(Song song1, Song song2) {
-//                int like = Integer.compare(song1.getLikes(), song2.getLikes());
-//
-//                if (like == 0) {
-//                    int rez = song1.getName().compareTo(song2.getName());
-//                    return -rez;
-//                }
-//
-//                return -like;
-//            }
-//        });
 
         for (int i = 0; i < user.getLikedSongs().size(); i++) {
             Song s = user.getLikedSongs().get(i);

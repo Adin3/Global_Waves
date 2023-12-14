@@ -6,14 +6,11 @@ import lombok.Getter;
 import program.CommandList;
 import program.Manager;
 import program.command.Filters;
-import program.format.Library;
 import program.format.Playlist;
 import program.format.Podcast;
 import program.format.Song;
 
 import java.util.ArrayList;
-import java.util.Collections;
-
 public class SearchBarUser extends SearchBar {
     private static final int MAX_USERS = 5;
     @Getter
@@ -39,7 +36,7 @@ public class SearchBarUser extends SearchBar {
     public void clearSearch() {
     }
 
-    public SearchBarUser(String owner) {
+    public SearchBarUser(final String owner) {
         this.owner = owner;
     }
 
@@ -49,7 +46,7 @@ public class SearchBarUser extends SearchBar {
      * @param username user's name
      */
     public void select(final int number, final String username) {
-        if (!users.isEmpty() && Manager.getSource(username).isSourceSearched()) {
+        if (Manager.getSource(username).isSourceSearched()) {
             if (number <= users.size()) {
                 userLoaded = users.get((number - 1));
                 Manager.getPartialResult().put("message",
@@ -99,6 +96,7 @@ public class SearchBarUser extends SearchBar {
                     users.addAll(searchHostByName(filter.getName()));
                 }
             }
+            default -> { }
         }
 
         while (users.size() > MAX_USERS) {

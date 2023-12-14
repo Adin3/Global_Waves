@@ -1,13 +1,11 @@
 package program.format;
 
 import lombok.Getter;
-import lombok.Setter;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Date;
-import java.util.Date;
 
 public class Event {
     @Getter
@@ -17,29 +15,38 @@ public class Event {
     @Getter
     private String date;
 
-    public Event(String name, String description, String date) {
+    private static final int MINIMUM_YEAR = 1900;
+
+    private static final int MAXIMUM_YEAR = 2023;
+
+    public Event(final String name, final String description, final String date) {
         this.name = name;
         this.description = description;
         this.date = date;
     }
 
+    /**
+     * checks if date is valid
+     * @return true if date is valid, false otherwise
+     */
     public boolean checkDate() {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+        DateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
         dateFormat.setLenient(false);
 
         try {
-            Date parsedDate = dateFormat.parse(date);
-
             Calendar calendar = Calendar.getInstance();
-            calendar.setTime(parsedDate);
+            calendar.setTime(dateFormat.parse(date));
 
             int year = calendar.get(Calendar.YEAR);
-            return (year >= 1900 && year <= 2023);
+            return (year >= MINIMUM_YEAR && year <= MAXIMUM_YEAR);
         } catch (ParseException e) {
             return false;
         }
     }
 
+    /**
+     * override toString function for Event
+     */
     public String toString() {
         return name + " - " + date + ":\n\t" + description;
     }

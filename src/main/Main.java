@@ -24,7 +24,6 @@ import java.util.Objects;
 
 public final class Main {
     static final String LIBRARY_PATH = CheckerConstants.TESTS_PATH + "library/library.json";
-    static int a = 0;
     /**
      * for coding style
      */
@@ -58,9 +57,8 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 17) {
+            if (isCreated) {
                 action(file.getName(), filepath);
-                a++;
             }
         }
 
@@ -91,10 +89,8 @@ public final class Main {
         }
 
         Manager.setResult(objectMapper.createArrayNode());
-        System.out.println("-----------" + a + "\n");
         for (Command command : commands) {
-            System.out.println(command.getTimestamp() + "\n");
-            Manager.getCurrentCommand(command);
+            Manager.setCommand(command);
             CommandList.setCommand(command);
             Manager.updateDeltaTime();
 
@@ -142,7 +138,8 @@ public final class Main {
                 case "removePodcast" -> CommandList.removePodcast();
                 case "removeEvent" -> CommandList.removeEvent();
                 case "getTop5Albums" -> CommandList.getTop5Albums();
-                default -> {}
+                case "getTop5Artists" -> CommandList.getTop5Artists();
+                default -> { }
             }
             Manager.checkSource();
             Manager.getResult().add(Manager.getPartialResult());

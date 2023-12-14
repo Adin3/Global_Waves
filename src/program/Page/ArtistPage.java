@@ -3,17 +3,21 @@ package program.page;
 import program.Manager;
 import program.format.Event;
 import program.format.Merch;
-import program.format.Song;
 import program.user.User;
 
 import java.util.ArrayList;
 
-class ArtistPage implements PageStrategy {
+public class ArtistPage implements PageStrategy {
     private String artist;
 
-    public ArtistPage(String artist) {
+    ArtistPage(final String artist) {
         this.artist = artist;
     }
+
+
+    /**
+     * prints the artist's page
+     */
     @Override
     public String printCurrentPage() {
         StringBuilder result = new StringBuilder("Albums:\n\t[");

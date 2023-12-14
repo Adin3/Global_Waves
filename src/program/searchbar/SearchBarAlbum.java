@@ -12,7 +12,7 @@ import program.format.Song;
 import java.util.ArrayList;
 import java.util.Collections;
 
-public class SearchBarAlbum extends SearchBar{
+public class SearchBarAlbum extends SearchBar {
     @Getter
     private final ArrayList<Album> albums = new ArrayList<>();
 

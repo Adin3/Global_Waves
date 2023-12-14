@@ -5,12 +5,16 @@ import program.format.Library;
 import program.format.Podcast;
 import program.user.User;
 
-class HostPage implements PageStrategy {
+public class HostPage implements PageStrategy {
     private String host;
 
-    public HostPage(String host) {
+    HostPage(final String host) {
         this.host = host;
     }
+
+    /**
+     * prints the host's page
+     */
     @Override
     public String printCurrentPage() {
         StringBuilder result = new StringBuilder("Podcasts:\n\t[");

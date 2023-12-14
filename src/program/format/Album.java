@@ -27,14 +27,15 @@ public class Album {
     @Getter
     private String description;
 
-    public Album(String owner, String name, int releaseYear, String description) {
+    public Album(final String owner, final String name,
+                 final int releaseYear, final String description) {
         this.owner = owner;
         this.name = name;
         this.releaseYear = releaseYear;
         this.description = description;
     }
 
-    public Album(Album album) {
+    public Album(final Album album) {
         this.owner = album.getOwner();
         this.name = album.getName();
         this.releaseYear = album.getReleaseYear();
@@ -95,14 +96,25 @@ public class Album {
         return followers.size();
     }
 
+    /**
+     * override equal function for album
+     * @param o object which is checked for equality
+     */
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Album album = (Album) o;
         return Objects.equals(owner, album.owner) && Objects.equals(name, album.name);
     }
 
+    /**
+     * override hashcode function for album
+     */
     @Override
     public int hashCode() {
         return Objects.hash(owner, name);

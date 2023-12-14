@@ -10,8 +10,11 @@ public class Page {
     public Page() {
         setPrintingStrategy(new HomePage());
     }
-
-    public boolean changePage(String pageName) {
+    /**
+     * change the current page of user
+     * @param pageName the name of the changed page
+     */
+    public boolean changePage(final String pageName) {
         nonUserName = null;
         switch (pageName) {
             case "Home" -> setPrintingStrategy(new HomePage());
@@ -32,10 +35,17 @@ public class Page {
         }
         return true;
     }
-    private void setPrintingStrategy(PageStrategy printingStrategy) {
+    /**
+     * sets the type of page
+     * @param printingStrategy variable that decides what type of page will be loaded
+     */
+    private void setPrintingStrategy(final PageStrategy printingStrategy) {
         this.printingStrategy = printingStrategy;
     }
 
+    /**
+     * prints the current page
+     */
     public String printCurrentPage() {
         if (printingStrategy != null) {
             return printingStrategy.printCurrentPage();

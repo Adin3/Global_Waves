@@ -5,7 +5,6 @@ import lombok.Getter;
 import lombok.Setter;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.Objects;
 
 public final class Song {
@@ -29,7 +28,7 @@ public final class Song {
     @Getter
     private int id;
 
-    public Song() {}
+    public Song() { }
 
     public Song(final SongInput song, final int id) {
         this.name = song.getName();
@@ -121,18 +120,27 @@ public final class Song {
         this.artist = artist;
     }
 
+    /**
+     * adds a new like to the songs
+     */
     public void addLike() {
         likes++;
     }
-
+    /**
+     * removes a like from the songs
+     */
     public void removeLike() {
         likes--;
     }
 
     @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+    public boolean equals(final Object o) {
+        if (this == o) {
+            return true;
+        }
+        if (o == null || getClass() != o.getClass()) {
+            return false;
+        }
         Song song = (Song) o;
         return Objects.equals(name, song.name)
                 && Objects.equals(maxDuration, song.maxDuration)

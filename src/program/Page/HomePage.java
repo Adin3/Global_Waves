@@ -1,14 +1,18 @@
 package program.page;
-
-import com.fasterxml.jackson.databind.node.ArrayNode;
 import program.Manager;
 import program.format.Library;
 import program.user.User;
 import program.format.Song;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.List;
 
-class HomePage implements PageStrategy {
+public class HomePage implements PageStrategy {
+    private static final int TOP5 = 5;
+    /**
+     * prints the home page of the user
+     */
     @Override
     public String printCurrentPage() {
         StringBuilder result = new StringBuilder("Liked songs:\n\t[");
@@ -20,7 +24,7 @@ class HomePage implements PageStrategy {
 
         likedSongs.sort(new Comparator<>() {
             @Override
-            public int compare(Song song1, Song song2) {
+            public int compare(final Song song1, final Song song2) {
                 int like = Integer.compare(song1.getLikes(), song2.getLikes());
 
                 if (like == 0) {
@@ -31,18 +35,16 @@ class HomePage implements PageStrategy {
             }
         });
 
-        while (likedSongs.size() > 5) {
+        while (likedSongs.size() > TOP5) {
             likedSongs.remove(likedSongs.size() - 1);
         }
 
         for (int i = 0; i < likedSongs.size(); i++) {
             result.append(likedSongs.get(i).getName());
-            System.out.println(likedSongs.get(i).getName() + " " + likedSongs.get(i).getLikes());
             if (i < likedSongs.size() - 1) {
                 result.append(", ");
             }
         }
-        System.out.println("\n");
         result.append("]\n\nFollowed playlists:\n\t[");
         List<String> followedPlaylists = user.getFollowedPlaylists();
         for (int i = 0; i < followedPlaylists.size(); i++) {

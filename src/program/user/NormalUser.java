@@ -6,13 +6,23 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.Manager;
-import program.format.*;
+import program.format.Library;
+import program.format.Playlist;
+import program.format.Song;
 import program.page.Page;
-import program.player.*;
-import program.searchbar.*;
+import program.player.AlbumPlayer;
+import program.player.Player;
+import program.player.MusicPlayer;
+import program.player.PlaylistPlayer;
+import program.player.PodcastPlayer;
+import program.searchbar.SearchBarUser;
+import program.searchbar.SearchBar;
+import program.searchbar.SearchBarAlbum;
+import program.searchbar.SearchBarPlaylist;
+import program.searchbar.SearchBarPodcast;
+import program.searchbar.SearchBarSong;
 
 import java.util.ArrayList;
-import java.util.Objects;
 
 public class NormalUser extends User {
 
@@ -32,23 +42,12 @@ public class NormalUser extends User {
     private final ArrayList<Playlist> playlists = new ArrayList<>();
 
     @Getter
-    private final ArrayList<String> followedPlaylist = new ArrayList<>();
+    private final ArrayList<String> followedPlaylists = new ArrayList<>();
 
     @Getter
     private final ArrayList<Song> likedSongs = new ArrayList<>();
 
-    public ArrayList<String> getFollowedPlaylists() {
-        return followedPlaylist;
-    }
-
-    private enum userStatus {
-        ONLINE,
-        OFFLINE,
-    }
-
-    private User.userStatus status = User.userStatus.ONLINE;
-
-    public NormalUser() {}
+    public NormalUser() { }
     public NormalUser(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
@@ -56,31 +55,45 @@ public class NormalUser extends User {
         this.userType = "user";
     }
 
-    public NormalUser(String username, int age, String city, String userType) {
+    public NormalUser(final String username, final int age,
+                      final String city, final String userType) {
         this.username = username;
         this.age = age;
         this.city = city;
         this.userType = userType;
     }
-
+    /**
+     * changes the status of the user
+     */
     public void changeStatus() {
         switch (status) {
-            case ONLINE -> status = User.userStatus.OFFLINE;
-            case OFFLINE -> status = User.userStatus.ONLINE;
+            case ONLINE -> {
+                status = UserStatus.OFFLINE;
+            }
+            case OFFLINE -> {
+                status = UserStatus.ONLINE;
+            }
+            default -> { }
         }
     }
-
-    public void updatePlayer(int deltaTime) {
+    /**
+     * updates the player
+     */
+    public void updatePlayer(final int deltaTime) {
         if (!isOffline()) {
             musicplayer.updateDuration(deltaTime);
             musicplayer.updatePlayer();
         }
     }
-
+    /**
+     * checks is user is offline
+     */
     public boolean isOffline() {
-        return status == User.userStatus.OFFLINE;
+        return status == User.UserStatus.OFFLINE;
     }
-
+    /**
+     * checks if user is a normal user
+     */
     public boolean isNotNormalUser() {
         return !userType.equals("user");
     }
@@ -113,11 +126,19 @@ public class NormalUser extends User {
      */
     public void setMusicPlayer() {
         switch (formatType) {
-            case "song" -> musicplayer = new MusicPlayer(username);
-            case "podcast" -> musicplayer = new PodcastPlayer(username);
-            case "playlist" -> musicplayer = new PlaylistPlayer(username);
-            case "album" -> musicplayer = new AlbumPlayer(username);
-            default -> {}
+            case "song" -> {
+                musicplayer = new MusicPlayer(username);
+            }
+            case "podcast" -> {
+                musicplayer = new PodcastPlayer(username);
+            }
+            case "playlist" -> {
+                musicplayer = new PlaylistPlayer(username);
+            }
+            case "album" -> {
+                musicplayer = new AlbumPlayer(username);
+            }
+            default -> { }
         }
     }
     /**
@@ -127,16 +148,27 @@ public class NormalUser extends User {
     public void setSearchBar(final String commandType) {
         this.formatType = commandType;
         switch (this.formatType) {
-            case "song" -> searchBar = new SearchBarSong(username);
-            case "podcast" -> searchBar = new SearchBarPodcast(username);
-            case "playlist" -> searchBar = new SearchBarPlaylist(username);
-            case "artist", "host" -> searchBar = new SearchBarUser(username);
-            case "album" -> searchBar = new SearchBarAlbum(username);
-            default -> {
+            case "song" -> {
+                searchBar = new SearchBarSong(username);
             }
+            case "podcast" -> {
+                searchBar = new SearchBarPodcast(username);
+            }
+            case "playlist" -> {
+                searchBar = new SearchBarPlaylist(username);
+            }
+            case "artist", "host" -> {
+                searchBar = new SearchBarUser(username);
+            }
+            case "album" -> {
+                searchBar = new SearchBarAlbum(username);
+            }
+            default -> { }
         }
     }
-
+    /**
+     * searches in library files, collections, or users
+     */
     public void search() {
         if (isOffline()) {
             ArrayNode results = objectMapper.createArrayNode();
@@ -155,11 +187,15 @@ public class NormalUser extends User {
 
         searchBar.searchDone();
     }
-
+    /**
+     * selects one element from the array returned by search
+     */
     public void select() {
         searchBar.select(Manager.getCommand().getItemNumber(), username);
     }
-
+    /**
+     * loads a file or collection into player
+     */
     public void load() {
         if (!Manager.getSource(username).isSourceLoaded()) {
             setMusicPlayer();
@@ -167,35 +203,51 @@ public class NormalUser extends User {
 
         musicplayer.load();
     }
-
+    /**
+     * shows the status of player
+     */
     public void status() {
         musicplayer.status();
     }
-
+    /**
+     * toggles the play/pause of player
+     */
     public void playPause() {
         musicplayer.playPause();
     }
-
+    /**
+     * toggles the repeat function of player
+     */
     public void repeat() {
         musicplayer.repeat();
     }
-
+    /**
+     * shuffles the collection
+     */
     public void shuffle() {
         musicplayer.shuffle(Manager.getCommand().getSeed());
     }
-
+    /**
+     * goes forward to next file
+     */
     public void next() {
         musicplayer.next();
     }
-
+    /**
+     * goes back to previous file
+     */
     public void prev() {
         musicplayer.prev();
     }
-
+    /**
+     * skips forward for 90 seconds
+     */
     public void forward() {
         musicplayer.forward();
     }
-
+    /**
+     * goes backward for 90 seconds
+     */
     public void backward() {
         musicplayer.backward();
     }
@@ -274,11 +326,14 @@ public class NormalUser extends User {
         Playlist pl = Manager.getUser(username).getPlaylists().get(id - 1);
 
         pl.changeVisibility();
-        //Manager.getPlaylists().get(pl.getName()).changeVisibility();
 
         Manager.getPartialResult().put("message",
                 "Visibility status updated successfully to " + pl.getVisibility() + ".");
     }
+
+    /**
+     * lets user follow a playlist
+     */
     public void follow() {
         final String owner = Manager.getCommand().getUsername();
 
@@ -304,12 +359,12 @@ public class NormalUser extends User {
 
         if (pl.getFollowers().contains(owner)) {
             //pl.removeFollower(owner);
-            followedPlaylist.remove(pl.getName());
+            followedPlaylists.remove(pl.getName());
             Manager.getPlaylists().get(pl.getName()).removeFollower(owner);
             Manager.getPartialResult().put("message", "Playlist unfollowed successfully.");
         } else {
             //pl.addFollower(owner);
-            followedPlaylist.add(pl.getName());
+            followedPlaylists.add(pl.getName());
             Manager.getPlaylists().get(pl.getName()).addFollower(owner);
             Manager.getPartialResult().put("message", "Playlist followed successfully.");
         }
@@ -335,16 +390,13 @@ public class NormalUser extends User {
         } else {
             song = Manager.musicPlayer(username).getCurrentSong();
             if (song != null) {
-                for (Song s : Library.getInstance().getSongs()) {
-                    if (s.getName().equals(song.getName())) {
-                        song = s;
-                    }
-                }
+                song = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
             }
         }
 
         if (!Manager.getSources().get(username).isSourceLoaded()) {
-            Manager.getPartialResult().put("message", "Please load a source before liking or unliking.");
+            Manager.getPartialResult().put("message",
+                    "Please load a source before liking or unliking.");
             return;
         }
 
@@ -415,12 +467,16 @@ public class NormalUser extends User {
 
         Manager.getPartialResult().set("result", songs);
     }
-
+    /**
+     * switches the connection status to online or offline
+     */
     public void switchConnectionStatus() {
         Manager.getCurrentUser().changeStatus();
         Manager.getPartialResult().put("message", username + " has changed status successfully.");
     }
-
+    /**
+     * prints the current page
+     */
     public void printCurrentPage() {
         if (Manager.getCurrentUser().isOffline()) {
             Manager.getPartialResult().put("message",
@@ -430,7 +486,9 @@ public class NormalUser extends User {
         Manager.getPartialResult().put("message",
                 Manager.getCurrentUser().getCurrentPage().printCurrentPage());
     }
-
+    /**
+     * changes the page to nextPage
+     */
     public void changePage() {
         if (Manager.getCurrentUser().isOffline()) {
             Manager.getPartialResult().put("message",
@@ -440,13 +498,16 @@ public class NormalUser extends User {
 
         if (currentPage.changePage(Manager.getCommand().getNextPage())) {
             Manager.getPartialResult().put("message",
-                    username + " accessed " + Manager.getCommand().getNextPage() + " successfully.");
+                    username + " accessed " + Manager.getCommand().getNextPage()
+                            + " successfully.");
         } else {
             Manager.getPartialResult().put("message",
                     username + " is trying to access a non-existent page.");
         }
     }
-
+    /**
+     * removes an album
+     */
     public void deleteUser() {
         boolean used = isUsed();
 
@@ -455,8 +516,8 @@ public class NormalUser extends User {
             Manager.getSources().remove(username);
             Manager.getUsers().remove(username);
             Manager.getUsers().values().forEach(user -> {
-                if (user.getFollowedPlaylist() != null) {
-                    user.getFollowedPlaylist().removeIf(pl ->
+                if (user.getFollowedPlaylists() != null) {
+                    user.getFollowedPlaylists().removeIf(pl ->
                             Manager.getPlaylists().get(pl).getOwner().equals(username)
                     );
                 }

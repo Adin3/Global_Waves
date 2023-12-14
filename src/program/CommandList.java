@@ -2,19 +2,27 @@ package program;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
-import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import program.command.Command;
-import program.format.*;
+import program.format.Library;
+import program.format.Playlist;
+import program.format.Album;
+import program.format.Song;
 import program.user.ArtistUser;
 import program.user.HostUser;
 import program.user.NormalUser;
 import program.user.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.HashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
-public class CommandList {
+
+public final class CommandList {
 
     private static ObjectMapper objectMapper = new ObjectMapper();
 
@@ -22,6 +30,11 @@ public class CommandList {
     private static Command command;
 
     private static final int TOP5 = 5;
+
+    private CommandList() { }
+    /**
+     * search command wrapper
+     */
     public static void search() {
         String username = command.getUsername();
 
@@ -31,7 +44,9 @@ public class CommandList {
 
         Manager.getCurrentUser().search();
     }
-
+    /**
+     * select command wrapper
+     */
     public static void select() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -40,6 +55,9 @@ public class CommandList {
         Manager.getCurrentUser().select();
     }
 
+    /**
+     * load command wrapper
+     */
     public static void load() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -49,6 +67,9 @@ public class CommandList {
         Manager.getCurrentUser().load();
     }
 
+    /**
+     * status command wrapper
+     */
     public static void status() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -57,6 +78,9 @@ public class CommandList {
         Manager.getCurrentUser().status();
     }
 
+    /**
+     * playPause command wrapper
+     */
     public static void playPause() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -65,6 +89,9 @@ public class CommandList {
         Manager.getCurrentUser().playPause();
     }
 
+    /**
+     * repeat command wrapper
+     */
     public static void repeat() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -73,6 +100,9 @@ public class CommandList {
         Manager.getCurrentUser().repeat();
     }
 
+    /**
+     * shuffle command wrapper
+     */
     public static void shuffle() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -81,6 +111,9 @@ public class CommandList {
         Manager.getCurrentUser().shuffle();
     }
 
+    /**
+     * next command wrapper
+     */
     public static void next() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -89,6 +122,9 @@ public class CommandList {
         Manager.getCurrentUser().next();
     }
 
+    /**
+     * prev command wrapper
+     */
     public static void prev() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -97,6 +133,9 @@ public class CommandList {
         Manager.getCurrentUser().prev();
     }
 
+    /**
+     * forward command wrapper
+     */
     public static void forward() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -105,6 +144,9 @@ public class CommandList {
         Manager.getCurrentUser().forward();
     }
 
+    /**
+     * backward command wrapper
+     */
     public static void backward() {
         String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -113,7 +155,7 @@ public class CommandList {
         Manager.getCurrentUser().backward();
     }
     /**
-     * Adds a new playlist
+     * createPlaylist command wrapper
      */
     public static void createPlaylist() {
         final String username = command.getUsername();
@@ -128,7 +170,7 @@ public class CommandList {
     }
 
     /**
-     * adds/removes the current song in the playlist
+     * addRemoveInPlaylist command wrapper
      */
     public static void addRemoveInPlaylist() {
         final String owner = command.getUsername();
@@ -141,7 +183,7 @@ public class CommandList {
         Manager.getCurrentUser().addRemoveInPlaylist();
     }
     /**
-     * change the visibility of the playlist
+     * switchVisibility command wrapper
      */
     public static void switchVisibility() {
         final String username = command.getUsername();
@@ -154,7 +196,7 @@ public class CommandList {
         Manager.getCurrentUser().switchVisibility();
     }
     /**
-     * follow/unfollow the current playlist
+     * follow command wrapper
      */
     public static void follow() {
         final String owner = command.getUsername();
@@ -167,7 +209,7 @@ public class CommandList {
     }
 
     /**
-     * like/unlike the current song
+     * like command wrapper
      */
     public static void like() {
         final String username = command.getUsername();
@@ -179,7 +221,7 @@ public class CommandList {
     }
 
     /**
-     * shows all playlists created by the specific user
+     * showPlaylists command wrapper
      */
     public static void showPlaylists() {
         final String username = command.getUsername();
@@ -191,7 +233,7 @@ public class CommandList {
     }
 
     /**
-     * shows all liked songs by the specific user
+     * showPreferredSongs command wrapper
      */
     public static void showPreferredSongs() {
         final String username = command.getUsername();
@@ -202,7 +244,7 @@ public class CommandList {
     }
 
     /**
-     * shows top 5 playlists on app
+     * getTop5Playlists command wrapper
      */
     public static void getTop5Playlists() {
         ArrayList<Playlist> playlist = new ArrayList<>();
@@ -226,7 +268,6 @@ public class CommandList {
             }
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
         for (int i = 0; i < playlist.size() && i < TOP5; i++) {
@@ -238,7 +279,7 @@ public class CommandList {
     }
 
     /**
-     * shows top 5 songs in app
+     * getTop5Songs command wrapper
      */
     public static void getTop5Songs() {
 
@@ -266,7 +307,6 @@ public class CommandList {
             }
         }
 
-        ObjectMapper objectMapper = new ObjectMapper();
         ArrayNode node = objectMapper.createArrayNode();
 
         for (Song sg : tempSongs.subList(0, TOP5)) {
@@ -276,7 +316,9 @@ public class CommandList {
         Manager.getPartialResult().set("result", node);
 
     }
-
+    /**
+     * switchConnectionStatus command wrapper
+     */
     public static void switchConnectionStatus() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -286,6 +328,9 @@ public class CommandList {
         Manager.getCurrentUser().switchConnectionStatus();
     }
 
+    /**
+     * getOnlineUsers command wrapper
+     */
     public static void getOnlineUsers() {
         ArrayList<User> user = new ArrayList<>(Manager.getUsers().values());
         user.removeIf(User::isOffline);
@@ -296,6 +341,9 @@ public class CommandList {
         Manager.getPartialResult().set("result", onlineUsers);
     }
 
+    /**
+     * addUser command wrapper
+     */
     public static void addUser() {
         String username = command.getUsername();
         if (Manager.getUsers().containsKey(username)) {
@@ -321,13 +369,16 @@ public class CommandList {
                 user = new NormalUser(command.getUsername(), command.getAge(),
                         command.getCity(), command.getType());
             }
+            default -> { }
         }
         Manager.getUsers().put(username, user);
         Manager.addSource(username);
         Manager.getPartialResult().put("message", "The username "
                 + username + " has been added successfully.");
     }
-
+    /**
+     * addAlbum command wrapper
+     */
     public static void addAlbum() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -337,10 +388,16 @@ public class CommandList {
         Manager.getCurrentUser().addAlbum();
     }
 
+    /**
+     * showAlbums command wrapper
+     */
     public static void showAlbums() {
         Manager.getCurrentUser().showAlbums();
     }
 
+    /**
+     * printCurrentPage command wrapper
+     */
     public static void printCurrentPage() {
         if (Manager.getCurrentUser().isOffline()) {
             Manager.getPartialResult().put("message",
@@ -349,7 +406,9 @@ public class CommandList {
         }
         Manager.getCurrentUser().printCurrentPage();
     }
-
+    /**
+     * addEvent command wrapper
+     */
     public static void addEvent() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -358,7 +417,9 @@ public class CommandList {
 
         Manager.getCurrentUser().addEvent();
     }
-
+    /**
+     * addMerch command wrapper
+     */
     public static void addMerch() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -368,6 +429,9 @@ public class CommandList {
         Manager.getCurrentUser().addMerch();
     }
 
+    /**
+     * getAllUsers command wrapper
+     */
     public static void getAllUsers() {
         ArrayList<String> user = new ArrayList<>();
 
@@ -380,6 +444,9 @@ public class CommandList {
         Manager.getPartialResult().set("result", onlineUsers);
     }
 
+    /**
+     * deleteUser command wrapper
+     */
     public static void deleteUser() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -388,7 +455,9 @@ public class CommandList {
 
         Manager.getUser(username).deleteUser();
     }
-
+    /**
+     * addPodcast command wrapper
+     */
     public static void addPodcast() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -397,7 +466,9 @@ public class CommandList {
 
         Manager.getUser(username).addPodcast();
     }
-
+    /**
+     * addAnnouncement command wrapper
+     */
     public static void addAnnouncement() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -406,7 +477,9 @@ public class CommandList {
 
         Manager.getUser(username).addAnnouncement();
     }
-
+    /**
+     * removeAnnouncement command wrapper
+     */
     public static void removeAnnouncement() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -415,7 +488,9 @@ public class CommandList {
 
         Manager.getUser(username).removeAnnouncement();
     }
-
+    /**
+     * showPodcasts command wrapper
+     */
     public static void showPodcasts() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -424,7 +499,9 @@ public class CommandList {
 
         Manager.getUser(username).showPodcasts();
     }
-
+    /**
+     * removeAlbum command wrapper
+     */
     public static void removeAlbum() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -433,7 +510,9 @@ public class CommandList {
 
         Manager.getUser(username).removeAlbum();
     }
-
+    /**
+     * changePage command wrapper
+     */
     public static void changePage() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -442,7 +521,9 @@ public class CommandList {
 
         Manager.getUser(username).changePage();
     }
-
+    /**
+     * removePodcast command wrapper
+     */
     public static void removePodcast() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -451,7 +532,9 @@ public class CommandList {
 
         Manager.getUser(username).removePodcast();
     }
-
+    /**
+     * removeEvent command wrapper
+     */
     public static void removeEvent() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -460,28 +543,136 @@ public class CommandList {
 
         Manager.getUser(username).removeEvent();
     }
-
+    /**
+     * getTop5Albums command wrapper
+     */
     public static void getTop5Albums() {
+        ArrayList<Song> tempSongs = new ArrayList<>(Library.getInstance().getSongs());
+        int[] freqVec = new int[tempSongs.size()];
 
-        Map<String, Integer> albumsLikes = new HashMap<>();
-        for (Album album : Manager.getAlbums()) {
-            int numberOfLikes = 0;
-            for (Song song : album.getSongs()) {
-                Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
-                if (s != null) {
-                    numberOfLikes += s.getLikes();
-                }
+        for (User user : Library.getInstance().getUsers()) {
+            for (Song song : user.getLikedSongs()) {
+                freqVec[tempSongs.indexOf(song)]++;
             }
-            albumsLikes.put(album.getName(), numberOfLikes);
         }
 
-        List<Map.Entry<String, Integer>> sortAlbums = new ArrayList<>(albumsLikes.entrySet());
+        for (int i = tempSongs.size() - 1; i >= 0; i--) {
+            for (int j = tempSongs.size() - 1; j > 0; j--) {
+                if (freqVec[j] > freqVec[j - 1]) {
+                    int temp = freqVec[j - 1];
+                    freqVec[j - 1] = freqVec[j];
+                    freqVec[j] = temp;
 
-        sortAlbums.sort(Comparator.comparing(Map.Entry::getValue));
+                    Song sg = tempSongs.get(j - 1);
+                    tempSongs.set(j - 1, tempSongs.get(j));
+                    tempSongs.set(j, sg);
+
+                }
+            }
+        }
+
+        Map<String, Integer> albumsValue = new HashMap<>();
+        ArrayList<String> sortedAlbums = new ArrayList<>();
+        for (Album a : Manager.getAlbums()) {
+            albumsValue.put(a.getName(), 0);
+            sortedAlbums.add(a.getName());
+        }
+
+        for (int i = 0; i < tempSongs.size() && freqVec[i] != 0; i++) {
+            if (albumsValue.containsKey(tempSongs.get(i).getAlbum())) {
+                albumsValue.put(tempSongs.get(i).getAlbum(),
+                        albumsValue.get(tempSongs.get(i).getAlbum()) + freqVec[i]);
+            }
+        }
+        sortedAlbums.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = albumsValue.get(o1) - albumsValue.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+        Set<String> uniqueAlbums = new LinkedHashSet<>(sortedAlbums);
+
         ArrayNode result = objectMapper.createArrayNode();
-        for (int i = sortAlbums.size() - 1; i >= 0 && i > sortAlbums.size() - 6; i--) {
-            result.add(sortAlbums.get(i).getKey());
-            //System.out.println(sortAlbums.get(i).getKey() + " " + sortAlbums.get(i).getValue());
+        int times = 0;
+        for (String s : uniqueAlbums) {
+            result.add(s);
+            times++;
+            if (times == TOP5) {
+                break;
+            }
+        }
+        Manager.getPartialResult().set("result", result);
+
+    }
+    /**
+     * getTop5Artists command wrapper
+     */
+    public static void getTop5Artists() {
+
+        ArrayList<Song> tempSongs = new ArrayList<>(Library.getInstance().getSongs());
+        int[] freqVec = new int[tempSongs.size()];
+
+        for (User user : Library.getInstance().getUsers()) {
+            for (Song song : user.getLikedSongs()) {
+                freqVec[tempSongs.indexOf(song)]++;
+            }
+        }
+
+        for (int i = tempSongs.size() - 1; i >= 0; i--) {
+            for (int j = tempSongs.size() - 1; j > 0; j--) {
+                if (freqVec[j] > freqVec[j - 1]) {
+                    int temp = freqVec[j - 1];
+                    freqVec[j - 1] = freqVec[j];
+                    freqVec[j] = temp;
+
+                    Song sg = tempSongs.get(j - 1);
+                    tempSongs.set(j - 1, tempSongs.get(j));
+                    tempSongs.set(j, sg);
+
+                }
+            }
+        }
+
+        Map<String, Integer> artistsValue = new HashMap<>();
+        ArrayList<String> sortedArtists = new ArrayList<>();
+        for (String a : Manager.getArtists()) {
+            artistsValue.put(a, 0);
+            sortedArtists.add(a);
+        }
+
+        for (int i = 0; i < tempSongs.size() && freqVec[i] != 0; i++) {
+            if (artistsValue.containsKey(tempSongs.get(i).getArtist())) {
+                artistsValue.put(tempSongs.get(i).getArtist(),
+                        artistsValue.get(tempSongs.get(i).getArtist()) + freqVec[i]);
+            }
+        }
+        sortedArtists.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = artistsValue.get(o1) - artistsValue.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        ArrayNode result = objectMapper.createArrayNode();
+        int times = 0;
+        for (String s : sortedArtists) {
+            result.add(s);
+            times++;
+            if (times == TOP5) {
+                break;
+            }
         }
         Manager.getPartialResult().set("result", result);
     }

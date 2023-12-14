@@ -12,7 +12,11 @@ import program.player.Player;
 import program.searchbar.SearchBar;
 import program.user.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 public final class Manager {
 
@@ -43,7 +47,7 @@ public final class Manager {
     @Getter
     private static Map<String, Source> sources = new HashMap<>();
 
-    @Getter
+    @Getter @Setter
     private static Command command;
 
     private static int deltaTime = 0;
@@ -59,14 +63,23 @@ public final class Manager {
         }
         return instance;
     }
+
+    /**
+     * @return the current user
+     */
     public static User getCurrentUser() {
         return users.get(command.getUsername());
     }
 
-    public static boolean userExists() {
+    /**
+     * used in checkUser() to check if user exists
+     */
+    private static boolean userExists() {
         return getCurrentUser() != null;
     }
-
+    /**
+     * checks if user exists
+     */
     public static boolean checkUser() {
         if (!userExists()) {
             Manager.partialResult.put("message", "The username "
@@ -127,14 +140,18 @@ public final class Manager {
         }
     }
 
-
+    /**
+     * updates deltaTime
+     */
     public static void updateDeltaTime() {
         String username = command.getUsername();
         int nextTime = command.getTimestamp();
         deltaTime = nextTime - lastTime;
         lastTime = nextTime;
     }
-
+    /**
+     * prints the standard information
+     */
     public static void commandInfo() {
         Manager.setPartialResult(objectMapper.createObjectNode());
         Manager.getPartialResult().put("command", command.getCommand());
@@ -143,8 +160,10 @@ public final class Manager {
         }
         Manager.getPartialResult().put("timestamp", command.getTimestamp());
     }
-
-    public static <T> T findObjectByCondition(List<T> list, T condition) {
+    /**
+     * searches for a generic object in the given list, and returns it
+     */
+    public static <T> T findObjectByCondition(final List<T> list, final T condition) {
         for (T obj : list) {
             if (condition.equals(obj)) {
                 return obj;
@@ -152,11 +171,9 @@ public final class Manager {
         }
         return null;
     }
-
-    public static void getCurrentCommand(Command command) {
-        Manager.command = command;
-    }
-
+    /**
+     * wrapper for checkSource(String, String)
+     */
     public static void checkSource() {
         String username = command.getUsername();
 
@@ -167,20 +184,20 @@ public final class Manager {
     /**
      * checks the control flow of specific user
      * @param username the username of the user
-     * @param command the command used
+     * @param commandUsed the command used
      */
-    public static void checkSource(final String username, final String command) {
+    public static void checkSource(final String username, final String commandUsed) {
         if (!Manager.users.containsKey(username)) {
             return;
         }
 
-        if (command.equals("search")) {
+        if (commandUsed.equals("search")) {
             sources.get(username).setSourceSearched(true);
             sources.get(username).setSourceLoaded(false);
-        } else if (sources.get(username).isSourceSearched() && command.equals("select")) {
+        } else if (sources.get(username).isSourceSearched() && commandUsed.equals("select")) {
             sources.get(username).setSourceSelected(true);
             sources.get(username).setSourceSearched(false);
-        } else if (sources.get(username).isSourceSelected() && command.equals("load")) {
+        } else if (sources.get(username).isSourceSelected() && commandUsed.equals("load")) {
             sources.get(username).setSourceLoaded(true);
             sources.get(username).setSourceSelected(false);
         }

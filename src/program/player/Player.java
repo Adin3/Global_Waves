@@ -27,10 +27,15 @@ public class Player {
 
     private boolean shuffled = false;
 
+    /**
+     * @return the podcast played by player
+     */
     public Podcast getPodcast() {
         return null;
     }
-
+    /**
+     * @return the playlist played by player
+     */
     public Playlist getPlaylist() {
         return null;
     }

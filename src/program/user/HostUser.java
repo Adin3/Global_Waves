@@ -5,11 +5,13 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.Manager;
-import program.format.*;
+import program.format.Announcement;
+import program.format.Episode;
+import program.format.Library;
+import program.format.Podcast;
 
 import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.Objects;
 
 public class HostUser extends User {
 
@@ -18,7 +20,7 @@ public class HostUser extends User {
 
     @Getter
     private ArrayList<Announcement> announcements = new ArrayList<>();
-    public HostUser() {}
+    public HostUser() { }
     public HostUser(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
@@ -26,13 +28,16 @@ public class HostUser extends User {
         this.userType = "user";
     }
 
-    public HostUser(String username, int age, String city, String userType) {
+    public HostUser(final String username, final int age,
+                    final String city, final String userType) {
         this.username = username;
         this.age = age;
         this.city = city;
         this.userType = userType;
     }
-
+    /**
+     * adds a new Podcast
+     */
     public void addPodcast() {
         if (podcasts.contains(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
@@ -57,7 +62,9 @@ public class HostUser extends User {
         Manager.getPartialResult().put("message",
                 username + " has added new podcast successfully.");
     }
-
+    /**
+     * adds an announcement
+     */
     public void addAnnouncement() {
         for (Announcement announce : announcements) {
             if (announce.getName().equals(Manager.getCommand().getName())) {
@@ -75,6 +82,9 @@ public class HostUser extends User {
                 username + " has successfully added new announcement.");
     }
 
+    /**
+     * removes an announcement
+     */
     public void removeAnnouncement() {
         boolean exists = false;
         for (Announcement announce : announcements) {
@@ -95,6 +105,9 @@ public class HostUser extends User {
                 username + " has successfully deleted the announcement.");
     }
 
+    /**
+     * shows all the podcasts of the host
+     */
     public void showPodcasts() {
         ArrayNode result = objectMapper.createArrayNode();
         for (Podcast podcast : Library.getInstance().getPodcasts()) {
@@ -110,11 +123,15 @@ public class HostUser extends User {
         Manager.getPartialResult().set("result", result);
     }
 
+    /**
+     * deletes the user
+     */
     public void deleteUser() {
         boolean used = isUsed();
 
         if (!used) {
-            Library.getInstance().getPodcasts().removeIf(podcast -> podcast.getOwner().equals(username));
+            Library.getInstance().getPodcasts().removeIf(
+                    podcast -> podcast.getOwner().equals(username));
             Manager.getHosts().remove(username);
             Manager.getSources().remove(username);
             Manager.getUsers().remove(username);
@@ -141,7 +158,9 @@ public class HostUser extends User {
         }
         return used;
     }
-
+    /**
+     * removes a podcast from library
+     */
     public void removePodcast() {
         if (!podcasts.contains(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",

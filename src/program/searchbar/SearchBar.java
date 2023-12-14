@@ -25,6 +25,10 @@ public class SearchBar {
     @Getter
     protected boolean sourceSelected;
 
+
+    /**
+     * @return the album loaded by select command
+     */
     public Album getAlbumLoaded() {
         return null;
     }

@@ -17961,7 +17961,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 11770,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -18033,7 +18033,7 @@
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 11790,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "carol19",
@@ -18069,7 +18069,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 11800,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -18141,7 +18141,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 11820,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -18177,7 +18177,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 11830,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -18285,7 +18285,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 11860,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -18357,7 +18357,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 11880,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -18393,7 +18393,7 @@
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 11890,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "carol19",
@@ -18429,7 +18429,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 11900,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -18465,7 +18465,7 @@
   "command" : "select",
   "user" : "emily30",
   "timestamp" : 11910,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "emily30",
@@ -18501,7 +18501,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 11920,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -18645,7 +18645,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 11960,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -18681,7 +18681,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 11970,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -18753,7 +18753,7 @@
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 11990,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "carol19",
@@ -18897,7 +18897,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12030,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -18969,7 +18969,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 12050,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -19041,7 +19041,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 12070,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -19149,7 +19149,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 12100,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -19221,7 +19221,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12120,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -19293,7 +19293,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 12140,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -19401,7 +19401,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 12170,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -19437,7 +19437,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 12180,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -19509,7 +19509,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 12200,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -19581,7 +19581,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12220,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -19617,7 +19617,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12230,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -19653,7 +19653,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 12240,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -19761,7 +19761,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 12270,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -19797,7 +19797,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 12280,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -19869,7 +19869,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 12300,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -19941,7 +19941,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12320,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -19977,7 +19977,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12330,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -20049,7 +20049,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 12350,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -20085,7 +20085,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 12360,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -20193,7 +20193,7 @@
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 12390,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "carol19",
@@ -20229,7 +20229,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 12400,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -20301,7 +20301,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12420,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -20337,7 +20337,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12430,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -20409,7 +20409,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 12450,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -20445,7 +20445,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 12460,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -20517,7 +20517,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 12480,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -20661,7 +20661,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12520,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -20697,7 +20697,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12530,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -20733,7 +20733,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 12540,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -20805,7 +20805,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 12560,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -20985,7 +20985,7 @@
   "command" : "select",
   "user" : "emily30",
   "timestamp" : 12610,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "emily30",
@@ -21057,7 +21057,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12630,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -21093,7 +21093,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 12640,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -21129,7 +21129,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 12650,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -21165,7 +21165,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 12660,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -21309,7 +21309,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 12700,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -21345,7 +21345,7 @@
   "command" : "select",
   "user" : "emily30",
   "timestamp" : 12710,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "emily30",
@@ -21381,7 +21381,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12720,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -21453,7 +21453,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 12740,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -21489,7 +21489,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 12750,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -21525,7 +21525,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 12760,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -21633,7 +21633,7 @@
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 12790,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "carol19",
@@ -21741,7 +21741,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12820,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -21885,7 +21885,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 12860,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -21957,7 +21957,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 12880,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -22029,7 +22029,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 12900,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -22101,7 +22101,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 12920,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -22137,7 +22137,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 12930,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -22173,7 +22173,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 12940,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -22209,7 +22209,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 12950,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -22281,7 +22281,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 12970,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -22317,7 +22317,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 12980,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -22425,7 +22425,7 @@
   "command" : "select",
   "user" : "emily30",
   "timestamp" : 13010,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "emily30",
@@ -22497,7 +22497,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 13030,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -22677,7 +22677,7 @@
   "command" : "select",
   "user" : "bob35",
   "timestamp" : 13080,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "bob35",
@@ -22749,7 +22749,7 @@
   "command" : "select",
   "user" : "david27",
   "timestamp" : 13100,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "david27",
@@ -22785,7 +22785,7 @@
   "command" : "select",
   "user" : "emily30",
   "timestamp" : 13110,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "emily30",
@@ -22821,7 +22821,7 @@
   "command" : "select",
   "user" : "frank21",
   "timestamp" : 13120,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "frank21",
@@ -22857,7 +22857,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 13130,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -22893,7 +22893,7 @@
   "command" : "select",
   "user" : "henry26",
   "timestamp" : 13140,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "henry26",
@@ -23001,7 +23001,7 @@
   "command" : "select",
   "user" : "alice22",
   "timestamp" : 13170,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
@@ -23073,7 +23073,7 @@
   "command" : "select",
   "user" : "carol19",
   "timestamp" : 13190,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "carol19",
@@ -23145,7 +23145,7 @@
   "command" : "select",
   "user" : "emily30",
   "timestamp" : 13210,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "emily30",
@@ -23217,7 +23217,7 @@
   "command" : "select",
   "user" : "grace25",
   "timestamp" : 13230,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "grace25",
@@ -23289,7 +23289,7 @@
   "command" : "select",
   "user" : "irene33",
   "timestamp" : 13250,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "irene33",
@@ -23325,7 +23325,7 @@
   "command" : "select",
   "user" : "jack29",
   "timestamp" : 13260,
-  "message" : "Please conduct a search before making a selection."
+  "message" : "The selected ID is too high."
 }, {
   "command" : "printCurrentPage",
   "user" : "jack29",
@@ -25966,8 +25966,9 @@
 }, {
   "command" : "getTop5Albums",
   "timestamp" : 14850,
-  "result" : [ "Bad Dirt", "Teen Revolution", "Breezy View", "Electric View", "Teen Harmonies" ]
+  "result" : [ "Bad Dirt", "Teen Revolution", "Breezy View", "Groovy Harmonies", "Alone Hood" ]
 }, {
   "command" : "getTop5Artists",
-  "timestamp" : 14850
+  "timestamp" : 14850,
+  "result" : [ "jacobdean", "glester", "mccarthyluis", "jsimpson", "amanda16" ]
 } ]
