@@ -464,7 +464,7 @@ public class CommandList {
     public static void getTop5Albums() {
 
         Map<String, Integer> albumsLikes = new HashMap<>();
-        for (Album album : Manager.getAlbums().values()) {
+        for (Album album : Manager.getAlbums()) {
             int numberOfLikes = 0;
             for (Song song : album.getSongs()) {
                 Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
@@ -481,7 +481,7 @@ public class CommandList {
         ArrayNode result = objectMapper.createArrayNode();
         for (int i = sortAlbums.size() - 1; i >= 0 && i > sortAlbums.size() - 6; i--) {
             result.add(sortAlbums.get(i).getKey());
-            System.out.println(sortAlbums.get(i).getKey() + " " + sortAlbums.get(i).getValue());
+            //System.out.println(sortAlbums.get(i).getKey() + " " + sortAlbums.get(i).getValue());
         }
         Manager.getPartialResult().set("result", result);
     }

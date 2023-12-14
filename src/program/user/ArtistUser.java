@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
+import program.Duplet;
 import program.Manager;
 import program.format.*;
 import program.page.Page;
@@ -15,7 +16,7 @@ import java.util.*;
 public class ArtistUser extends User {
 
     @Getter
-    private final ArrayList<String> albums = new ArrayList<>();
+    private final Map<String, Album> albums = new LinkedHashMap<>();
 
     @Getter
     private final Map<String, Event> events = new LinkedHashMap<>();
@@ -39,13 +40,7 @@ public class ArtistUser extends User {
     }
 
     public void addAlbum() {
-        if (!Objects.equals(Manager.getCurrentUser().getUserType(), "artist")) {
-            Manager.getPartialResult().put("message",
-                    username + " is not an artist.");
-            return;
-        }
-
-        if (Manager.getCurrentUser().getAlbums().contains(Manager.getCommand().getName())) {
+        if (albums.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
                     username + " has another album with the same name.");
             return;
@@ -69,8 +64,8 @@ public class ArtistUser extends User {
             album.addSong(song);
         }
 
-        Manager.getAlbums().put(Manager.getCommand().getName(), album);
-        Manager.getCurrentUser().getAlbums().add(album.getName());
+        Manager.getAlbums().add(album);
+        albums.put(album.getName(), album);
 
         Manager.getPartialResult().put("message",
                 username + " has added new album successfully.");
@@ -78,8 +73,8 @@ public class ArtistUser extends User {
 
     public void showAlbums() {
         ArrayNode result = objectMapper.createArrayNode();
-        for (String albumName : Manager.getCurrentUser().getAlbums()) {
-            Album album = Manager.getAlbums().get(albumName);
+        for (Album albumName : Manager.getCurrentUser().getAlbums().values()) {
+            Album album = Manager.findObjectByCondition(Manager.getAlbums(), albumName);
             ObjectNode albumNode = objectMapper.createObjectNode();
             albumNode.put("name", album.getName());
             ArrayNode songs = objectMapper.createArrayNode();
@@ -137,7 +132,7 @@ public class ArtistUser extends User {
 
         if (!used) {
             Library.getInstance().getSongs().removeIf(song -> song.getArtist().equals(username));
-            Manager.getAlbums().values().removeIf(album -> album.getOwner().equals(username));
+            Manager.getAlbums().removeIf(album -> album.getOwner().equals(username));
             Manager.getArtists().remove(username);
             Manager.getSources().remove(username);
             Manager.getUsers().remove(username);
@@ -177,7 +172,7 @@ public class ArtistUser extends User {
     }
 
     public void removeAlbum() {
-        if (!albums.contains(Manager.getCommand().getName())) {
+        if (!albums.containsKey(Manager.getCommand().getName())) {
             Manager.getPartialResult().put("message",
                     username + " doesn't have an album with the given name.");
             return;

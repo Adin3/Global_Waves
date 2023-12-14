@@ -19,7 +19,7 @@ public final class Manager {
     private static ObjectMapper objectMapper = new ObjectMapper();
     private static Manager instance = null;
     @Getter
-    private static Map<String, User> users = new HashMap<>();
+    private static Map<String, User> users = new LinkedHashMap<>();
 
     @Getter
     private static ArrayList<String> artists = new ArrayList<>();
@@ -31,10 +31,11 @@ public final class Manager {
     private static ArrayList<String> normals = new ArrayList<>();
 
     @Getter
-    private static Map<String, Album> albums = new HashMap<>();
+    private static ArrayList<Album> albums = new ArrayList<>();
 
     @Getter
-    private static Map<String, Playlist> playlists = new HashMap<>();
+    private static Map<String, Playlist> playlists = new LinkedHashMap<>();
+
     @Getter @Setter
     private static ArrayNode result;
     @Getter @Setter

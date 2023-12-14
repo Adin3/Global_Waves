@@ -18,8 +18,9 @@ class ArtistPage implements PageStrategy {
     public String printCurrentPage() {
         StringBuilder result = new StringBuilder("Albums:\n\t[");
         User user = Manager.getUsers().get(artist);
-        for (int i = 0; i < user.getAlbums().size(); i++) {
-            result.append(user.getAlbums().get(i));
+        String[] albumName = user.getAlbums().keySet().toArray(new String[0]);
+        for (int i = 0; i < albumName.length; i++) {
+            result.append(albumName[i]);
             if (i < user.getAlbums().size() - 1) {
                 result.append(", ");
             }

@@ -61,7 +61,7 @@ public class User {
         return null;
     }
 
-    public ArrayList<String> getAlbums() {
+    public Map<String, Album> getAlbums() {
         return null;
     }
 
@@ -153,93 +153,93 @@ public class User {
     public void setSearchBar(final String commandType) {}
 
     public void search() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void select() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void load() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void status() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void playPause() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void repeat() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void shuffle() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void next() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void prev() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void forward() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void backward() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
     /**
      * Adds a new playlist
      */
     public void createPlaylist() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     /**
      * adds/removes the current song in the playlist
      */
     public void addRemoveInPlaylist() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
     /**
      * change the visibility of the playlist
      */
     public void switchVisibility() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
     /**
      * follow/unfollow the current playlist
      */
     public void follow() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     /**
      * like/unlike the current song
      */
     public void like() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     /**
      * shows all playlists created by the specific user
      */
     public void showPlaylists() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     /**
      * shows all liked songs by the specific user
      */
     public void showPreferredSongs() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     /**
@@ -257,7 +257,7 @@ public class User {
     }
 
     public void switchConnectionStatus() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void getOnlineUsers() {
@@ -277,7 +277,7 @@ public class User {
     }
 
     public void printCurrentPage() {
-        Manager.getPartialResult().put("message", username + " is not a user.");
+        Manager.getPartialResult().put("message", username + " is not a normal user.");
     }
 
     public void addEvent() {
@@ -314,7 +314,7 @@ public class User {
 
     public void removeAlbum() {Manager.getPartialResult().put("message", username + " is not an artist.");}
 
-    public void changePage() {Manager.getPartialResult().put("message", username + " is not a user.");}
+    public void changePage() {Manager.getPartialResult().put("message", username + " is not a normal user.");}
 
     public void removePodcast() {Manager.getPartialResult().put("message", username + " is not a host.");}
 

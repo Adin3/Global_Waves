@@ -24,7 +24,7 @@ import java.util.Objects;
 
 public final class Main {
     static final String LIBRARY_PATH = CheckerConstants.TESTS_PATH + "library/library.json";
-
+    static int a = 0;
     /**
      * for coding style
      */
@@ -49,7 +49,7 @@ public final class Main {
             resultFile.delete();
         }
         Files.createDirectories(path);
-        int a = 0;
+
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.getName().startsWith("library")) {
                 continue;
@@ -91,8 +91,9 @@ public final class Main {
         }
 
         Manager.setResult(objectMapper.createArrayNode());
-
+        System.out.println("-----------" + a + "\n");
         for (Command command : commands) {
+            System.out.println(command.getTimestamp() + "\n");
             Manager.getCurrentCommand(command);
             CommandList.setCommand(command);
             Manager.updateDeltaTime();

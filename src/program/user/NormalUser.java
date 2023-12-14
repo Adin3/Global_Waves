@@ -220,7 +220,7 @@ public class NormalUser extends User {
 
         Playlist p = new Playlist(username, name, time);
         Manager.getPlaylists().put(p.getName(), p);
-        Manager.getUsers().get(username).addPlaylist(p);
+        this.playlists.add(p);
         Manager.getPartialResult().put("message", "Playlist created successfully.");
     }
 
@@ -260,9 +260,6 @@ public class NormalUser extends User {
             playlist.removeSong(song);
             Manager.getPartialResult().put("message", "Successfully removed from playlist.");
         }
-
-        Manager.getPlaylists().remove(playlist.getName());
-        Manager.getPlaylists().put(playlist.getName(), playlist);
     }
     /**
      * change the visibility of the playlist
@@ -277,12 +274,10 @@ public class NormalUser extends User {
         Playlist pl = Manager.getUser(username).getPlaylists().get(id - 1);
 
         pl.changeVisibility();
+        //Manager.getPlaylists().get(pl.getName()).changeVisibility();
 
         Manager.getPartialResult().put("message",
                 "Visibility status updated successfully to " + pl.getVisibility() + ".");
-
-        Manager.getPlaylists().remove(pl.getName());
-        Manager.getPlaylists().put(pl.getName(), pl);
     }
     public void follow() {
         final String owner = Manager.getCommand().getUsername();
@@ -308,17 +303,16 @@ public class NormalUser extends User {
         }
 
         if (pl.getFollowers().contains(owner)) {
-            pl.removeFollower(owner);
+            //pl.removeFollower(owner);
             followedPlaylist.remove(pl.getName());
+            Manager.getPlaylists().get(pl.getName()).removeFollower(owner);
             Manager.getPartialResult().put("message", "Playlist unfollowed successfully.");
         } else {
-            pl.addFollower(owner);
+            //pl.addFollower(owner);
             followedPlaylist.add(pl.getName());
+            Manager.getPlaylists().get(pl.getName()).addFollower(owner);
             Manager.getPartialResult().put("message", "Playlist followed successfully.");
         }
-
-        Manager.getPlaylists().remove(pl.getName());
-        Manager.getPlaylists().put(pl.getName(), pl);
     }
 
     /**

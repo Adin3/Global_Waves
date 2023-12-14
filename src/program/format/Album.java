@@ -3,6 +3,7 @@ package program.format;
 import lombok.Getter;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Album {
     @Getter
@@ -92,5 +93,18 @@ public class Album {
      */
     public int numberOfFollowers() {
         return followers.size();
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Album album = (Album) o;
+        return Objects.equals(owner, album.owner) && Objects.equals(name, album.name);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(owner, name);
     }
 }

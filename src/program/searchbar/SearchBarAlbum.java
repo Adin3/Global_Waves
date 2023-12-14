@@ -130,7 +130,7 @@ public class SearchBarAlbum extends SearchBar{
     private ArrayList<Album> searchAlbumByName(final String name) {
 
         ArrayList<Album> play = new ArrayList<>();
-        for (Album pl : Manager.getAlbums().values()) {
+        for (Album pl : Manager.getAlbums()) {
             if (pl.getName().startsWith(name)) {
                 play.add(pl);
             }
@@ -145,7 +145,7 @@ public class SearchBarAlbum extends SearchBar{
     private ArrayList<Album> searchAlbumByOwner(final String albumOwner) {
 
         ArrayList<Album> play = new ArrayList<>();
-        for (Album pl : Manager.getAlbums().values()) {
+        for (Album pl : Manager.getAlbums()) {
             if (pl.getOwner().equals(albumOwner)) {
                 play.add(pl);
             }

@@ -174,6 +174,7 @@ public class PlaylistPlayer extends Player {
             Manager.getPartialResult().put("message",
                     "Skipped to next track successfully."
                             + " The current track is " + currentSong.getName() + ".");
+            paused = false;
             return;
         }
 
@@ -234,14 +235,14 @@ public class PlaylistPlayer extends Player {
             return;
         }
 
-        if (repeat.equals("Repeat Current Song")) {
-            currentSong.setDuration(currentSong.getMaxDuration());
-            Manager.getPartialResult().put("message",
-                    "Returned to previous track successfully."
-                            + " The current track is " + currentSong.getName() + ".");
-            paused = false;
-            return;
-        }
+//        if (repeat.equals("Repeat Current Song")) {
+//            currentSong.setDuration(currentSong.getMaxDuration());
+//            Manager.getPartialResult().put("message",
+//                    "Returned to previous track successfully."
+//                            + " The current track is " + currentSong.getName() + ".");
+//            paused = false;
+//            return;
+//        }
 
         if (playlistPosition <= 0) {
             playlistPosition++;
