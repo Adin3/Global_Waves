@@ -3,7 +3,7 @@ package program.searchbar;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
 import lombok.Getter;
-import program.Manager;
+import program.admin.Manager;
 import program.command.Filters;
 import program.format.Album;
 import program.format.Playlist;

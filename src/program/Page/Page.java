@@ -1,7 +1,7 @@
 package program.page;
 
 import lombok.Getter;
-import program.Manager;
+import program.admin.Manager;
 
 public class Page {
     private PageStrategy printingStrategy;

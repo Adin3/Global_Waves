@@ -1,5 +1,5 @@
 package program.page;
-import program.Manager;
+import program.admin.Manager;
 import program.format.Library;
 import program.user.User;
 import program.format.Song;

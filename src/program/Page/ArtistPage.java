@@ -1,6 +1,6 @@
 package program.page;
 
-import program.Manager;
+import program.admin.Manager;
 import program.format.Event;
 import program.format.Merch;
 import program.user.User;

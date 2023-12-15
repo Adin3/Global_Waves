@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.node.ArrayNode;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
-import program.Manager;
+import program.admin.Manager;
 import program.format.Album;
 import program.format.Event;
 import program.format.Merch;

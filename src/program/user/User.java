@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import fileio.input.UserInput;
 import lombok.Getter;
 import lombok.Setter;
-import program.Manager;
+import program.admin.Manager;
 import program.format.Event;
 import program.format.Merch;
 import program.format.Announcement;

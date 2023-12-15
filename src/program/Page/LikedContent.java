@@ -1,6 +1,6 @@
 package program.page;
 
-import program.Manager;
+import program.admin.Manager;
 import program.format.Library;
 import program.format.Playlist;
 import program.format.Song;

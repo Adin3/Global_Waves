@@ -3,7 +3,7 @@ package program.format;
 import fileio.input.PodcastInput;
 import fileio.input.UserInput;
 import fileio.input.LibraryInput;
-import program.Manager;
+import program.admin.Manager;
 import program.user.NormalUser;
 import program.user.User;
 

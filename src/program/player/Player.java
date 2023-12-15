@@ -1,7 +1,7 @@
 package program.player;
 
 import lombok.Getter;
-import program.Manager;
+import program.admin.Manager;
 import program.format.Album;
 import program.format.Playlist;
 import program.format.Podcast;

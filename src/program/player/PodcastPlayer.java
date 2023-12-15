@@ -5,7 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.Getter;
 import program.format.Episode;
-import program.Manager;
+import program.admin.Manager;
 import program.format.Podcast;
 
 public class PodcastPlayer extends Player {

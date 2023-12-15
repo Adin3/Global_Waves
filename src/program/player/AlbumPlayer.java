@@ -4,7 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import lombok.Getter;
-import program.Manager;
+import program.admin.Manager;
 import program.format.Album;
 import program.format.Song;
 

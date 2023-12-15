@@ -5,10 +5,10 @@ import checker.CheckerConstants;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.ObjectWriter;
 import fileio.input.LibraryInput;
-import program.CommandList;
+import program.admin.CommandList;
 import program.command.Command;
 import program.format.Library;
-import program.Manager;
+import program.admin.Manager;
 import program.user.User;
 
 import java.io.File;
