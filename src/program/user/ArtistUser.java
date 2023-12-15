@@ -5,7 +5,11 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.Manager;
-import program.format.*;
+import program.format.Album;
+import program.format.Event;
+import program.format.Merch;
+import program.format.Song;
+import program.format.Library;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;

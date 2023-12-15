@@ -10,17 +10,10 @@ import program.format.Library;
 import program.format.Playlist;
 import program.format.Song;
 import program.page.Page;
-import program.player.AlbumPlayer;
 import program.player.Player;
-import program.player.MusicPlayer;
-import program.player.PlaylistPlayer;
-import program.player.PodcastPlayer;
-import program.searchbar.SearchBarUser;
+import program.player.PlayerFactory;
 import program.searchbar.SearchBar;
-import program.searchbar.SearchBarAlbum;
-import program.searchbar.SearchBarPlaylist;
-import program.searchbar.SearchBarPodcast;
-import program.searchbar.SearchBarSong;
+import program.searchbar.SearchBarFactory;
 
 import java.util.ArrayList;
 
@@ -125,21 +118,7 @@ public class NormalUser extends User {
      * creates new player based on searches
      */
     public void setMusicPlayer() {
-        switch (formatType) {
-            case "song" -> {
-                musicplayer = new MusicPlayer(username);
-            }
-            case "podcast" -> {
-                musicplayer = new PodcastPlayer(username);
-            }
-            case "playlist" -> {
-                musicplayer = new PlaylistPlayer(username);
-            }
-            case "album" -> {
-                musicplayer = new AlbumPlayer(username);
-            }
-            default -> { }
-        }
+        musicplayer = PlayerFactory.getInstance().createPlayer(formatType, username);
     }
     /**
      * creates a searchbar depending on the type searched
@@ -147,24 +126,7 @@ public class NormalUser extends User {
      */
     public void setSearchBar(final String commandType) {
         this.formatType = commandType;
-        switch (this.formatType) {
-            case "song" -> {
-                searchBar = new SearchBarSong(username);
-            }
-            case "podcast" -> {
-                searchBar = new SearchBarPodcast(username);
-            }
-            case "playlist" -> {
-                searchBar = new SearchBarPlaylist(username);
-            }
-            case "artist", "host" -> {
-                searchBar = new SearchBarUser(username);
-            }
-            case "album" -> {
-                searchBar = new SearchBarAlbum(username);
-            }
-            default -> { }
-        }
+        searchBar = SearchBarFactory.getInstance().createSearchBar(formatType, username);
     }
     /**
      * searches in library files, collections, or users

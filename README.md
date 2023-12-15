@@ -22,9 +22,9 @@ Fiecare user normal are un singur searchbar si player activ
 
 daca se solicita o cautare noua, se elimina playerul curent
 
-prin polymorfism dinamic si campul type din user se decide ce fel de searchbar respectiv player se va folosi la runtime
+prin ***Design Pattern-ul Factory*** se decide ce fel de searchbar respectiv player se va folosi la runtime
 
-![img_schema_1](https://i.imgur.com/cN3fC0K.png)
+![img_schema_1](https://i.imgur.com/seHoe5A.png)
 
 in setSearchbar se instentizeaza un obiect de tip SearchbarSong, SearchbarPlaylist, SearchbarPodcast, SearchbarAlbum, respectiv SearchbarUser in functie de tipul primit la input
 Cele trei clase de search mostenesc clasa mama Search care contine metodele search si select
@@ -165,7 +165,7 @@ sa din Library
 
 Tot sistemul de paginatie este gandit cu ***Design Pattern-ul Strategy***
 
-<div align="center"><img src="https://i.imgur.com/5IqxTQ1.png"></div>
+![img_schema_1](https://i.imgur.com/5IqxTQ1.png)
 
 ### Command List
 
@@ -174,4 +174,4 @@ Este un utility class folosit pe post de wrapper pentru comenzile programului
 In fiecare metoda wrapper se aplica metoda prorpiu zisa, dar si ceva logica inainte de aceasta
 (De exemplu verificarea userului)
 
-<div align="center"><img src="https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif" width="500px"></div>
+![img_schema_1](https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif)
