@@ -358,12 +358,10 @@ public class NormalUser extends User {
         }
 
         if (pl.getFollowers().contains(owner)) {
-            //pl.removeFollower(owner);
             followedPlaylists.remove(pl.getName());
             Manager.getPlaylists().get(pl.getName()).removeFollower(owner);
             Manager.getPartialResult().put("message", "Playlist unfollowed successfully.");
         } else {
-            //pl.addFollower(owner);
             followedPlaylists.add(pl.getName());
             Manager.getPlaylists().get(pl.getName()).addFollower(owner);
             Manager.getPartialResult().put("message", "Playlist followed successfully.");

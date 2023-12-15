@@ -5,11 +5,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.Manager;
-import program.format.Event;
-import program.format.Merch;
-import program.format.Library;
-import program.format.Song;
-import program.format.Album;
+import program.format.*;
 
 import java.util.HashSet;
 import java.util.LinkedHashMap;
@@ -195,8 +191,19 @@ public class ArtistUser extends User {
                     username + " doesn't have an album with the given name.");
             return;
         }
-        Manager.getPartialResult().put("message",
-                username + " can't delete this album.");
+
+        boolean used = isUsed();
+
+        if (used) {
+            Manager.getPartialResult().put("message",
+                    username + " can't delete this album.");
+        } else {
+            albums.remove(Manager.getCommand().getName());
+            Manager.getAlbums().removeIf(
+                    album -> album.getName().equals(Manager.getCommand().getName()));
+            Manager.getPartialResult().put("message",
+                    username + " deleted the album successfully.");
+        }
     }
     /**
      * removes an event

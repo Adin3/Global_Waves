@@ -1,2 +1,4 @@
 Starting audit...
+[ERROR] C:\Users\Neacsu\Desktop\POO\POO1\.\src\program\user\ArtistUser.java:8:22: Using the '.*' form of import should be avoided - program.format.*. [AvoidStarImport]
 Audit done.
+Checkstyle ends with 1 errors.

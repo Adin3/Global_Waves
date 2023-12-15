@@ -29,8 +29,6 @@ public class PlaylistPlayer extends Player {
     private int savedTime;
 
     private int playlistPosition;
-
-    private int previousPlaylistPosition = 0;
     private int[] shuffledIndexes;
 
     private ArrayList<Song> unshuffledplaylist = new ArrayList<>();
@@ -72,7 +70,6 @@ public class PlaylistPlayer extends Player {
         currentSong = new Song(playlist.getSong(0));
         currentSong.setDuration(currentSong.getMaxDuration());
         playlistPosition = 0;
-        previousPlaylistPosition = 0;
     }
 
     /**
@@ -180,7 +177,6 @@ public class PlaylistPlayer extends Player {
 
         boolean end = playlistPosition + 1 >= playlist.getSongs().size();
         if (repeat.equals("Repeat All")) {
-            previousPlaylistPosition = playlistPosition;
             if (end) {
                 playlistPosition = 0;
             } else {
@@ -205,7 +201,6 @@ public class PlaylistPlayer extends Player {
             Manager.getSource(owner).setSourceLoaded(false);
             return;
         }
-        previousPlaylistPosition = playlistPosition;
         playlistPosition++;
         currentSong.setDuration(currentSong.getMaxDuration());
         currentSong = new Song(playlist.getSong(playlistPosition));
@@ -234,15 +229,6 @@ public class PlaylistPlayer extends Player {
             paused = false;
             return;
         }
-
-//        if (repeat.equals("Repeat Current Song")) {
-//            currentSong.setDuration(currentSong.getMaxDuration());
-//            Manager.getPartialResult().put("message",
-//                    "Returned to previous track successfully."
-//                            + " The current track is " + currentSong.getName() + ".");
-//            paused = false;
-//            return;
-//        }
 
         if (playlistPosition <= 0) {
             playlistPosition++;
