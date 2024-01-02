@@ -11,6 +11,7 @@ import program.format.Song;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Comparator;
 
 public class SearchBarAlbum extends SearchBar {
     @Getter
@@ -118,6 +119,19 @@ public class SearchBarAlbum extends SearchBar {
             albums.clear();
             albums.addAll(temp);
         }
+
+        albums.sort(new Comparator<Album>() {
+            @Override
+            public int compare(final Album o1, final Album o2) {
+                int id1 = Manager.getUser(o1.getOwner()).getId();
+                int id2 = Manager.getUser(o2.getOwner()).getId();
+                int rez = id1 - id2;
+                if  (rez == 0) {
+                    return o1.getCreationTime() - o2.getCreationTime();
+                }
+                return rez;
+            }
+        });
 
         while (albums.size() > MAX_ALBUMS) {
             albums.remove(albums.size() - 1);

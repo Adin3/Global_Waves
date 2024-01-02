@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.admin.Manager;
+import program.format.Episode;
 import program.format.Library;
 import program.format.Playlist;
 import program.format.Song;
@@ -16,6 +17,9 @@ import program.searchbar.SearchBar;
 import program.searchbar.SearchBarFactory;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.LinkedHashMap;
+import java.util.Map;
 
 public class NormalUser extends User {
 
@@ -40,12 +44,29 @@ public class NormalUser extends User {
     @Getter
     private final ArrayList<Song> likedSongs = new ArrayList<>();
 
+    @Getter
+    private Map<String, Integer> listenedSongs = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Integer> listenedAlbums = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Integer> listenedArtists = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Integer> listenedGenres = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Integer> listenedEpisodes = new LinkedHashMap<String, Integer>();
+
     public NormalUser() { }
     public NormalUser(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
         this.username = user.getUsername();
         this.userType = "user";
+        id_count++;
+        this.id = id_count;
     }
 
     public NormalUser(final String username, final int age,
@@ -54,6 +75,8 @@ public class NormalUser extends User {
         this.age = age;
         this.city = city;
         this.userType = userType;
+        id_count++;
+        this.id = id_count;
     }
     /**
      * changes the status of the user
@@ -112,6 +135,22 @@ public class NormalUser extends User {
      */
     public void removeLikedSong(final Song song) {
         likedSongs.remove(song);
+    }
+
+    public void setListenedSong(Song song) {
+        int freq = listenedSongs.getOrDefault(song.getName(), 0) + 1;
+        listenedSongs.put(song.getName(), freq);
+        freq = listenedAlbums.getOrDefault(song.getAlbum(), 0) + 1;
+        listenedAlbums.put(song.getAlbum(), freq);
+        freq = listenedArtists.getOrDefault(song.getArtist(), 0) + 1;
+        listenedArtists.put(song.getArtist(), freq);
+        freq = listenedGenres.getOrDefault(song.getGenre(), 0) + 1;
+        listenedGenres.put(song.getGenre(), freq);
+    }
+
+    public void setListenedEpisode(Episode episode) {
+        int freq = listenedEpisodes.getOrDefault(episode.getName(), 0) + 1;
+        listenedEpisodes.put(episode.getName(), freq);
     }
 
     /**
@@ -347,6 +386,9 @@ public class NormalUser extends User {
         Song song = null;
         if (Manager.getUser(username).getFormatType().equals("song")) {
             song = Manager.searchBar(username).getSongLoaded();
+            if (song != null) {
+                song = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
+            }
         } else {
             song = Manager.musicPlayer(username).getCurrentSong();
             if (song != null) {
@@ -368,17 +410,11 @@ public class NormalUser extends User {
 
         if (!Manager.getUser(username).getLikedSongs().contains(song)) {
             Manager.getUser(username).addLikedSong(song);
-            Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
-            if (s != null) {
-                s.addLike();
-            }
+            song.addLike();
             Manager.getPartialResult().put("message", "Like registered successfully.");
         } else {
             Manager.getUser(username).removeLikedSong(song);
-            Song s = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
-            if (s != null) {
-                s.removeLike();
-            }
+            song.removeLike();
             Manager.getPartialResult().put("message", "Unlike registered successfully.");
         }
     }
@@ -504,5 +540,159 @@ public class NormalUser extends User {
             }
         }
         return used;
+    }
+
+    private ObjectNode topArtists() {
+        ObjectNode topArtists = objectMapper.createObjectNode();
+        ArrayList<String> artists = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedArtists.entrySet()) {
+            artists.add(entry.getKey());
+        }
+
+        artists.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedArtists.get(o1) - listenedArtists.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (artists.size() > 5) {
+            artists.remove(artists.size()-1);
+        }
+
+        for (String name : artists) {
+            topArtists.put(name, listenedArtists.get(name));
+        }
+        return topArtists;
+    }
+
+    private ObjectNode topGenres() {
+        ObjectNode topGenres = objectMapper.createObjectNode();
+        ArrayList<String> genres = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedGenres.entrySet()) {
+            genres.add(entry.getKey());
+        }
+        genres.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedGenres.get(o1) - listenedGenres.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (genres.size() > 5) {
+            genres.remove(genres.size()-1);
+        }
+
+        for (String name : genres) {
+            topGenres.put(name, listenedGenres.get(name));
+        }
+        return topGenres;
+    }
+
+    private ObjectNode topSongs() {
+        ObjectNode topSongs = objectMapper.createObjectNode();
+        ArrayList<String> songs = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedSongs.entrySet()) {
+            songs.add(entry.getKey());
+        }
+
+        songs.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedSongs.get(o1) - listenedSongs.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (songs.size() > 5) {
+            songs.remove(songs.size()-1);
+        }
+
+        for (String name : songs) {
+            topSongs.put(name, listenedSongs.get(name));
+        }
+
+        return topSongs;
+    }
+
+    private ObjectNode topAlbums() {
+        ObjectNode topAlbums = objectMapper.createObjectNode();
+        ArrayList<String> albums = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedAlbums.entrySet()) {
+            albums.add(entry.getKey());
+        }
+
+        albums.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedAlbums.get(o1) - listenedAlbums.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (albums.size() > 5) {
+            albums.remove(albums.size()-1);
+        }
+
+        for (String name : albums) {
+            topAlbums.put(name, listenedAlbums.get(name));
+        }
+
+        return topAlbums;
+    }
+
+    private ObjectNode topEpisodes() {
+        ObjectNode topEpisodes = objectMapper.createObjectNode();
+        for (Map.Entry<String, Integer> entry : listenedEpisodes.entrySet()) {
+            topEpisodes.put(entry.getKey(), entry.getValue());
+        }
+        return topEpisodes;
+    }
+
+    private int emptyWrapped() {
+        return listenedArtists.size()
+                + listenedGenres.size()
+                + listenedAlbums.size()
+                + listenedEpisodes.size()
+                + listenedSongs.size();
+    }
+    /**
+     * shows that user's wrapped
+     */
+    public void wrapped() {
+        ObjectNode result = objectMapper.createObjectNode();
+        if (emptyWrapped() == 0) {
+            Manager.getPartialResult().put("message", "No data to show for user "
+            + username + ".");
+            return;
+        }
+        result.set("topArtists", topArtists());
+        result.set("topGenres", topGenres());
+        result.set("topSongs", topSongs());
+        result.set("topAlbums", topAlbums());
+        result.set("topEpisodes", topEpisodes());
+        Manager.getPartialResult().set("result", result);
     }
 }

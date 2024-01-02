@@ -45,6 +45,7 @@ public class HomePage implements PageStrategy {
                 result.append(", ");
             }
         }
+
         result.append("]\n\nFollowed playlists:\n\t[");
         List<String> followedPlaylists = user.getFollowedPlaylists();
         for (int i = 0; i < followedPlaylists.size(); i++) {

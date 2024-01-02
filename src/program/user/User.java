@@ -1,10 +1,12 @@
 package program.user;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import lombok.Setter;
 import program.admin.Manager;
+import program.format.Episode;
 import program.format.Event;
 import program.format.Merch;
 import program.format.Announcement;
@@ -16,6 +18,7 @@ import program.player.Player;
 import program.searchbar.SearchBar;
 
 import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class User {
@@ -32,6 +35,12 @@ public class User {
 
     @Getter
     protected String userType;
+
+    @Getter @Setter
+    protected static int id_count = 0;
+
+    @Getter
+    protected int id;
 
     /**
      * returns the player
@@ -87,6 +96,33 @@ public class User {
     public Map<String, Merch> getMerchs() {
         return null;
     }
+    public Map<String, Integer> getListenedSongs() {
+        return null;
+    }
+
+    public Map<String, Integer> getListenedEpisodes() {
+        return null;
+    }
+
+    public Map<String, Integer> getListenedGenres() {
+        return null;
+    }
+
+    public Map<String, Integer> getListenedArtists() {
+        return null;
+    }
+
+    public Map<String, Integer> getListenedAlbums() {
+        return null;
+    }
+
+    public void setListenedSong(Song song) {}
+
+    public void setListenedSong(Song song, String listener) {}
+
+    public void setListenedEpisode(Episode episode) {}
+
+    public ObjectNode endProgram(final int rank) { return null; }
     /**
      * returns all user's followed playlists
      */
@@ -417,4 +453,9 @@ public class User {
     public void removeEvent() {
         Manager.getPartialResult().put("message", username + " is not an artist.");
     }
+
+    /**
+     * shows that user's wrapped
+     */
+    public void wrapped() { Manager.getPartialResult().put("message", "no data to show for user " + username + ".");}
 }

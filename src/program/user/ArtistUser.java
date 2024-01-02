@@ -11,10 +11,7 @@ import program.format.Merch;
 import program.format.Song;
 import program.format.Library;
 
-import java.util.HashSet;
-import java.util.LinkedHashMap;
-import java.util.Map;
-import java.util.Objects;
+import java.util.*;
 
 public class ArtistUser extends User {
 
@@ -27,12 +24,26 @@ public class ArtistUser extends User {
     @Getter
     private final Map<String, Merch> merchs = new LinkedHashMap<>();
 
+    @Getter
+    private Map<String, Integer> listenedSongs = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Integer> listenedAlbums = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Integer> listeners = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private boolean listened = false;
+
     public ArtistUser() { }
     public ArtistUser(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
         this.username = user.getUsername();
         this.userType = "artist";
+        id_count++;
+        this.id = id_count;
     }
 
     public ArtistUser(final String username, final int age,
@@ -41,6 +52,8 @@ public class ArtistUser extends User {
         this.age = age;
         this.city = city;
         this.userType = userType;
+        id_count++;
+        this.id = id_count;
     }
     /**
      * adds new album in the system
@@ -62,7 +75,8 @@ public class ArtistUser extends User {
         }
 
         Album album = new Album(Manager.getCommand().getUsername(), Manager.getCommand().getName(),
-                Manager.getCommand().getReleaseYear(), Manager.getCommand().getDescription());
+                Manager.getCommand().getReleaseYear(), Manager.getCommand().getDescription(),
+                Manager.getCommand().getTimestamp());
 
         for (Song song : Manager.getCommand().getSongs()) {
             song.setMaxDuration(song.getDuration());
@@ -223,4 +237,138 @@ public class ArtistUser extends User {
         Manager.getPartialResult().put("message",
                 username + " deleted the event successfully.");
     }
+
+    public void setListenedSong(Song song, String listener) {
+        int freq = listenedSongs.getOrDefault(song.getName(), 0) + 1;
+        listenedSongs.put(song.getName(), freq);
+        freq = listenedAlbums.getOrDefault(song.getAlbum(), 0) + 1;
+        listenedAlbums.put(song.getAlbum(), freq);
+        freq = listeners.getOrDefault(listener, 0) + 1;
+        listeners.put(listener, freq);
+        listened = true;
+    }
+
+    private ObjectNode topSongs() {
+        ObjectNode topSongs = objectMapper.createObjectNode();
+        ArrayList<String> songs = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedSongs.entrySet()) {
+            songs.add(entry.getKey());
+        }
+
+        songs.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedSongs.get(o1) - listenedSongs.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (songs.size() > 5) {
+            songs.remove(songs.size()-1);
+        }
+
+        for (String name : songs) {
+            topSongs.put(name, listenedSongs.get(name));
+        }
+
+        return topSongs;
+    }
+
+    private ObjectNode topAlbums() {
+        ObjectNode topAlbums = objectMapper.createObjectNode();
+        ArrayList<String> albums = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedAlbums.entrySet()) {
+            albums.add(entry.getKey());
+        }
+
+        albums.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedAlbums.get(o1) - listenedAlbums.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (albums.size() > 5) {
+            albums.remove(albums.size()-1);
+        }
+
+        for (String name : albums) {
+            topAlbums.put(name, listenedAlbums.get(name));
+        }
+        return topAlbums;
+    }
+
+    private ArrayNode topFans() {
+        ArrayNode topFans = objectMapper.createArrayNode();
+        ArrayList<String> fans = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listeners.entrySet()) {
+            fans.add(entry.getKey());
+        }
+
+        fans.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listeners.get(o1) - listeners.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (fans.size() > 5) {
+            fans.remove(fans.size()-1);
+        }
+
+        for (String name : fans) {
+            topFans.add(name);
+        }
+        return topFans;
+    }
+
+    private int emptyWrapped() {
+        return listeners.size()
+                + listenedAlbums.size()
+                + listenedSongs.size();
+    }
+    /**
+     * shows that user's wrapped
+     */
+    public void wrapped() {
+        ObjectNode result = objectMapper.createObjectNode();
+        if (emptyWrapped() == 0) {
+            Manager.getPartialResult().put("message", "No data to show for user "
+                    + username + ".");
+            return;
+        }
+        result.put("listeners", listeners.size());
+        result.set("topAlbums", topAlbums());
+        result.set("topFans", topFans());
+        result.set("topSongs", topSongs());
+        Manager.getPartialResult().set("result", result);
+    }
+
+    public ObjectNode endProgram(final int rank) {
+        if (!listened) return null;
+        ObjectNode art = objectMapper.createObjectNode();
+        art.put("songRevenue", 0.0);
+        art.put("merchRevenue", 0.0);
+        art.put("ranking", rank);
+        art.put("mostProfitableSong", "N/A");
+        return art;
+    }
+
 }

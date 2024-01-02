@@ -48,7 +48,7 @@ public final class Main {
             resultFile.delete();
         }
         Files.createDirectories(path);
-
+        int a = 0;
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.getName().startsWith("library")) {
                 continue;
@@ -57,8 +57,9 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated) {
+            if (isCreated && a < 10) {
                 action(file.getName(), filepath);
+                a++;
             }
         }
 
@@ -139,13 +140,14 @@ public final class Main {
                 case "removeEvent" -> CommandList.removeEvent();
                 case "getTop5Albums" -> CommandList.getTop5Albums();
                 case "getTop5Artists" -> CommandList.getTop5Artists();
+                case "wrapped" -> CommandList.wrapped();
                 default -> { }
             }
             Manager.checkSource();
             Manager.getResult().add(Manager.getPartialResult());
         }
 
-
+        CommandList.endProgram();
 
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), Manager.getResult());

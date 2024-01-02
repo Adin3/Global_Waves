@@ -12,11 +12,7 @@ import program.player.Player;
 import program.searchbar.SearchBar;
 import program.user.User;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
+import java.util.*;
 
 public final class Manager {
 
@@ -171,6 +167,16 @@ public final class Manager {
         }
         return null;
     }
+
+    public static void orderArtists() {
+        artists.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                return o1.compareTo(o2);
+            }
+        });
+    }
+
     /**
      * wrapper for checkSource(String, String)
      */

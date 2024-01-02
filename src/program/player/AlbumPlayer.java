@@ -40,6 +40,10 @@ public class AlbumPlayer extends Player {
     }
 
     private String owner;
+
+    private boolean changeSong = false;
+
+    private boolean newListen = false;
     /**
      * clear player
      */
@@ -78,6 +82,7 @@ public class AlbumPlayer extends Player {
                 "Playback loaded successfully.");
         currentSong = new Song(album.getSong(0));
         currentSong.setDuration(currentSong.getMaxDuration());
+        newListen = true;
         albumPosition = 0;
         previousPlaylistPosition = 0;
     }
@@ -403,9 +408,17 @@ public class AlbumPlayer extends Player {
         }
 
         int time = currentSong.getDuration() - deltaTime;
+
+        if (newListen) {
+            Manager.getUser(owner).setListenedSong(currentSong);
+            Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);
+            newListen = false;
+        }
         savedTime = 0;
-        if (time < 0) {
+        if (time <= 0) {
             albumPosition++;
+            changeSong = true;
+            newListen = true;
             savedTime = -time;
             time = 0;
         }
@@ -420,7 +433,8 @@ public class AlbumPlayer extends Player {
         }
 
         if (currentSong.getDuration() == 0) {
-            while (savedTime != 0) {
+            while (savedTime != 0 || changeSong) {
+                changeSong = false;
                 if (albumPosition >= album.getSongs().size() && repeat.equals("No Repeat")) {
                     currentSong = null;
                     paused = true;
@@ -439,6 +453,8 @@ public class AlbumPlayer extends Player {
                 currentSong.setDuration(currentSong.getMaxDuration());
                 currentSong = new Song(album.getSong(albumPosition));
                 currentSong.setDuration(currentSong.getMaxDuration());
+                /*Manager.getCurrentUser().setListenedSong(currentSong);
+                Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);*/
                 updateDuration(savedTime);
             }
 

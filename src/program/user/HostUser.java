@@ -25,7 +25,9 @@ public class HostUser extends User {
         this.age = user.getAge();
         this.city = user.getCity();
         this.username = user.getUsername();
-        this.userType = "user";
+        this.userType = "host";
+        id_count++;
+        this.id = id_count;
     }
 
     public HostUser(final String username, final int age,
@@ -34,6 +36,8 @@ public class HostUser extends User {
         this.age = age;
         this.city = city;
         this.userType = userType;
+        id_count++;
+        this.id = id_count;
     }
     /**
      * adds a new Podcast

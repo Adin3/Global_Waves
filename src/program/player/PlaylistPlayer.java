@@ -69,6 +69,8 @@ public class PlaylistPlayer extends Player {
                 "Playback loaded successfully.");
         currentSong = new Song(playlist.getSong(0));
         currentSong.setDuration(currentSong.getMaxDuration());
+        Manager.getUser(owner).setListenedSong(currentSong);
+        Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);
         playlistPosition = 0;
     }
 
@@ -419,6 +421,8 @@ public class PlaylistPlayer extends Player {
                 currentSong.setDuration(currentSong.getMaxDuration());
                 currentSong = new Song(playlist.getSong(playlistPosition));
                 currentSong.setDuration(currentSong.getMaxDuration());
+                Manager.getUser(owner).setListenedSong(currentSong);
+                Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);
                 updateDuration(savedTime);
             }
 

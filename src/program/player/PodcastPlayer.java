@@ -67,6 +67,7 @@ public class PodcastPlayer extends Player {
                 "Playback loaded successfully.");
         currentEpisode = podcast.getEpisodes().get(0);
         currentEpisode.setMaxDuration(currentEpisode.getDuration());
+        Manager.getCurrentUser().setListenedEpisode(currentEpisode);
         podcastPosition = 0;
     }
 
@@ -360,6 +361,7 @@ public class PodcastPlayer extends Player {
                 currentEpisode.setDuration(currentEpisode.getMaxDuration());
                 currentEpisode = podcast.getEpisodes().get(podcastPosition);
                 currentEpisode.setMaxDuration(currentEpisode.getDuration());
+                Manager.getCurrentUser().setListenedEpisode(currentEpisode);
                 updateDuration(savedTime);
             }
 

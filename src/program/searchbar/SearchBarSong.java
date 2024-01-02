@@ -159,7 +159,7 @@ public class SearchBarSong extends SearchBar {
 
         ArrayList<Song> songs = new ArrayList<>();
         for (Song s : Library.getInstance().getSongs()) {
-            if (s.getName().startsWith(name)) {
+            if (s.getName().toLowerCase().startsWith(name.toLowerCase())) {
                 songs.add(s);
             }
         }

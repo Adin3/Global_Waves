@@ -2,6 +2,7 @@ package program.admin;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import program.command.Command;
@@ -675,5 +676,31 @@ public final class CommandList {
             }
         }
         Manager.getPartialResult().set("result", result);
+    }
+
+    public static void wrapped() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).wrapped();
+    }
+
+    public static void endProgram() {
+        Manager.setPartialResult(objectMapper.createObjectNode());
+        Manager.getPartialResult().put("command", "endProgram");
+        ObjectNode result = objectMapper.createObjectNode();
+        Manager.getPartialResult().set("result", result);
+        int rank = 1;
+        Manager.orderArtists();
+        for (String artist : Manager.getArtists()) {
+            ObjectNode art = Manager.getUser(artist).endProgram(rank);
+            if (art != null) {
+                rank++;
+                result.set(artist, art);
+            }
+        }
+        Manager.getResult().add(Manager.getPartialResult());
     }
 }

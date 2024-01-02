@@ -27,12 +27,16 @@ public class Album {
     @Getter
     private String description;
 
+    @Getter
+    private int creationTime;
+
     public Album(final String owner, final String name,
-                 final int releaseYear, final String description) {
+                 final int releaseYear, final String description, final int time) {
         this.owner = owner;
         this.name = name;
         this.releaseYear = releaseYear;
         this.description = description;
+        this.creationTime = time;
     }
 
     public Album(final Album album) {
