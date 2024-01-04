@@ -412,6 +412,7 @@ public class AlbumPlayer extends Player {
         if (newListen) {
             Manager.getUser(owner).setListenedSong(currentSong);
             Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);
+            Manager.getUser(owner).getFreeSongQueue().add(currentSong);
             newListen = false;
         }
         savedTime = 0;

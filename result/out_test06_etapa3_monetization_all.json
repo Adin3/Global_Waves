@@ -12892,79 +12892,79 @@
   "command" : "endProgram",
   "result" : {
     "The Beatles" : {
-      "songRevenue" : 1228053.13,
+      "songRevenue" : 1229432.13,
       "merchRevenue" : 0.0,
       "ranking" : 1,
       "mostProfitableSong" : "Because - Remastered 2009"
     },
     "Bob Marley" : {
-      "songRevenue" : 1157004.67,
+      "songRevenue" : 1157769.67,
       "merchRevenue" : 0.0,
       "ranking" : 2,
       "mostProfitableSong" : "400 Years"
     },
     "Jimi Hendrix" : {
-      "songRevenue" : 1107089.89,
+      "songRevenue" : 1109109.89,
       "merchRevenue" : 0.0,
       "ranking" : 3,
       "mostProfitableSong" : "Foxy Lady"
     },
     "Madonna" : {
-      "songRevenue" : 1044279.72,
+      "songRevenue" : 1046728.72,
       "merchRevenue" : 0.0,
       "ranking" : 4,
       "mostProfitableSong" : "Express Yourself"
     },
     "Fleetwood Mac" : {
-      "songRevenue" : 851034.31,
+      "songRevenue" : 853156.31,
       "merchRevenue" : 0.0,
       "ranking" : 5,
       "mostProfitableSong" : "Gold Dust Woman"
     },
     "Frank Sinatra" : {
-      "songRevenue" : 838632.95,
+      "songRevenue" : 842277.95,
       "merchRevenue" : 0.0,
       "ranking" : 6,
       "mostProfitableSong" : "Silent Night"
     },
     "Marvin Gaye" : {
-      "songRevenue" : 797662.69,
+      "songRevenue" : 801147.69,
       "merchRevenue" : 0.0,
       "ranking" : 7,
       "mostProfitableSong" : "God Is Love"
     },
     "Bob Dylan" : {
-      "songRevenue" : 758292.76,
+      "songRevenue" : 760480.76,
       "merchRevenue" : 0.0,
       "ranking" : 8,
       "mostProfitableSong" : "Corrina, Corrina"
     },
     "Aretha Franklin" : {
-      "songRevenue" : 643366.86,
+      "songRevenue" : 645872.86,
       "merchRevenue" : 0.0,
       "ranking" : 9,
       "mostProfitableSong" : "Dr. Feelgood (Love Is a Serious Business)"
     },
     "Joni Mitchell" : {
-      "songRevenue" : 524701.8,
+      "songRevenue" : 526596.8,
       "merchRevenue" : 0.0,
       "ranking" : 10,
       "mostProfitableSong" : "For Free"
     },
     "Led Zeppelin" : {
-      "songRevenue" : 426532.18,
+      "songRevenue" : 430703.18,
       "merchRevenue" : 0.0,
       "ranking" : 11,
       "mostProfitableSong" : "Misty Mountain Hop"
     },
     "Stevie Wonder" : {
-      "songRevenue" : 367095.07,
+      "songRevenue" : 369854.07,
       "merchRevenue" : 0.0,
       "ranking" : 12,
       "mostProfitableSong" : "Signed, Sealed, Delivered (I'm Yours)"
     },
     "Bruce Springsteen" : {
-      "songRevenue" : 256253.97,
+      "songRevenue" : 260755.97,
       "merchRevenue" : 0.0,
       "ranking" : 13,
       "mostProfitableSong" : "No Surrender"

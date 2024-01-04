@@ -262,6 +262,7 @@ public class ArtistUser extends User {
 
     public void addMerchRevenue(final double revenue) {
         merchRevenue += revenue;
+        listened = true;
     }
 
     private ObjectNode topSongs() {

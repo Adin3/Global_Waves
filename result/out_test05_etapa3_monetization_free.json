@@ -3206,29 +3206,29 @@
 }, {
   "command" : "endProgram",
   "result" : {
-    "Joni Mitchell" : {
-      "songRevenue" : 0.0,
+    "The Rolling Stones" : {
+      "songRevenue" : 5976.0,
       "merchRevenue" : 0.0,
       "ranking" : 1,
-      "mostProfitableSong" : "N/A"
-    },
-    "Prince" : {
-      "songRevenue" : 0.0,
-      "merchRevenue" : 0.0,
-      "ranking" : 2,
-      "mostProfitableSong" : "N/A"
+      "mostProfitableSong" : "Miss You"
     },
     "Stevie Wonder" : {
-      "songRevenue" : 0.0,
+      "songRevenue" : 5215.0,
+      "merchRevenue" : 0.0,
+      "ranking" : 2,
+      "mostProfitableSong" : "He's Misstra Know It All"
+    },
+    "Joni Mitchell" : {
+      "songRevenue" : 5026.0,
       "merchRevenue" : 0.0,
       "ranking" : 3,
-      "mostProfitableSong" : "N/A"
+      "mostProfitableSong" : "The Arrangement"
     },
-    "The Rolling Stones" : {
-      "songRevenue" : 0.0,
+    "Prince" : {
+      "songRevenue" : 4410.0,
       "merchRevenue" : 0.0,
       "ranking" : 4,
-      "mostProfitableSong" : "N/A"
+      "mostProfitableSong" : "Free"
     }
   }
 } ]

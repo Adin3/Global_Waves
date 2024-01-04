@@ -6,10 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.admin.Manager;
-import program.format.Episode;
-import program.format.Library;
-import program.format.Playlist;
-import program.format.Song;
+import program.format.*;
 import program.page.Page;
 import program.player.Player;
 import program.player.PlayerFactory;
@@ -44,6 +41,8 @@ public class NormalUser extends User {
     @Getter
     private final ArrayList<Song> likedSongs = new ArrayList<>();
 
+    private ArrayList<String> merch = new ArrayList<>();
+
     @Getter
     private Map<String, Integer> listenedSongs = new LinkedHashMap<String, Integer>();
 
@@ -61,6 +60,8 @@ public class NormalUser extends User {
 
     @Getter
     private Map<String, Map<String, Integer>> premiumListens = new LinkedHashMap<>();
+    @Getter
+    private ArrayList<Song> freeSongQueue = new ArrayList<>();
     private int premiumListensSize = 0;
 
     public NormalUser() { }
@@ -749,5 +750,39 @@ public class NormalUser extends User {
         }
 
         Manager.getPartialResult().put("message", "Ad inserted successfully.");
+        musicplayer.setAdBreak(true);
+        musicplayer.setAdPrice(Manager.getCommand().getPrice());
+        double sum = (Manager.getCommand().getPrice() / freeSongQueue.size()) * 1;
+        for (Song s : freeSongQueue) {
+            Manager.getUser(s.getArtist()).calculateSongRevenue(s.getName(), sum);
+            Manager.getUser(s.getArtist()).addSongRevenue(sum);
+        }
+        freeSongQueue.clear();
+    }
+
+    public void buyMerch() {
+        String merchName = Manager.getCommand().getName();
+        if (!merchName.startsWith(currentPage.getNonUserName())) {
+            Manager.getPartialResult().put("message", "Cannot buy merch from this page.");
+            return;
+        }
+
+        if (!Manager.getUser(currentPage.getNonUserName()).getMerchs().containsKey(merchName)) {
+            Manager.getPartialResult().put("message", "The merch " + merchName + " doesn't exist.");
+            return;
+        }
+
+        merch.add(merchName);
+        Merch merchBought = Manager.getUser(currentPage.getNonUserName()).getMerchs().get(merchName);
+        Manager.getUser(currentPage.getNonUserName()).addMerchRevenue(merchBought.getPrice());
+        Manager.getPartialResult().put("message", username + " has added new merch successfully.");
+    }
+
+    public void seeMerch() {
+        ArrayNode result = objectMapper.createArrayNode();
+        for (String m : merch) {
+            result.add(m);
+        }
+        Manager.getPartialResult().set("result", result);
     }
 }

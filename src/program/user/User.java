@@ -116,6 +116,8 @@ public class User {
         return null;
     }
 
+    public ArrayList<Song> getFreeSongQueue() { return null; }
+
     public void setListenedSong(Song song) {}
 
     public void setListenedSong(Song song, String listener) {}
@@ -476,4 +478,9 @@ public class User {
     public void cancelPremium() {Manager.getPartialResult().put("message", username + " is not an user.");}
 
     public void adBreak() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void buyMerch() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void seeMerch() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
 }

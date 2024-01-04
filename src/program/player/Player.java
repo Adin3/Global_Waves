@@ -1,6 +1,7 @@
 package program.player;
 
 import lombok.Getter;
+import lombok.Setter;
 import program.admin.Manager;
 import program.format.Album;
 import program.format.Playlist;
@@ -26,6 +27,12 @@ public class Player {
     private boolean paused = false;
 
     private boolean shuffled = false;
+
+    @Getter @Setter
+    private boolean adBreak = false;
+
+    @Getter @Setter
+    private int adPrice = 0;
 
     /**
      * @return the podcast played by player

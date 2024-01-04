@@ -735,4 +735,22 @@ public final class CommandList {
 
         Manager.getUser(username).adBreak();
     }
+
+    public static void buyMerch() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).buyMerch();
+    }
+
+    public static void seeMerch() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).seeMerch();
+    }
 }

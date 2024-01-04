@@ -55,6 +55,7 @@ public final class MusicPlayer extends Player {
             song.setDuration(song.getMaxDuration());
             Manager.getUser(owner).setListenedSong(song);
             Manager.getUser(song.getArtist()).setListenedSong(song, owner);
+            Manager.getUser(owner).getFreeSongQueue().add(song);
         } else {
             Manager.getPartialResult().put("message",
                     "You can't load an empty audio collection!");
@@ -308,12 +309,14 @@ public final class MusicPlayer extends Player {
                 song.setDuration(song.getMaxDuration());
                 Manager.getUser(owner).setListenedSong(song);
                 Manager.getUser(song.getArtist()).setListenedSong(song, owner);
+                Manager.getUser(owner).getFreeSongQueue().add(song);
             }
 
             if (repeat.equals("Repeat Infinite")) {
                 song.setDuration(song.getMaxDuration());
                 Manager.getUser(owner).setListenedSong(song);
                 Manager.getUser(song.getArtist()).setListenedSong(song, owner);
+                Manager.getUser(owner).getFreeSongQueue().add(song);
             }
 
             updateDuration(savedTime);
