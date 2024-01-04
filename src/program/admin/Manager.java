@@ -172,7 +172,13 @@ public final class Manager {
         artists.sort(new Comparator<String>() {
             @Override
             public int compare(String o1, String o2) {
-                return o1.compareTo(o2);
+                double ret = Manager.getUser(o1).getTotalRevenue()
+                        - Manager.getUser(o2).getTotalRevenue();
+                if (ret == 0.0) {
+                    return o1.compareTo(o2);
+                }
+
+                return (int)-ret;
             }
         });
     }

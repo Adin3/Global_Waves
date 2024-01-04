@@ -122,7 +122,19 @@ public class User {
 
     public void setListenedEpisode(Episode episode) {}
 
+    public void addSongRevenue(final double revenue) {}
+
+    public void addMerchRevenue(final double revenue) {}
+
     public ObjectNode endProgram(final int rank) { return null; }
+
+    public void calculateAllSongRevenue() {}
+
+    public void calculateSongRevenue(String name, double sum) {}
+
+    public double getTotalRevenue() { return 0.0;}
+
+    public boolean isPremium() { return false; }
     /**
      * returns all user's followed playlists
      */
@@ -458,4 +470,10 @@ public class User {
      * shows that user's wrapped
      */
     public void wrapped() { Manager.getPartialResult().put("message", "no data to show for user " + username + ".");}
+
+    public void buyPremium() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void cancelPremium() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void adBreak() {Manager.getPartialResult().put("message", username + " is not an user.");}
 }

@@ -16,10 +16,7 @@ import program.player.PlayerFactory;
 import program.searchbar.SearchBar;
 import program.searchbar.SearchBarFactory;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+import java.util.*;
 
 public class NormalUser extends User {
 
@@ -34,6 +31,9 @@ public class NormalUser extends User {
 
     @Getter
     private final Page currentPage = new Page();
+
+    @Getter
+    private boolean premium = false;
 
     @Getter
     private final ArrayList<Playlist> playlists = new ArrayList<>();
@@ -58,6 +58,10 @@ public class NormalUser extends User {
 
     @Getter
     private Map<String, Integer> listenedEpisodes = new LinkedHashMap<String, Integer>();
+
+    @Getter
+    private Map<String, Map<String, Integer>> premiumListens = new LinkedHashMap<>();
+    private int premiumListensSize = 0;
 
     public NormalUser() { }
     public NormalUser(final UserInput user) {
@@ -146,6 +150,14 @@ public class NormalUser extends User {
         listenedArtists.put(song.getArtist(), freq);
         freq = listenedGenres.getOrDefault(song.getGenre(), 0) + 1;
         listenedGenres.put(song.getGenre(), freq);
+        if (premium) {
+            Map<String, Integer> listen;
+            listen = premiumListens.getOrDefault(song.getArtist(), new HashMap<>());
+            freq = listen.getOrDefault(song.getName(), 0) + 1;
+            listen.put(song.getName(), freq);
+            premiumListens.put(song.getArtist(), listen);
+            premiumListensSize++;
+        }
     }
 
     public void setListenedEpisode(Episode episode) {
@@ -530,6 +542,9 @@ public class NormalUser extends User {
 
     private boolean isUsed() {
         boolean used = false;
+        if (premium) {
+            return true;
+        }
         for (User user : Manager.getUsers().values()) {
             if (user.getUserType().equals("user")) {
                 Playlist play = user.getMusicplayer().getPlaylist();
@@ -694,5 +709,45 @@ public class NormalUser extends User {
         result.set("topAlbums", topAlbums());
         result.set("topEpisodes", topEpisodes());
         Manager.getPartialResult().set("result", result);
+    }
+
+    public void buyPremium() {
+        if (premium) {
+            Manager.getPartialResult().put("message", username + " is already a premium user.");
+        } else {
+            premium = true;
+            Manager.getPartialResult().put("message", username + " bought the subscription successfully.");
+        }
+    }
+
+    public void cancelPremium() {
+        if (premium) {
+            premium = false;
+            Manager.getPartialResult().put("message", username + " cancelled the subscription successfully.");
+        } else {
+            Manager.getPartialResult().put("message", username + " is not a premium user.");
+        }
+    }
+
+    public void calculateAllSongRevenue() {
+        for (Map.Entry<String, Map<String, Integer>> artist : premiumListens.entrySet()) {
+            int numberOfSongs = 0;
+            for (Map.Entry<String, Integer> song : artist.getValue().entrySet()) {
+                numberOfSongs += song.getValue();
+                double sum = (1000000.0 / premiumListensSize) * song.getValue();
+                Manager.getUser(artist.getKey()).calculateSongRevenue(song.getKey(), sum);
+            }
+            double value = (1000000.0 / premiumListensSize) * numberOfSongs;
+            Manager.getUser(artist.getKey()).addSongRevenue(value);
+        }
+    }
+
+    public void adBreak() {
+        if (musicplayer == null) {
+            Manager.getPartialResult().put("message", username + " is not playing any music.");
+            return;
+        }
+
+        Manager.getPartialResult().put("message", "Ad inserted successfully.");
     }
 }

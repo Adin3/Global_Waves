@@ -15,6 +15,7 @@ import program.user.HostUser;
 import program.user.NormalUser;
 import program.user.User;
 
+import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -687,12 +688,34 @@ public final class CommandList {
         Manager.getUser(username).wrapped();
     }
 
+    public static void buyPremium() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).buyPremium();
+    }
+
+    public static void cancelPremium() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).cancelPremium();
+    }
+
     public static void endProgram() {
         Manager.setPartialResult(objectMapper.createObjectNode());
         Manager.getPartialResult().put("command", "endProgram");
         ObjectNode result = objectMapper.createObjectNode();
-        Manager.getPartialResult().set("result", result);
+
         int rank = 1;
+        for (String normal : Manager.getNormals()) {
+            Manager.getUser(normal).calculateAllSongRevenue();
+        }
+        Manager.getPartialResult().set("result", result);
         Manager.orderArtists();
         for (String artist : Manager.getArtists()) {
             ObjectNode art = Manager.getUser(artist).endProgram(rank);
@@ -702,5 +725,14 @@ public final class CommandList {
             }
         }
         Manager.getResult().add(Manager.getPartialResult());
+    }
+
+    public static void adBreak() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).adBreak();
     }
 }

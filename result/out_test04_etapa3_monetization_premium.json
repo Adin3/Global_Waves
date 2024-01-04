@@ -261,11 +261,13 @@
 }, {
   "command" : "buyPremium",
   "user" : "henry26",
-  "timestamp" : 5
+  "timestamp" : 5,
+  "message" : "henry26 bought the subscription successfully."
 }, {
   "command" : "buyPremium",
   "user" : "grace25",
-  "timestamp" : 5
+  "timestamp" : 5,
+  "message" : "grace25 bought the subscription successfully."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -349,7 +351,8 @@
 }, {
   "command" : "cancelPremium",
   "user" : "henry26",
-  "timestamp" : 482
+  "timestamp" : 482,
+  "message" : "henry26 cancelled the subscription successfully."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -401,7 +404,8 @@
 }, {
   "command" : "cancelPremium",
   "user" : "henry26",
-  "timestamp" : 823
+  "timestamp" : 823,
+  "message" : "henry26 is not a premium user."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -469,7 +473,8 @@
 }, {
   "command" : "buyPremium",
   "user" : "jack29",
-  "timestamp" : 1132
+  "timestamp" : 1132,
+  "message" : "jack29 bought the subscription successfully."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -489,7 +494,8 @@
 }, {
   "command" : "buyPremium",
   "user" : "jack29",
-  "timestamp" : 1203
+  "timestamp" : 1203,
+  "message" : "jack29 is already a premium user."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -701,7 +707,8 @@
 }, {
   "command" : "buyPremium",
   "user" : "jack29",
-  "timestamp" : 2320
+  "timestamp" : 2320,
+  "message" : "jack29 is already a premium user."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -1281,7 +1288,8 @@
 }, {
   "command" : "buyPremium",
   "user" : "carol19",
-  "timestamp" : 5509
+  "timestamp" : 5509,
+  "message" : "carol19 bought the subscription successfully."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -1349,7 +1357,8 @@
 }, {
   "command" : "buyPremium",
   "user" : "jack29",
-  "timestamp" : 5683
+  "timestamp" : 5683,
+  "message" : "jack29 is already a premium user."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -1996,7 +2005,8 @@
 }, {
   "command" : "cancelPremium",
   "user" : "henry26",
-  "timestamp" : 8797
+  "timestamp" : 8797,
+  "message" : "henry26 is not a premium user."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -2048,7 +2058,8 @@
 }, {
   "command" : "cancelPremium",
   "user" : "henry26",
-  "timestamp" : 8900
+  "timestamp" : 8900,
+  "message" : "henry26 is not a premium user."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -2794,12 +2805,12 @@
   "command" : "wrapped",
   "user" : "The Rolling Stones",
   "timestamp" : 21076,
-  "message" : "No data to show for user The Rolling Stones."
+  "message" : "No data to show for artist The Rolling Stones."
 }, {
   "command" : "wrapped",
   "user" : "Frank Sinatra",
   "timestamp" : 21076,
-  "message" : "No data to show for user Frank Sinatra."
+  "message" : "No data to show for artist Frank Sinatra."
 }, {
   "command" : "wrapped",
   "user" : "grace25",
@@ -2834,23 +2845,23 @@
 }, {
   "command" : "endProgram",
   "result" : {
-    "Aretha Franklin" : {
-      "songRevenue" : 0.0,
+    "James Brown" : {
+      "songRevenue" : 1894230.77,
       "merchRevenue" : 0.0,
       "ranking" : 1,
-      "mostProfitableSong" : "N/A"
+      "mostProfitableSong" : "I Don't Want Nobody To Give Me Nothing (Open Up The Door I'll Get It Myself)"
     },
-    "James Brown" : {
-      "songRevenue" : 0.0,
+    "Aretha Franklin" : {
+      "songRevenue" : 1086538.46,
       "merchRevenue" : 0.0,
       "ranking" : 2,
-      "mostProfitableSong" : "N/A"
+      "mostProfitableSong" : "Dr. Feelgood (Love Is a Serious Business)"
     },
     "Pink Floyd" : {
-      "songRevenue" : 0.0,
+      "songRevenue" : 1019230.77,
       "merchRevenue" : 0.0,
       "ranking" : 3,
-      "mostProfitableSong" : "N/A"
+      "mostProfitableSong" : "Have a Cigar"
     }
   }
 } ]

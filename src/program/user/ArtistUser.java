@@ -33,6 +33,14 @@ public class ArtistUser extends User {
     @Getter
     private Map<String, Integer> listeners = new LinkedHashMap<String, Integer>();
 
+    private Map<String, Double> premiumListens = new LinkedHashMap<>();
+    @Getter
+    private double songRevenue = 0.0;
+    @Getter
+    private double merchRevenue = 0.0;
+
+    private String mostProfitableSong;
+
     @Getter
     private boolean listened = false;
 
@@ -248,6 +256,14 @@ public class ArtistUser extends User {
         listened = true;
     }
 
+    public void addSongRevenue(final double revenue) {
+        songRevenue += revenue;
+    }
+
+    public void addMerchRevenue(final double revenue) {
+        merchRevenue += revenue;
+    }
+
     private ObjectNode topSongs() {
         ObjectNode topSongs = objectMapper.createObjectNode();
         ArrayList<String> songs = new ArrayList<>();
@@ -350,7 +366,7 @@ public class ArtistUser extends User {
     public void wrapped() {
         ObjectNode result = objectMapper.createObjectNode();
         if (emptyWrapped() == 0) {
-            Manager.getPartialResult().put("message", "No data to show for user "
+            Manager.getPartialResult().put("message", "No data to show for artist "
                     + username + ".");
             return;
         }
@@ -361,13 +377,54 @@ public class ArtistUser extends User {
         Manager.getPartialResult().set("result", result);
     }
 
+    public void calculateSongRevenue(String name, double sum) {
+        double newSum = premiumListens.getOrDefault(name, 0.0) + sum;
+        premiumListens.put(name, newSum);
+    }
+
+    public double getTotalRevenue() {
+        return songRevenue + merchRevenue;
+    }
+
+    private void mostProfitableSong() {
+        if (premiumListens.isEmpty()) {
+            return;
+        }
+
+        ArrayList<String> profitableSong = new ArrayList<>();
+        for (Map.Entry<String, Double> entry : premiumListens.entrySet()) {
+            profitableSong.add(entry.getKey());
+        }
+        profitableSong.sort(new Comparator<String>() {
+            @Override
+            public int compare(String o1, String o2) {
+                double rez = premiumListens.get(o1) - premiumListens.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return (int)-rez;
+            }
+        });
+        mostProfitableSong = profitableSong.get(0);
+    }
+
     public ObjectNode endProgram(final int rank) {
         if (!listened) return null;
         ObjectNode art = objectMapper.createObjectNode();
-        art.put("songRevenue", 0.0);
-        art.put("merchRevenue", 0.0);
+        double rev = Math.round(songRevenue * 100.0) / 100.0;
+        mostProfitableSong();
+
+
+        art.put("songRevenue", rev);
+        art.put("merchRevenue", merchRevenue);
         art.put("ranking", rank);
-        art.put("mostProfitableSong", "N/A");
+        if (rev != 0) {
+            art.put("mostProfitableSong", mostProfitableSong);
+        } else {
+            art.put("mostProfitableSong", "N/A");
+        }
         return art;
     }
 

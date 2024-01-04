@@ -334,7 +334,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 1368
+  "timestamp" : 1368,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -402,7 +403,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 2112
+  "timestamp" : 2112,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -422,7 +424,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 2286
+  "timestamp" : 2286,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -506,7 +509,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 2787
+  "timestamp" : 2787,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -526,7 +530,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 2839
+  "timestamp" : 2839,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -546,7 +551,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 2928
+  "timestamp" : 2928,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -614,7 +620,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 3235
+  "timestamp" : 3235,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -730,7 +737,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 3516
+  "timestamp" : 3516,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -750,7 +758,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 3558
+  "timestamp" : 3558,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -866,7 +875,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 3972
+  "timestamp" : 3972,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -886,7 +896,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 4039
+  "timestamp" : 4039,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -906,7 +917,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 4092
+  "timestamp" : 4092,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -926,7 +938,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 4216
+  "timestamp" : 4216,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -1047,7 +1060,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 5584
+  "timestamp" : 5584,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -1179,11 +1193,13 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 7218
+  "timestamp" : 7218,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 7219
+  "timestamp" : 7219,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -1219,7 +1235,8 @@
 }, {
   "command" : "adBreak",
   "user" : "irene33",
-  "timestamp" : 7379
+  "timestamp" : 7379,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -1271,7 +1288,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 7523
+  "timestamp" : 7523,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -1339,7 +1357,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 7789
+  "timestamp" : 7789,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -1535,7 +1554,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 8708
+  "timestamp" : 8708,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -1555,7 +1575,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 8830
+  "timestamp" : 8830,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -1591,7 +1612,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 9195
+  "timestamp" : 9195,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -1659,7 +1681,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 9754
+  "timestamp" : 9754,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -1679,7 +1702,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 9833
+  "timestamp" : 9833,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2088,7 +2112,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 12299
+  "timestamp" : 12299,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2108,7 +2133,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 12374
+  "timestamp" : 12374,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2160,7 +2186,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 12549
+  "timestamp" : 12549,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2230,7 +2257,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 12659
+  "timestamp" : 12659,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2282,7 +2310,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 12845
+  "timestamp" : 12845,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2334,7 +2363,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 13004
+  "timestamp" : 13004,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2354,7 +2384,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 13095
+  "timestamp" : 13095,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2422,7 +2453,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 13338
+  "timestamp" : 13338,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2458,7 +2490,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 13403
+  "timestamp" : 13403,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2494,7 +2527,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 13643
+  "timestamp" : 13643,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2530,7 +2564,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 13706
+  "timestamp" : 13706,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2614,7 +2649,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 13962
+  "timestamp" : 13962,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2650,7 +2686,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 14040
+  "timestamp" : 14040,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2686,7 +2723,8 @@
 }, {
   "command" : "adBreak",
   "user" : "grace25",
-  "timestamp" : 14153
+  "timestamp" : 14153,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -2889,7 +2927,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 16765
+  "timestamp" : 16765,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -2941,7 +2980,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 17027
+  "timestamp" : 17027,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -3009,7 +3049,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 17316
+  "timestamp" : 17316,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -3029,7 +3070,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 17479
+  "timestamp" : 17479,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -3049,7 +3091,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 17649
+  "timestamp" : 17649,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -3085,7 +3128,8 @@
 }, {
   "command" : "adBreak",
   "user" : "david27",
-  "timestamp" : 17762
+  "timestamp" : 17762,
+  "message" : "Ad inserted successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -3124,7 +3168,7 @@
   "command" : "wrapped",
   "user" : "Pink Floyd",
   "timestamp" : 17942,
-  "message" : "No data to show for user Pink Floyd."
+  "message" : "No data to show for artist Pink Floyd."
 }, {
   "command" : "wrapped",
   "user" : "david27",

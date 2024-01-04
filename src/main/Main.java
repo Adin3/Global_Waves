@@ -141,6 +141,9 @@ public final class Main {
                 case "getTop5Albums" -> CommandList.getTop5Albums();
                 case "getTop5Artists" -> CommandList.getTop5Artists();
                 case "wrapped" -> CommandList.wrapped();
+                case "buyPremium" -> CommandList.buyPremium();
+                case "cancelPremium" -> CommandList.cancelPremium();
+                case "adBreak" -> CommandList.adBreak();
                 default -> { }
             }
             Manager.checkSource();
