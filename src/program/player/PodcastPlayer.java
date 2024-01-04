@@ -7,6 +7,7 @@ import lombok.Getter;
 import program.format.Episode;
 import program.admin.Manager;
 import program.format.Podcast;
+import program.user.User;
 
 public class PodcastPlayer extends Player {
     public PodcastPlayer() { }
@@ -15,6 +16,8 @@ public class PodcastPlayer extends Player {
 
     @Getter
     private Podcast podcast;
+
+    private String host;
 
     private Episode currentEpisode;
 
@@ -56,6 +59,7 @@ public class PodcastPlayer extends Player {
         }
 
         this.podcast = temp;
+        this.host = temp.getOwner();
 
         if (this.podcast.getEpisodes().isEmpty()) {
             Manager.getPartialResult().put("message",
@@ -68,6 +72,9 @@ public class PodcastPlayer extends Player {
         currentEpisode = podcast.getEpisodes().get(0);
         currentEpisode.setMaxDuration(currentEpisode.getDuration());
         Manager.getCurrentUser().setListenedEpisode(currentEpisode);
+        User h = Manager.getUser(host);
+        if (h != null)
+            Manager.getUser(host).setListenedEpisode(currentEpisode, owner);
         podcastPosition = 0;
     }
 
@@ -362,6 +369,9 @@ public class PodcastPlayer extends Player {
                 currentEpisode = podcast.getEpisodes().get(podcastPosition);
                 currentEpisode.setMaxDuration(currentEpisode.getDuration());
                 Manager.getCurrentUser().setListenedEpisode(currentEpisode);
+                User h = Manager.getUser(host);
+                if (h != null)
+                    Manager.getUser(host).setListenedEpisode(currentEpisode, owner);
                 updateDuration(savedTime);
             }
 

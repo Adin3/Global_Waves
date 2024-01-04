@@ -124,6 +124,8 @@ public class User {
 
     public void setListenedEpisode(Episode episode) {}
 
+    public void setListenedEpisode(Episode episode, String listener) {}
+
     public void addSongRevenue(final double revenue) {}
 
     public void addMerchRevenue(final double revenue) {}

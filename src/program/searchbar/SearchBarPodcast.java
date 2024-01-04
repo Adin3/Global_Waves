@@ -61,6 +61,7 @@ public class SearchBarPodcast extends SearchBar {
             }
             Manager.getPartialResult().put("message",
                     "The selected ID is too high.");
+            Manager.getSource(owner).setSourceSearched(false);
             return;
         }
         Manager.getPartialResult().put("message",

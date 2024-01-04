@@ -1,5 +1,7 @@
 package program.player;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import lombok.Setter;
 import program.admin.Manager;
@@ -61,7 +63,16 @@ public class Player {
     /**
      * shows status
      */
-    public void status() { }
+    public void status() {
+        ObjectMapper objectMapper = new ObjectMapper();
+        ObjectNode status = objectMapper.createObjectNode();
+        status.put("name", "");
+        status.put("remainedTime", 0);
+        status.put("repeat", "No Repeat");
+        status.put("shuffle", false);
+        status.put("paused", true);
+        Manager.getPartialResult().set("stats", status);
+    }
 
     /**
      * trigger pause

@@ -48,4 +48,6 @@ public final class Command {
     private ArrayList<Episode> episodes;
 
     private String nextPage;
+
+    private String recommendationType;
 }

@@ -10,8 +10,7 @@ import program.format.Episode;
 import program.format.Library;
 import program.format.Podcast;
 
-import java.util.ArrayList;
-import java.util.HashSet;
+import java.util.*;
 
 public class HostUser extends User {
 
@@ -20,6 +19,12 @@ public class HostUser extends User {
 
     @Getter
     private ArrayList<Announcement> announcements = new ArrayList<>();
+
+    @Getter
+    private Map<String, Integer> listenedEpisodes = new LinkedHashMap<>();
+
+    @Getter
+    private Set<String> listeners = new HashSet<>();
     public HostUser() { }
     public HostUser(final UserInput user) {
         this.age = user.getAge();
@@ -192,5 +197,60 @@ public class HostUser extends User {
             Manager.getPartialResult().put("message",
                     username + " deleted the podcast successfully.");
         }
+    }
+
+    public void setListenedEpisode(Episode episode, String listener) {
+        int freq = listenedEpisodes.getOrDefault(episode.getName(), 0) + 1;
+        listenedEpisodes.put(episode.getName(), freq);
+        listeners.add(listener);
+    }
+
+    private ObjectNode topEpisodes() {
+        ObjectNode topEpisodes = objectMapper.createObjectNode();
+        ArrayList<String> episodes = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : listenedEpisodes.entrySet()) {
+            episodes.add(entry.getKey());
+        }
+
+        episodes.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                int rez = listenedEpisodes.get(o1) - listenedEpisodes.get(o2);
+
+                if (rez == 0) {
+                    return o1.compareTo(o2);
+                }
+
+                return -rez;
+            }
+        });
+
+        while (episodes.size() > 5) {
+            episodes.remove(episodes.size()-1);
+        }
+
+        for (String name : episodes) {
+            topEpisodes.put(name, listenedEpisodes.get(name));
+        }
+        return topEpisodes;
+    }
+
+    private int emptyWrapped() {
+        return listeners.size()
+                + listenedEpisodes.size();
+    }
+    /**
+     * shows that user's wrapped
+     */
+    public void wrapped() {
+        ObjectNode result = objectMapper.createObjectNode();
+        if (emptyWrapped() == 0) {
+            Manager.getPartialResult().put("message", "No data to show for host "
+                    + username + ".");
+            return;
+        }
+        result.set("topEpisodes", topEpisodes());
+        result.put("listeners", listeners.size());
+        Manager.getPartialResult().set("result", result);
     }
 }

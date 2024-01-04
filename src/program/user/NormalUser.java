@@ -101,7 +101,7 @@ public class NormalUser extends User {
      * updates the player
      */
     public void updatePlayer(final int deltaTime) {
-        if (!isOffline()) {
+        if (!isOffline() && musicplayer != null) {
             musicplayer.updateDuration(deltaTime);
             musicplayer.updatePlayer();
         }
@@ -178,7 +178,7 @@ public class NormalUser extends User {
      */
     public void setSearchBar(final String commandType) {
         this.formatType = commandType;
-        searchBar = SearchBarFactory.getInstance().createSearchBar(formatType, username);
+        searchBar = SearchBarFactory.getInstance().createSearchBar(this.formatType, username);
     }
     /**
      * searches in library files, collections, or users
@@ -213,6 +213,13 @@ public class NormalUser extends User {
     public void load() {
         if (!Manager.getSource(username).isSourceLoaded()) {
             setMusicPlayer();
+        }
+        if (musicplayer == null) {
+            Manager.getPartialResult().put("message", "Please select a source before attempting to load.");
+            Manager.getSource(username).setSourceLoaded(false);
+            Manager.getSource(username).setSourceSelected(false);
+            Manager.getSource(username).setSourceSearched(false);
+            return;
         }
 
         musicplayer.load();

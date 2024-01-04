@@ -37,6 +37,6 @@ public final class PlayerFactory {
             default -> { }
         }
 
-        return null;
+        return new Player();
     }
 }
