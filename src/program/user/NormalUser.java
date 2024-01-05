@@ -15,7 +15,7 @@ import program.searchbar.SearchBarFactory;
 
 import java.util.*;
 
-public class NormalUser extends User {
+public class NormalUser extends User implements SubscribeObserver {
 
     @Getter
     private Player musicplayer = new Player();
@@ -62,6 +62,8 @@ public class NormalUser extends User {
     private Map<String, Map<String, Integer>> premiumListens = new LinkedHashMap<>();
     @Getter
     private ArrayList<Song> freeSongQueue = new ArrayList<>();
+
+    private ArrayList<String> notifications = new ArrayList<>();
     private int premiumListensSize = 0;
 
     public NormalUser() { }
@@ -791,5 +793,38 @@ public class NormalUser extends User {
             result.add(m);
         }
         Manager.getPartialResult().set("result", result);
+    }
+
+    public void subscribe() {
+        String page = currentPage.checkPage();
+        if (!page.equals("ArtistPage") && !page.equals("HostPage")) {
+            Manager.getPartialResult().put("message",  "To subscribe you need to be " +
+                    "on the page of an artist or host.");
+            return;
+        }
+
+        String artisthost = currentPage.getNonUserName();
+        if (Manager.getUser(artisthost).addSubscriber(this)) {
+            Manager.getPartialResult().put("message",  username + " subscribed to " + artisthost + " successfully.");
+        } else {
+            Manager.getPartialResult().put("message",  username + " unsubscribed from " + artisthost + " successfully.");
+        }
+    }
+
+    public void getNotifications() {
+        ArrayNode notificationsNode = objectMapper.createArrayNode();
+        for (int i = 0; i < notifications.size(); i+=2) {
+            ObjectNode objNode = objectMapper.createObjectNode();
+            objNode.put("name", notifications.get(i));
+            objNode.put("description", notifications.get(i+1));
+            notificationsNode.add(objNode);
+        }
+        Manager.getPartialResult().set("notifications", notificationsNode);
+        notifications.clear();
+    }
+
+    public void addNotification(String name, String description) {
+        notifications.add(name);
+        notifications.add(description);
     }
 }

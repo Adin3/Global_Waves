@@ -146,6 +146,8 @@ public final class Main {
                 case "adBreak" -> CommandList.adBreak();
                 case "buyMerch" -> CommandList.buyMerch();
                 case "seeMerch" -> CommandList.seeMerch();
+                case "subscribe" -> CommandList.subscribe();
+                case "getNotifications" -> CommandList.getNotifications();
                 default -> { }
             }
             Manager.checkSource();

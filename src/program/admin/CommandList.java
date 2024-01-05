@@ -753,4 +753,22 @@ public final class CommandList {
 
         Manager.getUser(username).seeMerch();
     }
+
+    public static void subscribe() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).subscribe();
+    }
+
+    public static void getNotifications() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).getNotifications();
+    }
 }

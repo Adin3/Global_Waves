@@ -232,7 +232,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 10
+  "timestamp" : 10,
+  "message" : "alice22 subscribed to Michael Jackson successfully."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -247,7 +248,8 @@
 }, {
   "command" : "subscribe",
   "user" : "carol19",
-  "timestamp" : 50
+  "timestamp" : 50,
+  "message" : "carol19 subscribed to The Doors successfully."
 }, {
   "command" : "search",
   "user" : "jack29",
@@ -262,7 +264,8 @@
 }, {
   "command" : "subscribe",
   "user" : "jack29",
-  "timestamp" : 89
+  "timestamp" : 89,
+  "message" : "jack29 subscribed to Madonna successfully."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -277,7 +280,8 @@
 }, {
   "command" : "subscribe",
   "user" : "henry26",
-  "timestamp" : 170
+  "timestamp" : 170,
+  "message" : "henry26 subscribed to Pink Floyd successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -292,7 +296,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 193
+  "timestamp" : 193,
+  "message" : "alice22 subscribed to Jay-Z successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -307,7 +312,8 @@
 }, {
   "command" : "subscribe",
   "user" : "grace25",
-  "timestamp" : 279
+  "timestamp" : 279,
+  "message" : "grace25 subscribed to Chuck Berry successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -322,7 +328,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 357
+  "timestamp" : 357,
+  "message" : "alice22 unsubscribed from Michael Jackson successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -337,7 +344,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 406
+  "timestamp" : 406,
+  "message" : "alice22 subscribed to Nothing But Thieves successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -352,7 +360,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 475
+  "timestamp" : 475,
+  "message" : "alice22 subscribed to The Who successfully."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -367,7 +376,8 @@
 }, {
   "command" : "subscribe",
   "user" : "henry26",
-  "timestamp" : 497
+  "timestamp" : 497,
+  "message" : "henry26 subscribed to Joni Mitchell successfully."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -382,7 +392,8 @@
 }, {
   "command" : "subscribe",
   "user" : "henry26",
-  "timestamp" : 585
+  "timestamp" : 585,
+  "message" : "henry26 subscribed to Fleetwood Mac successfully."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -397,7 +408,8 @@
 }, {
   "command" : "subscribe",
   "user" : "henry26",
-  "timestamp" : 657
+  "timestamp" : 657,
+  "message" : "henry26 subscribed to Rihanna successfully."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -412,7 +424,8 @@
 }, {
   "command" : "subscribe",
   "user" : "carol19",
-  "timestamp" : 696
+  "timestamp" : 696,
+  "message" : "carol19 subscribed to Eric Clapton successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -427,7 +440,8 @@
 }, {
   "command" : "subscribe",
   "user" : "grace25",
-  "timestamp" : 718
+  "timestamp" : 718,
+  "message" : "grace25 subscribed to Aretha Franklin successfully."
 }, {
   "command" : "search",
   "user" : "carol19",
@@ -442,7 +456,8 @@
 }, {
   "command" : "subscribe",
   "user" : "carol19",
-  "timestamp" : 797
+  "timestamp" : 797,
+  "message" : "carol19 subscribed to Bob Dylan successfully."
 }, {
   "command" : "search",
   "user" : "henry26",
@@ -457,7 +472,8 @@
 }, {
   "command" : "subscribe",
   "user" : "henry26",
-  "timestamp" : 831
+  "timestamp" : 831,
+  "message" : "henry26 subscribed to Bob Dylan successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -472,7 +488,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 887
+  "timestamp" : 887,
+  "message" : "alice22 subscribed to Madonna successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -487,7 +504,8 @@
 }, {
   "command" : "subscribe",
   "user" : "grace25",
-  "timestamp" : 970
+  "timestamp" : 970,
+  "message" : "grace25 subscribed to Frank Sinatra successfully."
 }, {
   "command" : "search",
   "user" : "grace25",
@@ -502,7 +520,8 @@
 }, {
   "command" : "subscribe",
   "user" : "grace25",
-  "timestamp" : 1002
+  "timestamp" : 1002,
+  "message" : "grace25 subscribed to James Brown successfully."
 }, {
   "command" : "search",
   "user" : "alice22",
@@ -517,7 +536,8 @@
 }, {
   "command" : "subscribe",
   "user" : "alice22",
-  "timestamp" : 1080
+  "timestamp" : 1080,
+  "message" : "alice22 subscribed to The Police successfully."
 }, {
   "command" : "addEvent",
   "user" : "Rihanna",
@@ -656,7 +676,14 @@
 }, {
   "command" : "getNotifications",
   "user" : "jack29",
-  "timestamp" : 3726
+  "timestamp" : 3726,
+  "notifications" : [ {
+    "name" : "New Album",
+    "description" : "New Album from Madonna."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Madonna."
+  } ]
 }, {
   "command" : "removeAlbum",
   "user" : "Eric Clapton",
@@ -676,12 +703,12 @@
   "command" : "removeAlbum",
   "user" : "Bob Dylan",
   "timestamp" : 4191,
-  "message" : "Bob Dylan can't delete this album."
+  "message" : "Bob Dylan deleted the album successfully."
 }, {
   "command" : "addAlbum",
   "user" : "Bob Dylan",
   "timestamp" : 4341,
-  "message" : "Bob Dylan has another album with the same name."
+  "message" : "Bob Dylan has added new album successfully."
 }, {
   "command" : "removeAlbum",
   "user" : "The Who",
@@ -710,11 +737,34 @@
 }, {
   "command" : "getNotifications",
   "user" : "henry26",
-  "timestamp" : 4811
+  "timestamp" : 4811,
+  "notifications" : [ {
+    "name" : "New Event",
+    "description" : "New Event from Rihanna."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Fleetwood Mac."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Joni Mitchell."
+  } ]
 }, {
   "command" : "getNotifications",
   "user" : "jack29",
-  "timestamp" : 5034
+  "timestamp" : 5034,
+  "notifications" : [ {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Madonna."
+  } ]
 }, {
   "command" : "addMerch",
   "user" : "The Doors",
@@ -744,7 +794,7 @@
   "command" : "removeAlbum",
   "user" : "Bob Dylan",
   "timestamp" : 6378,
-  "message" : "Bob Dylan can't delete this album."
+  "message" : "Bob Dylan deleted the album successfully."
 }, {
   "command" : "addMerch",
   "user" : "Fleetwood Mac",
@@ -759,19 +809,64 @@
   "command" : "addAlbum",
   "user" : "Bob Dylan",
   "timestamp" : 6528,
-  "message" : "Bob Dylan has another album with the same name."
+  "message" : "Bob Dylan has added new album successfully."
 }, {
   "command" : "getNotifications",
   "user" : "carol19",
-  "timestamp" : 6546
+  "timestamp" : 6546,
+  "notifications" : [ {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from The Doors."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Eric Clapton."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from The Doors."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Bob Dylan."
+  } ]
 }, {
   "command" : "getNotifications",
   "user" : "grace25",
-  "timestamp" : 6631
+  "timestamp" : 6631,
+  "notifications" : [ {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Aretha Franklin."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Aretha Franklin."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Aretha Franklin."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from James Brown."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Frank Sinatra."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from James Brown."
+  }, {
+    "name" : "New Event",
+    "description" : "New Event from Aretha Franklin."
+  } ]
 }, {
   "command" : "getNotifications",
   "user" : "grace25",
-  "timestamp" : 7090
+  "timestamp" : 7090,
+  "notifications" : [ ]
 }, {
   "command" : "addEvent",
   "user" : "Bob Dylan",
@@ -805,7 +900,8 @@
 }, {
   "command" : "getNotifications",
   "user" : "grace25",
-  "timestamp" : 7397
+  "timestamp" : 7397,
+  "notifications" : [ ]
 }, {
   "command" : "addAlbum",
   "user" : "Jay-Z",
@@ -824,7 +920,44 @@
 }, {
   "command" : "getNotifications",
   "user" : "alice22",
-  "timestamp" : 7756
+  "timestamp" : 7756,
+  "notifications" : [ {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Nothing But Thieves."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Madonna."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from The Who."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from The Police."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from The Police."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Madonna."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Madonna."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from The Who."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from The Who."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Madonna."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Jay-Z."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from Jay-Z."
+  } ]
 }, {
   "command" : "removeAlbum",
   "user" : "Chuck Berry",
@@ -844,7 +977,7 @@
   "command" : "removeAlbum",
   "user" : "The Police",
   "timestamp" : 8045,
-  "message" : "The Police can't delete this album."
+  "message" : "The Police deleted the album successfully."
 }, {
   "command" : "addAlbum",
   "user" : "Pink Floyd",
@@ -859,7 +992,7 @@
   "command" : "addAlbum",
   "user" : "The Police",
   "timestamp" : 8195,
-  "message" : "The Police has another album with the same name."
+  "message" : "The Police has added new album successfully."
 }, {
   "command" : "addAlbum",
   "user" : "Frank Sinatra",
@@ -879,16 +1012,20 @@
   "command" : "removeAlbum",
   "user" : "The Police",
   "timestamp" : 8687,
-  "message" : "The Police can't delete this album."
+  "message" : "The Police deleted the album successfully."
 }, {
   "command" : "getNotifications",
   "user" : "jack29",
-  "timestamp" : 8769
+  "timestamp" : 8769,
+  "notifications" : [ {
+    "name" : "New Album",
+    "description" : "New Album from Madonna."
+  } ]
 }, {
   "command" : "addAlbum",
   "user" : "The Police",
   "timestamp" : 8837,
-  "message" : "The Police has another album with the same name."
+  "message" : "The Police has added new album successfully."
 }, {
   "command" : "removeAlbum",
   "user" : "Fleetwood Mac",
@@ -907,7 +1044,17 @@
 }, {
   "command" : "getNotifications",
   "user" : "alice22",
-  "timestamp" : 9133
+  "timestamp" : 9133,
+  "notifications" : [ {
+    "name" : "New Album",
+    "description" : "New Album from The Police."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from The Police."
+  }, {
+    "name" : "New Event",
+    "description" : "New Event from Madonna."
+  } ]
 }, {
   "command" : "removeAlbum",
   "user" : "Aretha Franklin",
@@ -937,7 +1084,7 @@
   "command" : "removeAlbum",
   "user" : "Bob Dylan",
   "timestamp" : 9926,
-  "message" : "Bob Dylan can't delete this album."
+  "message" : "Bob Dylan deleted the album successfully."
 }, {
   "command" : "addEvent",
   "user" : "Eric Clapton",
@@ -947,7 +1094,7 @@
   "command" : "addAlbum",
   "user" : "Bob Dylan",
   "timestamp" : 10076,
-  "message" : "Bob Dylan has another album with the same name."
+  "message" : "Bob Dylan has added new album successfully."
 }, {
   "command" : "endProgram",
   "result" : { }

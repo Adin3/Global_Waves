@@ -58,4 +58,8 @@ public class HomePage implements PageStrategy {
         result.append("]");
         return result.toString();
     }
+
+    public String checkPage() {
+        return "HomePage";
+    }
 }

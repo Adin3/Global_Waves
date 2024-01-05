@@ -53,4 +53,12 @@ public class Page {
             return "Error";
         }
     }
+
+    public String checkPage() {
+        if (printingStrategy != null) {
+            return printingStrategy.checkPage();
+        } else {
+            return "Error";
+        }
+    }
 }

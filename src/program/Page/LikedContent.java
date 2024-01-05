@@ -51,4 +51,8 @@ public class LikedContent implements PageStrategy {
         result.append("]");
         return result.toString();
     }
+
+    public String checkPage() {
+        return "LikedContent";
+    }
 }

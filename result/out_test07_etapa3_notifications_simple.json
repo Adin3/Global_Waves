@@ -232,7 +232,8 @@
 }, {
   "command" : "subscribe",
   "user" : "david27",
-  "timestamp" : 10
+  "timestamp" : 10,
+  "message" : "david27 subscribed to Chuck Berry successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -247,7 +248,8 @@
 }, {
   "command" : "subscribe",
   "user" : "david27",
-  "timestamp" : 22
+  "timestamp" : 22,
+  "message" : "david27 subscribed to Elton John successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -262,7 +264,8 @@
 }, {
   "command" : "subscribe",
   "user" : "david27",
-  "timestamp" : 92
+  "timestamp" : 92,
+  "message" : "david27 subscribed to Fleetwood Mac successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -277,7 +280,8 @@
 }, {
   "command" : "subscribe",
   "user" : "david27",
-  "timestamp" : 115
+  "timestamp" : 115,
+  "message" : "david27 unsubscribed from Fleetwood Mac successfully."
 }, {
   "command" : "search",
   "user" : "david27",
@@ -292,7 +296,8 @@
 }, {
   "command" : "subscribe",
   "user" : "david27",
-  "timestamp" : 144
+  "timestamp" : 144,
+  "message" : "david27 subscribed to David Bowie successfully."
 }, {
   "command" : "removeAlbum",
   "user" : "Fleetwood Mac",
@@ -321,7 +326,8 @@
 }, {
   "command" : "getNotifications",
   "user" : "david27",
-  "timestamp" : 2778
+  "timestamp" : 2778,
+  "notifications" : [ ]
 }, {
   "command" : "removeAlbum",
   "user" : "Chuck Berry",
@@ -340,7 +346,11 @@
 }, {
   "command" : "getNotifications",
   "user" : "david27",
-  "timestamp" : 3629
+  "timestamp" : 3629,
+  "notifications" : [ {
+    "name" : "New Album",
+    "description" : "New Album from Chuck Berry."
+  } ]
 }, {
   "command" : "addAlbum",
   "user" : "Fleetwood Mac",
@@ -389,7 +399,20 @@
 }, {
   "command" : "getNotifications",
   "user" : "david27",
-  "timestamp" : 8095
+  "timestamp" : 8095,
+  "notifications" : [ {
+    "name" : "New Album",
+    "description" : "New Album from Chuck Berry."
+  }, {
+    "name" : "New Merchandise",
+    "description" : "New Merchandise from Elton John."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from David Bowie."
+  }, {
+    "name" : "New Album",
+    "description" : "New Album from David Bowie."
+  } ]
 }, {
   "command" : "endProgram",
   "result" : { }

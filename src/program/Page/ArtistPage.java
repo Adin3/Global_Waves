@@ -51,4 +51,8 @@ public class ArtistPage implements PageStrategy {
         result.append("]");
         return result.toString();
     }
+
+    public String checkPage() {
+        return "ArtistPage";
+    }
 }

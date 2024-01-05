@@ -130,6 +130,8 @@ public class User {
 
     public void addMerchRevenue(final double revenue) {}
 
+    public boolean addSubscriber(SubscribeObserver subscriber) { return false;}
+
     public ObjectNode endProgram(final int rank) { return null; }
 
     public void calculateAllSongRevenue() {}
@@ -484,5 +486,9 @@ public class User {
     public void buyMerch() {Manager.getPartialResult().put("message", username + " is not an user.");}
 
     public void seeMerch() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void subscribe() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void getNotifications() {Manager.getPartialResult().put("message", username + " is not an user.");}
 
 }

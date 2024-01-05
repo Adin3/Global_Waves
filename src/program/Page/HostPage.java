@@ -42,4 +42,8 @@ public class HostPage implements PageStrategy {
         result.append("]");
         return result.toString();
     }
+
+    public String checkPage() {
+        return "HostPage";
+    }
 }

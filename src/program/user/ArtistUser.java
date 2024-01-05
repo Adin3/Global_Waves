@@ -33,6 +33,9 @@ public class ArtistUser extends User {
     @Getter
     private Map<String, Integer> listeners = new LinkedHashMap<String, Integer>();
 
+    @Getter
+    private ArrayList<SubscribeObserver> subscribers = new ArrayList<>();
+
     private Map<String, Double> premiumListens = new LinkedHashMap<>();
     @Getter
     private double songRevenue = 0.0;
@@ -94,7 +97,7 @@ public class ArtistUser extends User {
 
         Manager.getAlbums().add(album);
         albums.put(album.getName(), album);
-
+        updateSubscribers("New Album", "New Album from " + username + ".");
         Manager.getPartialResult().put("message",
                 username + " has added new album successfully.");
     }
@@ -135,6 +138,7 @@ public class ArtistUser extends User {
         }
 
         events.put(event.getName(), event);
+        updateSubscribers("New Event", "New Event from " + username + ".");
         Manager.getPartialResult().put("message",
                 username + " has added new event successfully.");
     }
@@ -158,6 +162,7 @@ public class ArtistUser extends User {
         }
 
         merchs.put(merch.getName(), merch);
+        updateSubscribers("New Merchandise", "New Merchandise from " + username + ".");
         Manager.getPartialResult().put("message",
                 username + " has added new merchandise successfully.");
     }
@@ -201,9 +206,9 @@ public class ArtistUser extends User {
                 if (album != null && album.getArtist().equals(username)) {
                     used = true; break;
                 }
-                if (username.equals(user.getCurrentPage().getNonUserName())) {
-                    used = true; break;
-                }
+//                if (username.equals(user.getCurrentPage().getNonUserName())) {
+//                    used = true; break;
+//                }
             }
         }
         return used;
@@ -263,6 +268,21 @@ public class ArtistUser extends User {
     public void addMerchRevenue(final double revenue) {
         merchRevenue += revenue;
         listened = true;
+    }
+
+    public boolean addSubscriber(SubscribeObserver subscriber) {
+        if (subscribers.contains(subscriber)) {
+            subscribers.remove(subscriber);
+            return false;
+        }
+        subscribers.add(subscriber);
+        return true;
+    }
+
+    private void updateSubscribers(String name, String description) {
+        for (SubscribeObserver s : subscribers) {
+            s.addNotification(name, description);
+        }
     }
 
     private ObjectNode topSongs() {
