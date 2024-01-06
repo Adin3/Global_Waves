@@ -110,7 +110,8 @@
 }, {
   "command" : "updateRecommendations",
   "user" : "ghiu",
-  "timestamp" : 152
+  "timestamp" : 152,
+  "message" : "The recommendations for user ghiu have been updated successfully."
 }, {
   "command" : "loadRecommendations",
   "user" : "ghiu",
@@ -145,23 +146,27 @@
   "command" : "printCurrentPage",
   "user" : "ghiu",
   "timestamp" : 205,
-  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]"
+  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[Seven Seas of Rhye]\n\nPlaylists recommendations:\n\t[]"
 }, {
   "command" : "previousPage",
   "user" : "ghiu",
-  "timestamp" : 210
+  "timestamp" : 210,
+  "message" : "The user ghiu has navigated successfully to the previous page."
 }, {
   "command" : "previousPage",
   "user" : "ghiu",
-  "timestamp" : 215
+  "timestamp" : 215,
+  "message" : "The user ghiu has navigated successfully to the previous page."
 }, {
   "command" : "previousPage",
   "user" : "ghiu",
-  "timestamp" : 220
+  "timestamp" : 220,
+  "message" : "The user ghiu has navigated successfully to the previous page."
 }, {
   "command" : "nextPage",
   "user" : "ghiu",
-  "timestamp" : 235
+  "timestamp" : 235,
+  "message" : "The user ghiu has navigated successfully to the next page."
 }, {
   "command" : "printCurrentPage",
   "user" : "ghiu",
@@ -175,16 +180,18 @@
 }, {
   "command" : "nextPage",
   "user" : "ghiu",
-  "timestamp" : 255
+  "timestamp" : 255,
+  "message" : "There are no pages left to go forward."
 }, {
   "command" : "printCurrentPage",
   "user" : "ghiu",
   "timestamp" : 265,
-  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]"
+  "message" : "Liked songs:\n\t[]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[Seven Seas of Rhye]\n\nPlaylists recommendations:\n\t[]"
 }, {
   "command" : "nextPage",
   "user" : "ghiu",
-  "timestamp" : 275
+  "timestamp" : 275,
+  "message" : "There are no pages left to go forward."
 }, {
   "command" : "endProgram",
   "result" : {

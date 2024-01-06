@@ -27,7 +27,7 @@ public class NormalUser extends User implements SubscribeObserver {
     private String formatType;
 
     @Getter
-    private final Page currentPage = new Page();
+    private final Page currentPage;
 
     @Getter
     private boolean premium = false;
@@ -60,13 +60,22 @@ public class NormalUser extends User implements SubscribeObserver {
 
     @Getter
     private Map<String, Map<String, Integer>> premiumListens = new LinkedHashMap<>();
+
+    @Getter
+    private ArrayList<String> playlistsRecommended = new ArrayList<>();
+
+    @Getter
+    private ArrayList<Song> songsRecommended = new ArrayList<>();
+
     @Getter
     private ArrayList<Song> freeSongQueue = new ArrayList<>();
 
     private ArrayList<String> notifications = new ArrayList<>();
     private int premiumListensSize = 0;
 
-    public NormalUser() { }
+    public NormalUser() {
+        this.currentPage = new Page(username);
+    }
     public NormalUser(final UserInput user) {
         this.age = user.getAge();
         this.city = user.getCity();
@@ -74,6 +83,7 @@ public class NormalUser extends User implements SubscribeObserver {
         this.userType = "user";
         id_count++;
         this.id = id_count;
+        this.currentPage = new Page(username);
     }
 
     public NormalUser(final String username, final int age,
@@ -84,6 +94,7 @@ public class NormalUser extends User implements SubscribeObserver {
         this.userType = userType;
         id_count++;
         this.id = id_count;
+        this.currentPage = new Page(username);
     }
     /**
      * changes the status of the user
@@ -826,5 +837,72 @@ public class NormalUser extends User implements SubscribeObserver {
     public void addNotification(String name, String description) {
         notifications.add(name);
         notifications.add(description);
+    }
+
+    public void previousPage() {
+        currentPage.previousPage();
+    }
+
+    public void nextPage() {
+        currentPage.nextPage();
+    }
+
+    private boolean randomSongRecommendation() {
+        Song song = musicplayer.getSong();
+        if (song == null) {
+            return false;
+        }
+        int passedTime = song.getMaxDuration() - song.getDuration();
+        if (passedTime < 30) {
+            songsRecommended.add(song);
+        } else {
+            ArrayList<Song> genreSongs = new ArrayList<>();
+            for (Song s : Library.getInstance().getSongs()) {
+                if (s.getGenre().equals(song.getGenre())) {
+                    genreSongs.add(s);
+                }
+            }
+            Random random = new Random(passedTime);
+            int index = random.nextInt(genreSongs.size());
+            songsRecommended.add(genreSongs.get(index));
+        }
+        return true;
+    }
+
+    private boolean randomPlaylistRecommendation() {
+        if (followedPlaylists.isEmpty() && likedSongs.isEmpty() && playlists.isEmpty()) {
+            return false;
+        }
+
+        Playlist p = new Playlist(username, username + "'s recommendations",
+                Manager.getCommand().getTimestamp());
+        Manager.getPlaylists().put(p.getName(), p);
+        this.playlists.add(p);
+
+        playlistsRecommended.add(p.getName());
+        return true;
+    }
+
+    private boolean fanPlaylistRecommendation() {
+        return true;
+    }
+
+    public void updateRecommendations() {
+        boolean ret = true;
+        switch (Manager.getCommand().getRecommendationType()) {
+            case "random_song" -> ret = randomSongRecommendation();
+            case "random_playlist" -> ret = randomPlaylistRecommendation();
+            case "fans_playlist" -> ret = fanPlaylistRecommendation();
+        }
+        if (ret) {
+            Manager.getPartialResult().put("message", "The recommendations for user " +
+                    username + " have been updated successfully.");
+        } else {
+            Manager.getPartialResult().put("message", "No new recommendations were found");
+        }
+    }
+
+    public void loadRecommendations() {
+
     }
 }

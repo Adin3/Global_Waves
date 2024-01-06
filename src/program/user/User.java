@@ -141,6 +141,14 @@ public class User {
     public double getTotalRevenue() { return 0.0;}
 
     public boolean isPremium() { return false; }
+
+    public ArrayList<String> getPlaylistsRecommended() {
+        return null;
+    }
+
+    public ArrayList<Song> getSongsRecommended() {
+        return null;
+    }
     /**
      * returns all user's followed playlists
      */
@@ -490,5 +498,13 @@ public class User {
     public void subscribe() {Manager.getPartialResult().put("message", username + " is not an user.");}
 
     public void getNotifications() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void previousPage() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void nextPage() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void updateRecommendations() {Manager.getPartialResult().put("message", username + " is not an user.");}
+
+    public void loadRecommendations() {Manager.getPartialResult().put("message", username + " is not an user.");}
 
 }

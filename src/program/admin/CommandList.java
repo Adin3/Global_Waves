@@ -771,4 +771,40 @@ public final class CommandList {
 
         Manager.getUser(username).getNotifications();
     }
+
+    public static void previousPage() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).previousPage();
+    }
+
+    public static void nextPage() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).nextPage();
+    }
+
+    public static void updateRecommendations() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).updateRecommendations();
+    }
+    public static void loadRecommendations() {
+        final String username = command.getUsername();
+        if (Manager.checkUser()) {
+            return;
+        }
+
+        Manager.getUser(username).loadRecommendations();
+    }
+
 }

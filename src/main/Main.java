@@ -148,6 +148,10 @@ public final class Main {
                 case "seeMerch" -> CommandList.seeMerch();
                 case "subscribe" -> CommandList.subscribe();
                 case "getNotifications" -> CommandList.getNotifications();
+                case "previousPage" -> CommandList.previousPage();
+                case "nextPage" -> CommandList.nextPage();
+                case "updateRecommendations" -> CommandList.updateRecommendations();
+                case "loadRecommendations" -> CommandList.loadRecommendations();
                 default -> { }
             }
             Manager.checkSource();

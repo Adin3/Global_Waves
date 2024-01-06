@@ -55,6 +55,26 @@ public class HomePage implements PageStrategy {
                 result.append(", ");
             }
         }
+        result.append("]\n\nSong recommendations:\n\t[");
+
+        ArrayList<Song> recommendSongs = new ArrayList<>(user.getSongsRecommended());
+        for (int i = 0; i < recommendSongs.size(); i++) {
+            result.append(recommendSongs.get(i).getName());
+            if (i < recommendSongs.size() - 1) {
+                result.append(", ");
+            }
+        }
+
+        result.append("]\n\nPlaylists recommendations:\n\t[");
+
+        ArrayList<String> recommendPlaylist = new ArrayList<>(user.getPlaylistsRecommended());
+        for (int i = 0; i < recommendPlaylist.size(); i++) {
+            result.append(recommendPlaylist.get(i));
+            if (i < recommendPlaylist.size() - 1) {
+                result.append(", ");
+            }
+        }
+
         result.append("]");
         return result.toString();
     }

@@ -1,13 +1,23 @@
 package program.page;
 
 import lombok.Getter;
+import lombok.Setter;
 import program.admin.Manager;
 
 public class Page {
     private PageStrategy printingStrategy;
     @Getter
     private String nonUserName;
-    public Page() {
+    private PageInvoker invoker = new PageInvoker();
+
+    @Getter @Setter
+    private String previousPage = "Home";
+
+    @Getter
+    private final String owner;
+
+    public Page(String owner) {
+        this.owner = owner;
         setPrintingStrategy(new HomePage());
     }
     /**
@@ -16,6 +26,8 @@ public class Page {
      */
     public boolean changePage(final String pageName) {
         nonUserName = null;
+        invoker.addCommandHistory(this, pageName);
+
         switch (pageName) {
             case "Home" -> setPrintingStrategy(new HomePage());
             case "LikedContent" -> setPrintingStrategy(new LikedContent());
@@ -33,6 +45,7 @@ public class Page {
                 return false;
             }
         }
+
         return true;
     }
     /**
@@ -60,5 +73,13 @@ public class Page {
         } else {
             return "Error";
         }
+    }
+
+    public void previousPage() {
+        invoker.undo();
+    }
+
+    public void nextPage() {
+        invoker.redo();
     }
 }

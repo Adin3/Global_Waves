@@ -75,16 +75,18 @@
 }, {
   "command" : "updateRecommendations",
   "user" : "alice22",
-  "timestamp" : 135
+  "timestamp" : 135,
+  "message" : "The recommendations for user alice22 have been updated successfully."
 }, {
   "command" : "printCurrentPage",
   "user" : "alice22",
   "timestamp" : 150,
-  "message" : "Liked songs:\n\t[Amsterdam]\n\nFollowed playlists:\n\t[]"
+  "message" : "Liked songs:\n\t[Amsterdam]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[I Was Just a Kid]\n\nPlaylists recommendations:\n\t[]"
 }, {
   "command" : "updateRecommendations",
   "user" : "alice22",
-  "timestamp" : 165
+  "timestamp" : 165,
+  "message" : "The recommendations for user alice22 have been updated successfully."
 }, {
   "command" : "addUser",
   "user" : "Michael Jackson",
@@ -99,7 +101,7 @@
   "command" : "printCurrentPage",
   "user" : "alice22",
   "timestamp" : 190,
-  "message" : "Liked songs:\n\t[Amsterdam]\n\nFollowed playlists:\n\t[]"
+  "message" : "Liked songs:\n\t[Amsterdam]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[I Was Just a Kid]\n\nPlaylists recommendations:\n\t[alice22's recommendations]"
 }, {
   "command" : "endProgram",
   "result" : {

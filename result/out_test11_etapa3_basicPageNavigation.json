@@ -84,12 +84,13 @@
 }, {
   "command" : "updateRecommendations",
   "user" : "carmenzz",
-  "timestamp" : 145
+  "timestamp" : 145,
+  "message" : "The recommendations for user carmenzz have been updated successfully."
 }, {
   "command" : "printCurrentPage",
   "user" : "carmenzz",
   "timestamp" : 155,
-  "message" : "Liked songs:\n\t[Rocket Man, Your Song]\n\nFollowed playlists:\n\t[]"
+  "message" : "Liked songs:\n\t[Rocket Man, Your Song]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[]\n\nPlaylists recommendations:\n\t[]"
 }, {
   "command" : "changePage",
   "user" : "carmenzz",
@@ -103,7 +104,8 @@
 }, {
   "command" : "previousPage",
   "user" : "carmenzz",
-  "timestamp" : 180
+  "timestamp" : 180,
+  "message" : "The user carmenzz has navigated successfully to the previous page."
 }, {
   "command" : "printCurrentPage",
   "user" : "carmenzz",
