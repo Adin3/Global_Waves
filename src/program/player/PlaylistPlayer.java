@@ -75,6 +75,36 @@ public class PlaylistPlayer extends Player {
     }
 
     /**
+     * load playlist
+     * @param playlistLoaded the playlist that will be loaded
+     */
+    public void load(final Playlist playlistLoaded) {
+        Playlist temp = playlistLoaded;
+
+        if (temp == null) {
+            Manager.getPartialResult().put("message",
+                    "Please select a source before attempting to load.");
+            return;
+        }
+
+        this.playlist = new Playlist(playlist);
+
+        if (this.playlist.getSongs().isEmpty()) {
+            Manager.getPartialResult().put("message",
+                    "You can't load an empty audio collection!");
+            return;
+        }
+
+        Manager.getPartialResult().put("message",
+                "Playback loaded successfully.");
+        currentSong = new Song(playlist.getSong(0));
+        currentSong.setDuration(currentSong.getMaxDuration());
+        Manager.getUser(owner).setListenedSong(currentSong);
+        Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);
+        playlistPosition = 0;
+    }
+
+    /**
      * change repeat status
      */
     public void repeat() {

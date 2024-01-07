@@ -10,10 +10,16 @@ import program.format.Episode;
 import program.format.Library;
 import program.format.Podcast;
 
-import java.util.*;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.HashSet;
+import java.util.Set;
+import java.util.Comparator;
 
 public class HostUser extends User {
 
+    private static final int TOP5 = 5;
     @Getter
     private ArrayList<String> podcasts = new ArrayList<>();
 
@@ -23,7 +29,6 @@ public class HostUser extends User {
     @Getter
     private Map<String, Integer> listenedEpisodes = new LinkedHashMap<>();
 
-    @Getter
     private Set<String> listeners = new HashSet<>();
     public HostUser() { }
     public HostUser(final UserInput user) {
@@ -31,8 +36,8 @@ public class HostUser extends User {
         this.city = user.getCity();
         this.username = user.getUsername();
         this.userType = "host";
-        id_count++;
-        this.id = id_count;
+        idCount++;
+        this.id = idCount;
     }
 
     public HostUser(final String username, final int age,
@@ -41,8 +46,8 @@ public class HostUser extends User {
         this.age = age;
         this.city = city;
         this.userType = userType;
-        id_count++;
-        this.id = id_count;
+        idCount++;
+        this.id = idCount;
     }
     /**
      * adds a new Podcast
@@ -199,7 +204,12 @@ public class HostUser extends User {
         }
     }
 
-    public void setListenedEpisode(Episode episode, String listener) {
+    /**
+     * save the listened episode
+     * @param episode the listened episode
+     * @param listener the listener
+     */
+    public void setListenedEpisode(final Episode episode, final String listener) {
         int freq = listenedEpisodes.getOrDefault(episode.getName(), 0) + 1;
         listenedEpisodes.put(episode.getName(), freq);
         listeners.add(listener);
@@ -225,8 +235,8 @@ public class HostUser extends User {
             }
         });
 
-        while (episodes.size() > 5) {
-            episodes.remove(episodes.size()-1);
+        while (episodes.size() > TOP5) {
+            episodes.remove(episodes.size() - 1);
         }
 
         for (String name : episodes) {

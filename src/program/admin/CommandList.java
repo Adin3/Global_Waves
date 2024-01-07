@@ -15,7 +15,6 @@ import program.user.HostUser;
 import program.user.NormalUser;
 import program.user.User;
 
-import javax.swing.plaf.basic.BasicInternalFrameTitlePane;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -679,6 +678,9 @@ public final class CommandList {
         Manager.getPartialResult().set("result", result);
     }
 
+    /**
+     * wrapped command wrapper
+     */
     public static void wrapped() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -688,6 +690,9 @@ public final class CommandList {
         Manager.getUser(username).wrapped();
     }
 
+    /**
+     * buyPremium command wrapper
+     */
     public static void buyPremium() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -697,6 +702,9 @@ public final class CommandList {
         Manager.getUser(username).buyPremium();
     }
 
+    /**
+     * cancelPremium command wrapper
+     */
     public static void cancelPremium() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -706,6 +714,9 @@ public final class CommandList {
         Manager.getUser(username).cancelPremium();
     }
 
+    /**
+     * endProgram command wrapper
+     */
     public static void endProgram() {
         Manager.setPartialResult(objectMapper.createObjectNode());
         Manager.getPartialResult().put("command", "endProgram");
@@ -727,6 +738,9 @@ public final class CommandList {
         Manager.getResult().add(Manager.getPartialResult());
     }
 
+    /**
+     * adBreak command wrapper
+     */
     public static void adBreak() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -736,6 +750,10 @@ public final class CommandList {
         Manager.getUser(username).adBreak();
     }
 
+
+    /**
+     * buyMerch command wrapper
+     */
     public static void buyMerch() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -745,6 +763,9 @@ public final class CommandList {
         Manager.getUser(username).buyMerch();
     }
 
+    /**
+     * seeMerch command wrapper
+     */
     public static void seeMerch() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -754,6 +775,10 @@ public final class CommandList {
         Manager.getUser(username).seeMerch();
     }
 
+
+    /**
+     * subscribe command wrapper
+     */
     public static void subscribe() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -763,6 +788,10 @@ public final class CommandList {
         Manager.getUser(username).subscribe();
     }
 
+
+    /**
+     * getNotifications command wrapper
+     */
     public static void getNotifications() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -772,6 +801,10 @@ public final class CommandList {
         Manager.getUser(username).getNotifications();
     }
 
+
+    /**
+     * previousPage command wrapper
+     */
     public static void previousPage() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -781,6 +814,10 @@ public final class CommandList {
         Manager.getUser(username).previousPage();
     }
 
+
+    /**
+     * nextPage command wrapper
+     */
     public static void nextPage() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -790,6 +827,9 @@ public final class CommandList {
         Manager.getUser(username).nextPage();
     }
 
+    /**
+     * updateRecommendations command wrapper
+     */
     public static void updateRecommendations() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {
@@ -798,6 +838,10 @@ public final class CommandList {
 
         Manager.getUser(username).updateRecommendations();
     }
+
+    /**
+     * loadRecommendations command wrapper
+     */
     public static void loadRecommendations() {
         final String username = command.getUsername();
         if (Manager.checkUser()) {

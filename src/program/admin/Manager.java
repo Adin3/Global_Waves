@@ -12,7 +12,12 @@ import program.player.Player;
 import program.searchbar.SearchBar;
 import program.user.User;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.Map;
+import java.util.Comparator;
+import java.util.List;
 
 public final class Manager {
 
@@ -168,17 +173,20 @@ public final class Manager {
         return null;
     }
 
+    /**
+     * orders artists by revenue
+     */
     public static void orderArtists() {
         artists.sort(new Comparator<String>() {
             @Override
-            public int compare(String o1, String o2) {
+            public int compare(final String o1, final String o2) {
                 double ret = Manager.getUser(o1).getTotalRevenue()
                         - Manager.getUser(o2).getTotalRevenue();
                 if (ret == 0.0) {
                     return o1.compareTo(o2);
                 }
 
-                return (int)-ret;
+                return (int) -ret;
             }
         });
     }

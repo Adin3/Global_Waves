@@ -43,6 +43,9 @@ public class HostPage implements PageStrategy {
         return result.toString();
     }
 
+    /**
+     * @return "HostPage"
+     */
     public String checkPage() {
         return "HostPage";
     }

@@ -31,10 +31,12 @@ public class Player {
     private boolean shuffled = false;
 
     @Getter @Setter
-    private boolean adBreak = false;
+    protected boolean adBreak = false;
+
+    protected boolean adPlaying = false;
 
     @Getter @Setter
-    private int adPrice = 0;
+    protected int adPrice = 0;
 
     /**
      * @return the podcast played by player
@@ -56,6 +58,24 @@ public class Player {
      * load song
      */
     public void load() {
+        Manager.getPartialResult().put("message",
+                "Please select a source before attempting to load.");
+    }
+
+    /**
+     * load song
+     * @param songLoaded the song that will be loaded
+     */
+    public void load(final Song songLoaded) {
+        Manager.getPartialResult().put("message",
+                "Please select a source before attempting to load.");
+    }
+
+    /**
+     * load playlist
+     * @param playlist the playlist that will be loaded
+     */
+    public void load(final Playlist playlist) {
         Manager.getPartialResult().put("message",
                 "Please select a source before attempting to load.");
     }

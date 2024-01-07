@@ -6,17 +6,31 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import fileio.input.UserInput;
 import lombok.Getter;
 import program.admin.Manager;
-import program.format.*;
+import program.format.Song;
+import program.format.Playlist;
+import program.format.Episode;
+import program.format.Library;
+import program.format.Merch;
 import program.page.Page;
 import program.player.Player;
 import program.player.PlayerFactory;
 import program.searchbar.SearchBar;
 import program.searchbar.SearchBarFactory;
 
-import java.util.*;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
+import java.util.HashMap;
+import java.util.Comparator;
+import java.util.Random;
 
 public class NormalUser extends User implements SubscribeObserver {
 
+    private static final int TOP5 = 5;
+
+    private static final int SEC30_PASSED = 30;
+
+    private static final double PREMIUM_PRICE = 1000000.0;
     @Getter
     private Player musicplayer = new Player();
 
@@ -71,6 +85,8 @@ public class NormalUser extends User implements SubscribeObserver {
     private ArrayList<Song> freeSongQueue = new ArrayList<>();
 
     private ArrayList<String> notifications = new ArrayList<>();
+
+    private boolean lastSongRecommended = false;
     private int premiumListensSize = 0;
 
     public NormalUser() {
@@ -81,8 +97,8 @@ public class NormalUser extends User implements SubscribeObserver {
         this.city = user.getCity();
         this.username = user.getUsername();
         this.userType = "user";
-        id_count++;
-        this.id = id_count;
+        idCount++;
+        this.id = idCount;
         this.currentPage = new Page(username);
     }
 
@@ -92,8 +108,8 @@ public class NormalUser extends User implements SubscribeObserver {
         this.age = age;
         this.city = city;
         this.userType = userType;
-        id_count++;
-        this.id = id_count;
+        idCount++;
+        this.id = idCount;
         this.currentPage = new Page(username);
     }
     /**
@@ -155,7 +171,11 @@ public class NormalUser extends User implements SubscribeObserver {
         likedSongs.remove(song);
     }
 
-    public void setListenedSong(Song song) {
+    /**
+     * saves the listened song
+     * @param song the song that was listened
+     */
+    public void setListenedSong(final Song song) {
         int freq = listenedSongs.getOrDefault(song.getName(), 0) + 1;
         listenedSongs.put(song.getName(), freq);
         freq = listenedAlbums.getOrDefault(song.getAlbum(), 0) + 1;
@@ -174,7 +194,11 @@ public class NormalUser extends User implements SubscribeObserver {
         }
     }
 
-    public void setListenedEpisode(Episode episode) {
+    /**
+     * saves the listened episode
+     * @param episode the listened episode
+     */
+    public void setListenedEpisode(final Episode episode) {
         int freq = listenedEpisodes.getOrDefault(episode.getName(), 0) + 1;
         listenedEpisodes.put(episode.getName(), freq);
     }
@@ -228,7 +252,8 @@ public class NormalUser extends User implements SubscribeObserver {
             setMusicPlayer();
         }
         if (musicplayer == null) {
-            Manager.getPartialResult().put("message", "Please select a source before attempting to load.");
+            Manager.getPartialResult().put("message",
+                    "Please select a source before attempting to load.");
             Manager.getSource(username).setSourceLoaded(false);
             Manager.getSource(username).setSourceSelected(false);
             Manager.getSource(username).setSourceSearched(false);
@@ -417,8 +442,8 @@ public class NormalUser extends User implements SubscribeObserver {
         }
 
         Song song = null;
-        if (Manager.getUser(username).getFormatType().equals("song")) {
-            song = Manager.searchBar(username).getSongLoaded();
+        if (formatType.equals("song")) {
+            song = musicplayer.getSong();
             if (song != null) {
                 song = Manager.findObjectByCondition(Library.getInstance().getSongs(), song);
             }
@@ -441,12 +466,12 @@ public class NormalUser extends User implements SubscribeObserver {
         }
 
 
-        if (!Manager.getUser(username).getLikedSongs().contains(song)) {
-            Manager.getUser(username).addLikedSong(song);
+        if (!likedSongs.contains(song)) {
+            addLikedSong(song);
             song.addLike();
             Manager.getPartialResult().put("message", "Like registered successfully.");
         } else {
-            Manager.getUser(username).removeLikedSong(song);
+            removeLikedSong(song);
             song.removeLike();
             Manager.getPartialResult().put("message", "Unlike registered successfully.");
         }
@@ -578,6 +603,9 @@ public class NormalUser extends User implements SubscribeObserver {
         return used;
     }
 
+    /**
+     * @return top 5 artists
+     */
     private ObjectNode topArtists() {
         ObjectNode topArtists = objectMapper.createObjectNode();
         ArrayList<String> artists = new ArrayList<>();
@@ -598,8 +626,8 @@ public class NormalUser extends User implements SubscribeObserver {
             }
         });
 
-        while (artists.size() > 5) {
-            artists.remove(artists.size()-1);
+        while (artists.size() > TOP5) {
+            artists.remove(artists.size() - 1);
         }
 
         for (String name : artists) {
@@ -607,7 +635,9 @@ public class NormalUser extends User implements SubscribeObserver {
         }
         return topArtists;
     }
-
+    /**
+     * @return top 5 genres
+     */
     private ObjectNode topGenres() {
         ObjectNode topGenres = objectMapper.createObjectNode();
         ArrayList<String> genres = new ArrayList<>();
@@ -627,8 +657,8 @@ public class NormalUser extends User implements SubscribeObserver {
             }
         });
 
-        while (genres.size() > 5) {
-            genres.remove(genres.size()-1);
+        while (genres.size() > TOP5) {
+            genres.remove(genres.size() - 1);
         }
 
         for (String name : genres) {
@@ -636,7 +666,9 @@ public class NormalUser extends User implements SubscribeObserver {
         }
         return topGenres;
     }
-
+    /**
+     * @return top 5 songs
+     */
     private ObjectNode topSongs() {
         ObjectNode topSongs = objectMapper.createObjectNode();
         ArrayList<String> songs = new ArrayList<>();
@@ -657,8 +689,8 @@ public class NormalUser extends User implements SubscribeObserver {
             }
         });
 
-        while (songs.size() > 5) {
-            songs.remove(songs.size()-1);
+        while (songs.size() > TOP5) {
+            songs.remove(songs.size() - 1);
         }
 
         for (String name : songs) {
@@ -667,7 +699,9 @@ public class NormalUser extends User implements SubscribeObserver {
 
         return topSongs;
     }
-
+    /**
+     * @return top 5 albums
+     */
     private ObjectNode topAlbums() {
         ObjectNode topAlbums = objectMapper.createObjectNode();
         ArrayList<String> albums = new ArrayList<>();
@@ -688,8 +722,8 @@ public class NormalUser extends User implements SubscribeObserver {
             }
         });
 
-        while (albums.size() > 5) {
-            albums.remove(albums.size()-1);
+        while (albums.size() > TOP5) {
+            albums.remove(albums.size() - 1);
         }
 
         for (String name : albums) {
@@ -698,7 +732,9 @@ public class NormalUser extends User implements SubscribeObserver {
 
         return topAlbums;
     }
-
+    /**
+     * @return top 5 episodes
+     */
     private ObjectNode topEpisodes() {
         ObjectNode topEpisodes = objectMapper.createObjectNode();
         for (Map.Entry<String, Integer> entry : listenedEpisodes.entrySet()) {
@@ -732,39 +768,53 @@ public class NormalUser extends User implements SubscribeObserver {
         Manager.getPartialResult().set("result", result);
     }
 
+    /**
+     * buys premium subscription
+     */
     public void buyPremium() {
         if (premium) {
             Manager.getPartialResult().put("message", username + " is already a premium user.");
         } else {
             premium = true;
-            Manager.getPartialResult().put("message", username + " bought the subscription successfully.");
+            Manager.getPartialResult().put("message",
+                    username + " bought the subscription successfully.");
         }
     }
 
+    /**
+     * cancel premium subscription
+     */
     public void cancelPremium() {
         if (premium) {
             premium = false;
-            Manager.getPartialResult().put("message", username + " cancelled the subscription successfully.");
+            Manager.getPartialResult().put("message",
+                    username + " cancelled the subscription successfully.");
         } else {
             Manager.getPartialResult().put("message", username + " is not a premium user.");
         }
     }
 
+    /**
+     * calculate revenue for all songs
+     */
     public void calculateAllSongRevenue() {
         for (Map.Entry<String, Map<String, Integer>> artist : premiumListens.entrySet()) {
             int numberOfSongs = 0;
             for (Map.Entry<String, Integer> song : artist.getValue().entrySet()) {
                 numberOfSongs += song.getValue();
-                double sum = (1000000.0 / premiumListensSize) * song.getValue();
+                double sum = (PREMIUM_PRICE / premiumListensSize) * song.getValue();
                 Manager.getUser(artist.getKey()).calculateSongRevenue(song.getKey(), sum);
             }
-            double value = (1000000.0 / premiumListensSize) * numberOfSongs;
+            double value = (PREMIUM_PRICE / premiumListensSize) * numberOfSongs;
             Manager.getUser(artist.getKey()).addSongRevenue(value);
         }
     }
 
+    /**
+     * loads a new ad to player
+     */
     public void adBreak() {
-        if (musicplayer == null) {
+        if (musicplayer == null || musicplayer.getSong() == null) {
             Manager.getPartialResult().put("message", username + " is not playing any music.");
             return;
         }
@@ -772,7 +822,14 @@ public class NormalUser extends User implements SubscribeObserver {
         Manager.getPartialResult().put("message", "Ad inserted successfully.");
         musicplayer.setAdBreak(true);
         musicplayer.setAdPrice(Manager.getCommand().getPrice());
-        double sum = (Manager.getCommand().getPrice() / freeSongQueue.size()) * 1;
+    }
+
+    /**
+     * pays artists with the ad
+     * @param price the price of the ad
+     */
+    public void payAds(final int price) {
+        double sum = (double) price / freeSongQueue.size();
         for (Song s : freeSongQueue) {
             Manager.getUser(s.getArtist()).calculateSongRevenue(s.getName(), sum);
             Manager.getUser(s.getArtist()).addSongRevenue(sum);
@@ -780,24 +837,34 @@ public class NormalUser extends User implements SubscribeObserver {
         freeSongQueue.clear();
     }
 
+    /**
+     * buy merch from artist page
+     */
     public void buyMerch() {
         String merchName = Manager.getCommand().getName();
         if (!merchName.startsWith(currentPage.getNonUserName())) {
-            Manager.getPartialResult().put("message", "Cannot buy merch from this page.");
+            Manager.getPartialResult().put("message",
+                    "Cannot buy merch from this page.");
             return;
         }
 
         if (!Manager.getUser(currentPage.getNonUserName()).getMerchs().containsKey(merchName)) {
-            Manager.getPartialResult().put("message", "The merch " + merchName + " doesn't exist.");
+            Manager.getPartialResult().put("message",
+                    "The merch " + merchName + " doesn't exist.");
             return;
         }
 
         merch.add(merchName);
-        Merch merchBought = Manager.getUser(currentPage.getNonUserName()).getMerchs().get(merchName);
+        Merch merchBought = Manager.getUser(currentPage.getNonUserName())
+                .getMerchs().get(merchName);
         Manager.getUser(currentPage.getNonUserName()).addMerchRevenue(merchBought.getPrice());
-        Manager.getPartialResult().put("message", username + " has added new merch successfully.");
+        Manager.getPartialResult().put("message",
+                username + " has added new merch successfully.");
     }
 
+    /**
+     * see bought merch
+     */
     public void seeMerch() {
         ArrayNode result = objectMapper.createArrayNode();
         for (String m : merch) {
@@ -806,43 +873,62 @@ public class NormalUser extends User implements SubscribeObserver {
         Manager.getPartialResult().set("result", result);
     }
 
+    /**
+     * subscribe to an artist/host or playlist
+     */
     public void subscribe() {
         String page = currentPage.checkPage();
         if (!page.equals("ArtistPage") && !page.equals("HostPage")) {
-            Manager.getPartialResult().put("message",  "To subscribe you need to be " +
-                    "on the page of an artist or host.");
+            Manager.getPartialResult().put("message",  "To subscribe you need to be "
+                    + "on the page of an artist or host.");
             return;
         }
 
         String artisthost = currentPage.getNonUserName();
         if (Manager.getUser(artisthost).addSubscriber(this)) {
-            Manager.getPartialResult().put("message",  username + " subscribed to " + artisthost + " successfully.");
+            Manager.getPartialResult().put("message",
+                    username + " subscribed to " + artisthost + " successfully.");
         } else {
-            Manager.getPartialResult().put("message",  username + " unsubscribed from " + artisthost + " successfully.");
+            Manager.getPartialResult().put("message",
+                    username + " unsubscribed from " + artisthost + " successfully.");
         }
     }
 
+    /**
+     * shows all notifications
+     */
     public void getNotifications() {
         ArrayNode notificationsNode = objectMapper.createArrayNode();
-        for (int i = 0; i < notifications.size(); i+=2) {
+        for (int i = 0; i < notifications.size(); i += 2) {
             ObjectNode objNode = objectMapper.createObjectNode();
             objNode.put("name", notifications.get(i));
-            objNode.put("description", notifications.get(i+1));
+            objNode.put("description", notifications.get(i + 1));
             notificationsNode.add(objNode);
         }
         Manager.getPartialResult().set("notifications", notificationsNode);
         notifications.clear();
     }
 
-    public void addNotification(String name, String description) {
+    /**
+     * adds new notification
+     * @param name name of notification
+     * @param description description of notification
+     */
+    public void addNotification(final String name, final String description) {
         notifications.add(name);
         notifications.add(description);
     }
 
+    /**
+     * returns to previous page
+     */
     public void previousPage() {
         currentPage.previousPage();
     }
 
+    /**
+     * goes back to next page
+     */
     public void nextPage() {
         currentPage.nextPage();
     }
@@ -853,7 +939,7 @@ public class NormalUser extends User implements SubscribeObserver {
             return false;
         }
         int passedTime = song.getMaxDuration() - song.getDuration();
-        if (passedTime < 30) {
+        if (passedTime < SEC30_PASSED) {
             songsRecommended.add(song);
         } else {
             ArrayList<Song> genreSongs = new ArrayList<>();
@@ -866,6 +952,7 @@ public class NormalUser extends User implements SubscribeObserver {
             int index = random.nextInt(genreSongs.size());
             songsRecommended.add(genreSongs.get(index));
         }
+        lastSongRecommended = true;
         return true;
     }
 
@@ -879,30 +966,87 @@ public class NormalUser extends User implements SubscribeObserver {
         Manager.getPlaylists().put(p.getName(), p);
         this.playlists.add(p);
 
+        // todo adauga melodii in playlist;
+
         playlistsRecommended.add(p.getName());
+        lastSongRecommended = false;
         return true;
     }
 
     private boolean fanPlaylistRecommendation() {
+        Song song = musicplayer.getSong();
+        if (song == null || Manager.getUser(song.getArtist()).getListeners().isEmpty()) {
+            return false;
+        }
+
+        String artistName = song.getArtist();
+        Playlist p = new Playlist(username, artistName + " Fan Club recommendations",
+                Manager.getCommand().getTimestamp());
+        Manager.getPlaylists().put(p.getName(), p);
+        this.playlists.add(p);
+
+        // todo adauga melodii in playlist;
+
+        playlistsRecommended.add(p.getName());
+        lastSongRecommended = false;
         return true;
     }
 
-    public void updateRecommendations() {
-        boolean ret = true;
+    private boolean getRecommendation() {
         switch (Manager.getCommand().getRecommendationType()) {
-            case "random_song" -> ret = randomSongRecommendation();
-            case "random_playlist" -> ret = randomPlaylistRecommendation();
-            case "fans_playlist" -> ret = fanPlaylistRecommendation();
+            case "random_song" -> {
+                return randomSongRecommendation();
+            }
+            case "random_playlist" -> {
+                return randomPlaylistRecommendation();
+            }
+            case "fans_playlist" -> {
+                return fanPlaylistRecommendation();
+            }
+            default -> {
+                return false;
+            }
         }
+    }
+
+    /**
+     * update the recommendation page
+     */
+    public void updateRecommendations() {
+        boolean ret = getRecommendation();
+
         if (ret) {
-            Manager.getPartialResult().put("message", "The recommendations for user " +
-                    username + " have been updated successfully.");
+            Manager.getPartialResult().put("message", "The recommendations for user "
+                    + username + " have been updated successfully.");
         } else {
             Manager.getPartialResult().put("message", "No new recommendations were found");
         }
     }
 
+    /**
+     * loads last recommendation
+     */
     public void loadRecommendations() {
-
+        if (lastSongRecommended) {
+            if (songsRecommended.isEmpty()) {
+                Manager.getPartialResult().put("message", "No recommendations available.");
+                return;
+            }
+            Manager.getSource(username).setSourceLoaded(true);
+            musicplayer = PlayerFactory.getInstance().createPlayer("song", username);
+            musicplayer.load(songsRecommended.get(songsRecommended.size() - 1));
+            formatType = "song";
+        } else {
+            if (playlistsRecommended.isEmpty()) {
+                Manager.getPartialResult().put("message", "No recommendations available.");
+                return;
+            }
+            Manager.getSource(username).setSourceLoaded(true);
+            musicplayer = PlayerFactory.getInstance().createPlayer("playlist", username);
+            Playlist playlist = Manager.getPlaylists().get(playlistsRecommended.
+                    get(playlistsRecommended.size() - 1));
+            musicplayer.load(playlist);
+            formatType = "playlist";
+        }
     }
 }

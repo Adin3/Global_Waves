@@ -11,10 +11,18 @@ import program.format.Merch;
 import program.format.Song;
 import program.format.Library;
 
-import java.util.*;
+import java.util.Map;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Objects;
+import java.util.LinkedHashMap;
+import java.util.Comparator;
 
 public class ArtistUser extends User {
 
+    private static final int TOP5 = 5;
+
+    private static final double MATH_ROUND = 100.0;
     @Getter
     private final Map<String, Album> albums = new LinkedHashMap<>();
 
@@ -53,8 +61,8 @@ public class ArtistUser extends User {
         this.city = user.getCity();
         this.username = user.getUsername();
         this.userType = "artist";
-        id_count++;
-        this.id = id_count;
+        idCount++;
+        this.id = idCount;
     }
 
     public ArtistUser(final String username, final int age,
@@ -63,8 +71,8 @@ public class ArtistUser extends User {
         this.age = age;
         this.city = city;
         this.userType = userType;
-        id_count++;
-        this.id = id_count;
+        idCount++;
+        this.id = idCount;
     }
     /**
      * adds new album in the system
@@ -251,7 +259,12 @@ public class ArtistUser extends User {
                 username + " deleted the event successfully.");
     }
 
-    public void setListenedSong(Song song, String listener) {
+    /**
+     * saves the song that was listened
+     * @param song the song listened
+     * @param listener the listener
+     */
+    public void setListenedSong(final Song song, final String listener) {
         int freq = listenedSongs.getOrDefault(song.getName(), 0) + 1;
         listenedSongs.put(song.getName(), freq);
         freq = listenedAlbums.getOrDefault(song.getAlbum(), 0) + 1;
@@ -261,16 +274,28 @@ public class ArtistUser extends User {
         listened = true;
     }
 
+    /**
+     * adds the song earning to revenue
+     * @param revenue the earning
+     */
     public void addSongRevenue(final double revenue) {
         songRevenue += revenue;
     }
 
+    /**
+     * adds the merch earning to revenue
+     * @param revenue the earning
+     */
     public void addMerchRevenue(final double revenue) {
         merchRevenue += revenue;
         listened = true;
     }
 
-    public boolean addSubscriber(SubscribeObserver subscriber) {
+    /**
+     * adds a new subscriber
+     * @param subscriber the subscriber
+     */
+    public boolean addSubscriber(final SubscribeObserver subscriber) {
         if (subscribers.contains(subscriber)) {
             subscribers.remove(subscriber);
             return false;
@@ -279,12 +304,20 @@ public class ArtistUser extends User {
         return true;
     }
 
-    private void updateSubscribers(String name, String description) {
+    /**
+     * updates all subscribers
+     * @param name name of notification
+     * @param description description of notification
+     */
+    private void updateSubscribers(final String name, final String description) {
         for (SubscribeObserver s : subscribers) {
             s.addNotification(name, description);
         }
     }
 
+    /**
+     * @return Top 5 songs
+     */
     private ObjectNode topSongs() {
         ObjectNode topSongs = objectMapper.createObjectNode();
         ArrayList<String> songs = new ArrayList<>();
@@ -305,8 +338,8 @@ public class ArtistUser extends User {
             }
         });
 
-        while (songs.size() > 5) {
-            songs.remove(songs.size()-1);
+        while (songs.size() > TOP5) {
+            songs.remove(songs.size() - 1);
         }
 
         for (String name : songs) {
@@ -315,15 +348,17 @@ public class ArtistUser extends User {
 
         return topSongs;
     }
-
+    /**
+     * @return Top 5 albums
+     */
     private ObjectNode topAlbums() {
         ObjectNode topAlbums = objectMapper.createObjectNode();
-        ArrayList<String> albums = new ArrayList<>();
+        ArrayList<String> album = new ArrayList<>();
         for (Map.Entry<String, Integer> entry : listenedAlbums.entrySet()) {
-            albums.add(entry.getKey());
+            album.add(entry.getKey());
         }
 
-        albums.sort(new Comparator<String>() {
+        album.sort(new Comparator<String>() {
             @Override
             public int compare(final String o1, final String o2) {
                 int rez = listenedAlbums.get(o1) - listenedAlbums.get(o2);
@@ -336,16 +371,18 @@ public class ArtistUser extends User {
             }
         });
 
-        while (albums.size() > 5) {
-            albums.remove(albums.size()-1);
+        while (album.size() > TOP5) {
+            album.remove(album.size() - 1);
         }
 
-        for (String name : albums) {
+        for (String name : album) {
             topAlbums.put(name, listenedAlbums.get(name));
         }
         return topAlbums;
     }
-
+    /**
+     * @return Top 5 fans
+     */
     private ArrayNode topFans() {
         ArrayNode topFans = objectMapper.createArrayNode();
         ArrayList<String> fans = new ArrayList<>();
@@ -366,8 +403,8 @@ public class ArtistUser extends User {
             }
         });
 
-        while (fans.size() > 5) {
-            fans.remove(fans.size()-1);
+        while (fans.size() > TOP5) {
+            fans.remove(fans.size() - 1);
         }
 
         for (String name : fans) {
@@ -376,6 +413,9 @@ public class ArtistUser extends User {
         return topFans;
     }
 
+    /**
+     * checks if wrapped has something to show
+     */
     private int emptyWrapped() {
         return listeners.size()
                 + listenedAlbums.size()
@@ -398,15 +438,26 @@ public class ArtistUser extends User {
         Manager.getPartialResult().set("result", result);
     }
 
-    public void calculateSongRevenue(String name, double sum) {
+    /**
+     * calculate the revenue made by the songs
+     * @param name name of the song
+     * @param sum the revenue
+     */
+    public void calculateSongRevenue(final String name, final double sum) {
         double newSum = premiumListens.getOrDefault(name, 0.0) + sum;
         premiumListens.put(name, newSum);
     }
 
+    /**
+     * @return total revenue
+     */
     public double getTotalRevenue() {
         return songRevenue + merchRevenue;
     }
 
+    /**
+     * find most profitable song
+     */
     private void mostProfitableSong() {
         if (premiumListens.isEmpty()) {
             return;
@@ -418,23 +469,29 @@ public class ArtistUser extends User {
         }
         profitableSong.sort(new Comparator<String>() {
             @Override
-            public int compare(String o1, String o2) {
+            public int compare(final String o1, final String o2) {
                 double rez = premiumListens.get(o1) - premiumListens.get(o2);
 
                 if (rez == 0) {
                     return o1.compareTo(o2);
                 }
 
-                return (int)-rez;
+                return (int) -rez;
             }
         });
         mostProfitableSong = profitableSong.get(0);
     }
 
+    /**
+     * show stats for artist at the end of program
+     * @param rank global ranking
+     */
     public ObjectNode endProgram(final int rank) {
-        if (!listened) return null;
+        if (!listened) {
+            return null;
+        }
         ObjectNode art = objectMapper.createObjectNode();
-        double rev = Math.round(songRevenue * 100.0) / 100.0;
+        double rev = Math.round(songRevenue * MATH_ROUND) / MATH_ROUND;
         mostProfitableSong();
 
 

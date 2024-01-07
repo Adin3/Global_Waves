@@ -90,7 +90,7 @@
   "command" : "printCurrentPage",
   "user" : "carmenzz",
   "timestamp" : 155,
-  "message" : "Liked songs:\n\t[Rocket Man, Your Song]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[]\n\nPlaylists recommendations:\n\t[]"
+  "message" : "Liked songs:\n\t[Rocket Man, Your Song]\n\nFollowed playlists:\n\t[]\n\nSong recommendations:\n\t[]\n\nPlaylists recommendations:\n\t[Elton John Fan Club recommendations]"
 }, {
   "command" : "changePage",
   "user" : "carmenzz",
@@ -100,7 +100,7 @@
   "command" : "changePage",
   "user" : "carmenzz",
   "timestamp" : 175,
-  "message" : "carmenzz is trying to access a non-existent page."
+  "message" : "carmenzz accessed Artist successfully."
 }, {
   "command" : "previousPage",
   "user" : "carmenzz",

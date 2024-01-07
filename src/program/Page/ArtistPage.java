@@ -52,6 +52,9 @@ public class ArtistPage implements PageStrategy {
         return result.toString();
     }
 
+    /**
+     * @return "ArtistPage"
+     */
     public String checkPage() {
         return "ArtistPage";
     }

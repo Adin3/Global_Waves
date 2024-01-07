@@ -79,6 +79,9 @@ public class HomePage implements PageStrategy {
         return result.toString();
     }
 
+    /**
+     * @return "HomePage"
+     */
     public String checkPage() {
         return "HomePage";
     }

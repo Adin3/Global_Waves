@@ -3,6 +3,7 @@ package program.page;
 import lombok.Getter;
 import lombok.Setter;
 import program.admin.Manager;
+import program.user.User;
 
 public class Page {
     private PageStrategy printingStrategy;
@@ -16,9 +17,10 @@ public class Page {
     @Getter
     private final String owner;
 
-    public Page(String owner) {
+    public Page(final String owner) {
         this.owner = owner;
         setPrintingStrategy(new HomePage());
+        invoker.addCommandHistory(this, "Home");
     }
     /**
      * change the current page of user
@@ -26,26 +28,47 @@ public class Page {
      */
     public boolean changePage(final String pageName) {
         nonUserName = null;
-        invoker.addCommandHistory(this, pageName);
+        String pageSave = pageName;
 
         switch (pageName) {
             case "Home" -> setPrintingStrategy(new HomePage());
             case "LikedContent" -> setPrintingStrategy(new LikedContent());
+            case "Artist" -> {
+                User artist = Manager.getCurrentUser();
+                if (artist.getMusicplayer() == null || artist.getMusicplayer().getSong() == null) {
+                    return false;
+                }
+                nonUserName = Manager.getCurrentUser().getMusicplayer().getSong().getArtist();
+                setPrintingStrategy(new ArtistPage(nonUserName));
+                pageSave = nonUserName;
+            }
+            case "Host" -> {
+                User host = Manager.getCurrentUser();
+                if (host.getMusicplayer() == null || host.getMusicplayer().getPodcast() == null) {
+                    return false;
+                }
+                nonUserName = Manager.getCurrentUser().getMusicplayer().getPodcast().getOwner();
+                setPrintingStrategy(new HostPage(nonUserName));
+                pageSave = nonUserName;
+            }
             default -> {
                 if (Manager.getArtists().contains(pageName)) {
                     setPrintingStrategy(new ArtistPage(pageName));
                     nonUserName = pageName;
+                    invoker.addCommandHistory(this, pageSave);
                     return true;
                 }
                 if (Manager.getHosts().contains(pageName)) {
                     setPrintingStrategy(new HostPage(pageName));
                     nonUserName = pageName;
+                    invoker.addCommandHistory(this, pageSave);
                     return true;
                 }
                 return false;
             }
         }
 
+        invoker.addCommandHistory(this, pageSave);
         return true;
     }
     /**
@@ -67,6 +90,9 @@ public class Page {
         }
     }
 
+    /**
+     * @return the page type
+     */
     public String checkPage() {
         if (printingStrategy != null) {
             return printingStrategy.checkPage();
@@ -75,10 +101,17 @@ public class Page {
         }
     }
 
+    /**
+     * return to previous page
+     */
     public void previousPage() {
         invoker.undo();
     }
 
+
+    /**
+     * go to next page
+     */
     public void nextPage() {
         invoker.redo();
     }

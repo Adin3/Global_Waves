@@ -57,7 +57,7 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 15) {
+            if (isCreated && a < 17) {
                 action(file.getName(), filepath);
                 a++;
             }

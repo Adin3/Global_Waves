@@ -18,7 +18,6 @@ import program.player.Player;
 import program.searchbar.SearchBar;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.Map;
 
 public class User {
@@ -37,7 +36,7 @@ public class User {
     protected String userType;
 
     @Getter @Setter
-    protected static int id_count = 0;
+    protected static int idCount = 0;
 
     @Getter
     protected int id;
@@ -96,57 +95,147 @@ public class User {
     public Map<String, Merch> getMerchs() {
         return null;
     }
+
+    /**
+     * @return listened songs
+     */
     public Map<String, Integer> getListenedSongs() {
         return null;
     }
-
+    /**
+     * @return listened episodes
+     */
     public Map<String, Integer> getListenedEpisodes() {
         return null;
     }
-
+    /**
+     * @return listened genres
+     */
     public Map<String, Integer> getListenedGenres() {
         return null;
     }
-
+    /**
+     * @return listened artists
+     */
     public Map<String, Integer> getListenedArtists() {
         return null;
     }
-
+    /**
+     * @return listened albums
+     */
     public Map<String, Integer> getListenedAlbums() {
         return null;
     }
+    /**
+     * @return songs played without premium
+     */
+    public ArrayList<Song> getFreeSongQueue() {
+        return null;
+    }
 
-    public ArrayList<Song> getFreeSongQueue() { return null; }
+    /**
+     * saves listened song
+     * @param song the listened song
+     */
+    public void setListenedSong(final Song song) { }
+    /**
+     * saves listened song
+     * @param song the listened song
+     * @param listener the listener
+     */
+    public void setListenedSong(final Song song, final String listener) { }
+    /**
+     * saves listened episode
+     * @param episode the listened episode
+     */
+    public void setListenedEpisode(final Episode episode) { }
 
-    public void setListenedSong(Song song) {}
+    /**
+     * saves listened episode
+     * @param episode the listened episode
+     * @param listener the listener
+     */
+    public void setListenedEpisode(final Episode episode, final String listener) { }
 
-    public void setListenedSong(Song song, String listener) {}
 
-    public void setListenedEpisode(Episode episode) {}
+    /**
+     * adds song's revenue to total song revenue
+     * @param revenue song's revenue
+     */
+    public void addSongRevenue(final double revenue) { }
+    /**
+     * adds merch revenue to total merch revenue
+     * @param revenue merchandise's revenue
+     */
+    public void addMerchRevenue(final double revenue) { }
 
-    public void setListenedEpisode(Episode episode, String listener) {}
+    /**
+     * adds to new subscriber
+     * @param subscriber the subscriber
+     */
+    public boolean addSubscriber(final SubscribeObserver subscriber) {
+        return false;
+    }
 
-    public void addSongRevenue(final double revenue) {}
+    /**
+     * shows stats at end of program
+     * @param rank the global ranking
+     */
+    public ObjectNode endProgram(final int rank) {
+        return null;
+    }
 
-    public void addMerchRevenue(final double revenue) {}
 
-    public boolean addSubscriber(SubscribeObserver subscriber) { return false;}
+    /**
+     * calculate revenue for all songs
+     */
+    public void calculateAllSongRevenue() { }
 
-    public ObjectNode endProgram(final int rank) { return null; }
+    /**
+     * calculate revenue
+     * @param name name of listened song
+     * @param sum the revenue
+     */
+    public void calculateSongRevenue(final String name, final double sum) { }
 
-    public void calculateAllSongRevenue() {}
+    /**
+     * @return total revenue
+     */
+    public double getTotalRevenue() {
+        return 0.0;
+    }
 
-    public void calculateSongRevenue(String name, double sum) {}
+    /**
+     * @return premium status
+     */
+    public boolean isPremium() {
+        return false;
+    }
 
-    public double getTotalRevenue() { return 0.0;}
+    /**
+     * pay the artists with the ad
+     * @param price the price of the ad
+     */
+    public void payAds(final int price) { }
 
-    public boolean isPremium() { return false; }
-
+    /**
+     * @return recommended playlists
+     */
     public ArrayList<String> getPlaylistsRecommended() {
         return null;
     }
 
+    /**
+     * @return recommended songs
+     */
     public ArrayList<Song> getSongsRecommended() {
+        return null;
+    }
+
+    /**
+     * @return listeners
+     */
+    public Map<String, Integer> getListeners() {
         return null;
     }
     /**
@@ -483,28 +572,89 @@ public class User {
     /**
      * shows that user's wrapped
      */
-    public void wrapped() { Manager.getPartialResult().put("message", "no data to show for user " + username + ".");}
+    public void wrapped() {
+        Manager.getPartialResult().put("message",
+            "no data to show for user " + username + ".");
+    }
 
-    public void buyPremium() {Manager.getPartialResult().put("message", username + " is not an user.");}
+    /**
+     * buys premium subscription
+     */
+    public void buyPremium() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
 
-    public void cancelPremium() {Manager.getPartialResult().put("message", username + " is not an user.");}
+    /**
+     * cancel premium subscription
+     */
+    public void cancelPremium() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
 
-    public void adBreak() {Manager.getPartialResult().put("message", username + " is not an user.");}
+    /**
+     * loads ad break
+     */
+    public void adBreak() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * buy new merch from artist page
+     */
+    public void buyMerch() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * see all bought merch
+     */
+    public void seeMerch() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * subscribe to artist/host or playlist
+     */
+    public void subscribe() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * shows all notifications
+     */
+    public void getNotifications() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
 
-    public void buyMerch() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void seeMerch() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void subscribe() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void getNotifications() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void previousPage() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void nextPage() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void updateRecommendations() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
-    public void loadRecommendations() {Manager.getPartialResult().put("message", username + " is not an user.");}
-
+    /**
+     * returns to previous page
+     */
+    public void previousPage() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * goes to next page
+     */
+    public void nextPage() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * update the recommendation page
+     */
+    public void updateRecommendations() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
+    /**
+     * loads last recommendation to player
+     */
+    public void loadRecommendations() {
+        Manager.getPartialResult().put("message",
+                username + " is not an user.");
+    }
 }

@@ -4,6 +4,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import program.admin.Manager;
+import program.format.Library;
 import program.format.Song;
 
 
@@ -49,6 +50,24 @@ public final class MusicPlayer extends Player {
         }
 
         this.song = Manager.searchBar(owner).getSongLoaded();
+        if (this.song != null) {
+            Manager.getPartialResult().put("message",
+                    "Playback loaded successfully.");
+            song.setDuration(song.getMaxDuration());
+            Manager.getUser(owner).setListenedSong(song);
+            Manager.getUser(song.getArtist()).setListenedSong(song, owner);
+            Manager.getUser(owner).getFreeSongQueue().add(song);
+        } else {
+            Manager.getPartialResult().put("message",
+                    "You can't load an empty audio collection!");
+        }
+    }
+
+    /**
+     * @param songLoaded that will be loaded
+     */
+    public void load(final Song songLoaded) {
+        this.song = songLoaded;
         if (this.song != null) {
             Manager.getPartialResult().put("message",
                     "Playback loaded successfully.");
@@ -291,6 +310,10 @@ public final class MusicPlayer extends Player {
         if (time < 0) {
             savedTime = -time;
             time = 0;
+            if (adPlaying) {
+                Manager.getUser(owner).payAds(adPrice);
+                adPlaying = false;
+            }
         }
         song.setDuration(time);
     }
@@ -319,6 +342,13 @@ public final class MusicPlayer extends Player {
                 Manager.getUser(owner).getFreeSongQueue().add(song);
             }
 
+            if (isAdBreak()) {
+                song = Library.getInstance().getSongs().get(0);
+                Manager.getUser(owner).payAds(adPrice);
+                adPlaying = true;
+                adBreak = false;
+            }
+
             updateDuration(savedTime);
         }
 
@@ -327,6 +357,19 @@ public final class MusicPlayer extends Player {
             paused = true;
             shuffled = false;
             repeat = "No Repeat";
+        }
+    }
+
+    /**
+     * @param temp sets the ad break
+     */
+    public void setAdBreak(final boolean temp) {
+        adBreak = temp;
+        if (song == null) {
+            song = Library.getInstance().getSongs().get(0);
+            adPlaying = true;
+            adBreak = false;
+            paused = false;
         }
     }
 }

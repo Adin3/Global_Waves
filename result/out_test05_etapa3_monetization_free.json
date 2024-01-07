@@ -404,7 +404,7 @@
   "command" : "adBreak",
   "user" : "irene33",
   "timestamp" : 2112,
-  "message" : "Ad inserted successfully."
+  "message" : "irene33 is not playing any music."
 }, {
   "command" : "search",
   "user" : "irene33",
@@ -3206,29 +3206,29 @@
 }, {
   "command" : "endProgram",
   "result" : {
-    "The Rolling Stones" : {
-      "songRevenue" : 5976.0,
+    "Joni Mitchell" : {
+      "songRevenue" : 0.0,
       "merchRevenue" : 0.0,
       "ranking" : 1,
-      "mostProfitableSong" : "Miss You"
-    },
-    "Stevie Wonder" : {
-      "songRevenue" : 5215.0,
-      "merchRevenue" : 0.0,
-      "ranking" : 2,
-      "mostProfitableSong" : "He's Misstra Know It All"
-    },
-    "Joni Mitchell" : {
-      "songRevenue" : 5026.0,
-      "merchRevenue" : 0.0,
-      "ranking" : 3,
-      "mostProfitableSong" : "The Arrangement"
+      "mostProfitableSong" : "N/A"
     },
     "Prince" : {
-      "songRevenue" : 4410.0,
+      "songRevenue" : 0.0,
+      "merchRevenue" : 0.0,
+      "ranking" : 2,
+      "mostProfitableSong" : "N/A"
+    },
+    "Stevie Wonder" : {
+      "songRevenue" : 0.0,
+      "merchRevenue" : 0.0,
+      "ranking" : 3,
+      "mostProfitableSong" : "N/A"
+    },
+    "The Rolling Stones" : {
+      "songRevenue" : 0.0,
       "merchRevenue" : 0.0,
       "ranking" : 4,
-      "mostProfitableSong" : "Free"
+      "mostProfitableSong" : "N/A"
     }
   }
 } ]

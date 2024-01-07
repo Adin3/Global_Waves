@@ -73,8 +73,9 @@ public class PodcastPlayer extends Player {
         currentEpisode.setMaxDuration(currentEpisode.getDuration());
         Manager.getCurrentUser().setListenedEpisode(currentEpisode);
         User h = Manager.getUser(host);
-        if (h != null)
+        if (h != null) {
             Manager.getUser(host).setListenedEpisode(currentEpisode, owner);
+        }
         podcastPosition = 0;
     }
 
@@ -370,8 +371,9 @@ public class PodcastPlayer extends Player {
                 currentEpisode.setMaxDuration(currentEpisode.getDuration());
                 Manager.getCurrentUser().setListenedEpisode(currentEpisode);
                 User h = Manager.getUser(host);
-                if (h != null)
+                if (h != null) {
                     Manager.getUser(host).setListenedEpisode(currentEpisode, owner);
+                }
                 updateDuration(savedTime);
             }
 

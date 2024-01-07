@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
 import lombok.Getter;
 import program.admin.Manager;
 import program.format.Album;
+import program.format.Library;
 import program.format.Song;
 
 import java.util.ArrayList;
@@ -421,6 +422,11 @@ public class AlbumPlayer extends Player {
             changeSong = true;
             newListen = true;
             savedTime = -time;
+            if (adPlaying) {
+                Manager.getUser(owner).payAds(adPrice);
+                albumPosition--;
+                adPlaying = false;
+            }
             time = 0;
         }
         currentSong.setDuration(time);
@@ -444,21 +450,38 @@ public class AlbumPlayer extends Player {
                     Manager.getSource(owner).setSourceLoaded(false);
                     break;
                 }
-
-                if (albumPosition >= album.getSongs().size() && repeat.equals("Repeat All")) {
-                    albumPosition = 0;
-                } else if (repeat.equals("Repeat Current Song")) {
-                    albumPosition--;
+                if (isAdBreak()) {
+                    currentSong = Library.getInstance().getSongs().get(0);
+                    Manager.getUser(owner).payAds(adPrice);
+                    adBreak = false;
+                    adPlaying = true;
+                } else {
+                    if (albumPosition >= album.getSongs().size() && repeat.equals("Repeat All")) {
+                        albumPosition = 0;
+                    } else if (repeat.equals("Repeat Current Song")) {
+                        albumPosition--;
+                    }
                 }
 
                 currentSong.setDuration(currentSong.getMaxDuration());
                 currentSong = new Song(album.getSong(albumPosition));
                 currentSong.setDuration(currentSong.getMaxDuration());
-                /*Manager.getCurrentUser().setListenedSong(currentSong);
-                Manager.getUser(currentSong.getArtist()).setListenedSong(currentSong, owner);*/
                 updateDuration(savedTime);
             }
 
+        }
+    }
+
+    /**
+     * @param temp sets ad break
+     */
+    public void setAdBreak(final boolean temp) {
+        adBreak = temp;
+        if (currentSong == null) {
+            currentSong = Library.getInstance().getSongs().get(0);
+            adBreak = false;
+            adPlaying = true;
+            paused = false;
         }
     }
 }
