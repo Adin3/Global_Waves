@@ -163,12 +163,6 @@ public final class Main {
         ObjectWriter objectWriter = objectMapper.writerWithDefaultPrettyPrinter();
         objectWriter.writeValue(new File(filePath2), Manager.getResult());
 
-        Manager.getPlaylists().clear();
-        Manager.getAlbums().clear();
-        Manager.getUsers().clear();
-        Manager.getSources().clear();
-        Manager.getArtists().clear();
-        Manager.getHosts().clear();
-        Manager.getNormals().clear();
+        Manager.clearManager();
     }
 }

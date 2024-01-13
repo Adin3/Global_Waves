@@ -222,5 +222,18 @@ public final class Manager {
             sources.get(username).setSourceSelected(false);
         }
     }
+
+    /**
+     * clears all manager variables
+     */
+    public static void clearManager() {
+        Manager.getPlaylists().clear();
+        Manager.getAlbums().clear();
+        Manager.getUsers().clear();
+        Manager.getSources().clear();
+        Manager.getArtists().clear();
+        Manager.getHosts().clear();
+        Manager.getNormals().clear();
+    }
 }
 

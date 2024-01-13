@@ -13,6 +13,9 @@ La baza programului stau mai multe componente principale
 * [Time Updater](#time-updater)
 * [User](#user)
 * [Pagination](#pagination)
+* [Wrapped](#wrapped)
+* [Monetisation](#monetisation)
+* [Notifications](#notifications)
 * [Command List](#command-list)
 
 ### Searchbar si Player
@@ -161,11 +164,61 @@ Utilizatori normali pot accesa: HomePage, Liked Content, Artist's Page, Host's P
 iar artistii, si hostii pot doar sa isi modifice pagina personala.
 
 un user normal poate sa acceseze pagina unui artist sau host prin cautarea si selectarea
-sa din Library
+sa din Library sau prin folosirea comenzii de changePage Host/Artist care va selecta pagina
+artistului/hostului al carui fisier este in player-ul userului normal
+
+Userii normali mai pot sa se intoarca inapoi la paginile anterioare, istoricul de paginii
+fiind salvat
+
+In acelasi timp, un user normal de pe platforma poate primii recomandari noi de tip
+melodie sau playlist ce vor fi salvate pe HomePage-ul sa, si la care mai apoi sa dea load
+in player
 
 Tot sistemul de paginatie este gandit cu ***Design Pattern-ul Strategy***
 
 ![img_schema_1](https://i.imgur.com/5IqxTQ1.png)
+
+### Wrapped
+wrapped reprezinta statistice personalizate ale unui user
+
+wrapped este diferit pentru fiecare tip de user 
+si tine cont de melodiile si episoade ascultate pe platforma
+
+la apelarea comenzi *wrapped* se vor afisa top5-ul pentru fiecare categorie
+importanta pentru tipul userului respectiv in functie de listenuri
+
+### Monetisation
+artistii vor fii platiti pentru ascultarile pe melodii lor
+
+un user normal poate sa cumpere o subscriptie la 1000000 de credite pentru premium
+
+Userii premium vor putea platii egal melodiile ascultate de acestia prin aceasta formula
+
+ 	Revenue = premium_price/total_listened_song * nr_of_songs_from_artist
+
+Userii non-premium vor primi ocazional ad-break-uri. Dupa ce s-a terminat ad-ul,
+artistii vor primii pe melodiile ascultate de user intre ad-breakuri dupa formula aceasta
+
+    Revenue = ad_price/total_listened_song_between_ads * nr_of_songs_from_artist
+
+Useri normali mai pot sa cumpere merch de pe pagina artisului, acesta fiind inca un mod prin
+care artistul poate sa obtina bani
+
+la sfarsitul programului se afiseaza comanda *endProgram* 
+care arata statistici monetare despre toti artisti activi.
+(artist ce a facut fie venit, fie a fost ascultat de un user normal)
+
+### Notifications
+Orice user normal poate sa de-a subscribe la un artist/host de pe pagina acestuia.
+Odata ce a dat subscribe, userul respectiv devine un subscriber al acelui artist/host
+
+In cazul in care artistul creaza un event, album, sau merch nou;
+toti subscriberi acestuia vor fii notificati
+
+In cazul in care hostul creaza un announcement nou,
+toti subscriberi acestuia vor fii notificati
+
+Tot sistemul de paginatie este gandit cu ***Design Pattern-ul Observer***
 
 ### Command List
 
@@ -173,5 +226,7 @@ Este un utility class folosit pe post de wrapper pentru comenzile programului
 
 In fiecare metoda wrapper se aplica metoda prorpiu zisa, dar si ceva logica inainte de aceasta
 (De exemplu verificarea userului)
+
+Design Pattern folosit: Singleton, Factory, Strategy, Observer, Builder
 
 ![img_schema_1](https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif)
