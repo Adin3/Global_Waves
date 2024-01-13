@@ -30,6 +30,10 @@ public class NormalUser extends User implements SubscribeObserver {
 
     private static final int SEC30_PASSED = 30;
 
+    private static final int LIMIT5 = 5;
+
+    private static final int LIMIT3 = 3;
+
     private static final double PREMIUM_PRICE = 1000000.0;
     @Getter
     private Player musicplayer = new Player();
@@ -966,7 +970,32 @@ public class NormalUser extends User implements SubscribeObserver {
         Manager.getPlaylists().put(p.getName(), p);
         this.playlists.add(p);
 
-        // todo adauga melodii in playlist;
+        Map<String, Integer> genres = new HashMap<>();
+        for (Playlist play : playlists) {
+            play.getSongs().stream().forEach(song -> {
+                int freq = genres.getOrDefault(song.getGenre(), 0) + 1;
+                genres.put(song.getGenre(), freq);
+            });
+        }
+        likedSongs.stream().forEach(song -> {
+            int freq = genres.getOrDefault(song.getGenre(), 0) + 1;
+            genres.put(song.getGenre(), freq);
+        });
+
+        ArrayList<String> genresSorted = new ArrayList<>(genres.keySet());
+        genresSorted.sort(new Comparator<String>() {
+            @Override
+            public int compare(final String o1, final String o2) {
+                return genres.get(o1) - genres.get(o2);
+            }
+        });
+
+        genresSorted = new ArrayList<>(genresSorted.stream().limit(LIMIT3).toList());
+        for (Song s : Library.getInstance().getSongs()) {
+            if (genresSorted.contains(s.getGenre())) {
+                p.addSong(s);
+            }
+        }
 
         playlistsRecommended.add(p.getName());
         lastSongRecommended = false;
@@ -985,7 +1014,13 @@ public class NormalUser extends User implements SubscribeObserver {
         Manager.getPlaylists().put(p.getName(), p);
         this.playlists.add(p);
 
-        // todo adauga melodii in playlist;
+        User artist = Manager.getUser(artistName);
+        for (String userName : artist.getListeners().keySet().stream().limit(LIMIT5).toList()) {
+            User user = Manager.getUser(userName);
+            for (Song s : user.getLikedSongs().stream().limit(LIMIT5).toList()) {
+                p.addSong(s);
+            }
+        }
 
         playlistsRecommended.add(p.getName());
         lastSongRecommended = false;

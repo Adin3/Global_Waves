@@ -1,4 +1,2 @@
 Starting audit...
-[ERROR] C:\Users\Neacsu\Desktop\POO\POO1\.\src\main\Main.java:60:34: '17' is a magic number. [MagicNumber]
 Audit done.
-Checkstyle ends with 1 errors.

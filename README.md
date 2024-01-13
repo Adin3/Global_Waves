@@ -227,6 +227,6 @@ Este un utility class folosit pe post de wrapper pentru comenzile programului
 In fiecare metoda wrapper se aplica metoda prorpiu zisa, dar si ceva logica inainte de aceasta
 (De exemplu verificarea userului)
 
-Design Pattern folosit: Singleton, Factory, Strategy, Observer, Builder
+Design Pattern folosit: Singleton(Library), Factory(Searchbar, Player), Strategy(Page), Observer(User), Builder(Event)
 
 ![img_schema_1](https://tenor.com/view/frustrated-mad-fuck-this-homework-work-gif-15260947.gif)

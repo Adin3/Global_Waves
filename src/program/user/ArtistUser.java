@@ -135,9 +135,11 @@ public class ArtistUser extends User {
             return;
         }
 
-        Event event = new Event(Manager.getCommand().getName(),
-                Manager.getCommand().getDescription(),
-                Manager.getCommand().getDate());
+        Event event = new Event.EventBuilder()
+                .withName(Manager.getCommand().getName())
+                .withDescription(Manager.getCommand().getDescription())
+                .withDate(Manager.getCommand().getDate())
+                .build();
 
         if (!event.checkDate()) {
             Manager.getPartialResult().put("message", "Event for "
@@ -214,9 +216,6 @@ public class ArtistUser extends User {
                 if (album != null && album.getArtist().equals(username)) {
                     used = true; break;
                 }
-//                if (username.equals(user.getCurrentPage().getNonUserName())) {
-//                    used = true; break;
-//                }
             }
         }
         return used;

@@ -7,7 +7,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 
-public class Event {
+public final class Event {
     @Getter
     private String name;
     @Getter
@@ -19,11 +19,48 @@ public class Event {
 
     private static final int MAXIMUM_YEAR = 2023;
 
-    public Event(final String name, final String description, final String date) {
-        this.name = name;
-        this.description = description;
-        this.date = date;
+    private Event() { }
+
+    public static class EventBuilder {
+        private Event event;
+
+        public EventBuilder() {
+            event = new Event();
+        }
+
+        /**
+         * takes the name of event
+         * @param name name of the event
+         */
+        public EventBuilder withName(final String name) {
+            event.name = name;
+            return this;
+        }
+
+        /**
+         * takes the description of event
+         * @param description description of the event
+         */
+        public EventBuilder withDescription(final String description) {
+            event.description = description;
+            return this;
+        }
+        /**
+         * takes the date of event
+         * @param date date of the event
+         */
+        public EventBuilder withDate(final String date) {
+            event.date = date;
+            return this;
+        }
+        /**
+         * build the builder
+         */
+        public Event build() {
+            return event;
+        }
     }
+
 
     /**
      * checks if date is valid

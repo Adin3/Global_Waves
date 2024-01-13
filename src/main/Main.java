@@ -48,7 +48,7 @@ public final class Main {
             resultFile.delete();
         }
         Files.createDirectories(path);
-        int a = 0;
+
         for (File file : Objects.requireNonNull(directory.listFiles())) {
             if (file.getName().startsWith("library")) {
                 continue;
@@ -57,9 +57,8 @@ public final class Main {
             String filepath = CheckerConstants.OUT_PATH + file.getName();
             File out = new File(filepath);
             boolean isCreated = out.createNewFile();
-            if (isCreated && a < 17) {
+            if (isCreated) {
                 action(file.getName(), filepath);
-                a++;
             }
         }
 
